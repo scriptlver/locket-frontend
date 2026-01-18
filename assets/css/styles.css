@@ -116,11 +116,20 @@ body {
   border: none;     
   outline: none;      
   box-shadow: none;  
-  
   cursor: pointer;
-  font-size: 0.9rem;
-  color: #aaa;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
+
+.fav-btn img {
+  width: 9px;
+  height: 9px;
+  transition: transform 0.2s ease;
+}
+
+.fav-btn.active img {
+  transform: scale(1.3);
+}
+
 
 
 
