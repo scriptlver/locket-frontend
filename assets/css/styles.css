@@ -6,3 +6,43 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  --primary-color: #FFF;
+  --secondary-color: #000000;
+  --background-color:#F4F1EC;
+  --text-color: #000000;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.header {
+  display: flex;
+  align-items: center;        
+  justify-content: center;
+  position: relative;
+  height: 90px;        
+}
+
+.menu-icon {
+  width: 20px;                
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%); 
+  opacity: 0.8;
+}
+
+.titulo {
+  font-family: 'Kapakana', sans-serif;
+  font-size: 2.5rem;
+  text-align: center;
+  color: var(--text-color);
+  font-weight: 500;
+  transform: translate(-4px);
+}
+
