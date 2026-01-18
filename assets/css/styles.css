@@ -37,7 +37,7 @@ body {
   opacity: 0.8;
 }
 
-.titulo {
+.title {
   font-family: 'Kapakana', sans-serif;
   font-size: 2.5rem;
   text-align: center;
@@ -45,4 +45,62 @@ body {
   font-weight: 500;
   transform: translate(-4px);
 }
+
+.album-title{
+  font-family: 'Kapakana', sans-serif;
+  font-size: 2.2rem;
+  text-align: center;
+  color: var(--text-color);
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.album-cover {
+  display: block;
+  margin: 10px auto;
+  max-width: 270px;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.album-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.album-actions p {
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.album-actions button {
+  border: none;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+}
+
+.album-button {
+  background-color: var(--secondary-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 9rem 0;
+  font-size: 0.7rem;
+  color: #555;
+}
+
+
+
+
+
 
