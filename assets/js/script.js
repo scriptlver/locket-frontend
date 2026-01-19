@@ -10,11 +10,20 @@ document.querySelectorAll('.fav-btn').forEach(btn => {
   });
 });
 
-const menu = document.getElementById('menu');
-const closeMenu = document.getElementById('closeMenu');
+fetch("menu-mobile.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("menu-mobile").innerHTML = html;
 
-closeMenu.addEventListener('click', () => {
-  menu.style.display = 'none';
-});
+    const menu = document.getElementById("menu");
+    const openBtn = document.querySelector(".menu-icon");
+    const closeBtn = document.getElementById("closeMenu");
 
+    openBtn.addEventListener("click", () => {
+      menu.classList.add("active");
+    });
 
+    closeBtn.addEventListener("click", () => {
+      menu.classList.remove("active");
+    });
+  });
