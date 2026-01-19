@@ -1,45 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menu Mobile</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Mobile</title>
 
-  <link rel="stylesheet" href="assets/css/styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <header class="mobile-menu" id="menu">
+      <button class="close-btn" id="closeMenu">✕</button>
 
-  <header class="mobile-menu" id="menu">
-    <button class="close-btn" id="closeMenu">✕</button>
+      <h1 class="title">Madison Beer</h1>
 
-    <h1 class="title">Madison Beer</h1>
+      <nav class="menu-nav">
+        <a href="index.html">Home</a>
+        <a href="songs.html">Músicas</a>
+        <a href="favorites.html">Favoritos</a>
+      </nav>
 
-    <nav class="menu-nav">
-      <a href="#">Home</a>
-      <a href="#">Músicas</a>
-      <a href="#">Favoritos</a>
-    </nav>
+      <div class="search-box">
+        <input type="text" placeholder="Pesquisa" />
+        <img
+          src="assets/images/icons/search.png"
+          alt="Pesquisar"
+          class="search-icon"
+        />
+      </div>
 
-    <div class="search-box">
-      <input type="text" placeholder="Pesquisa">
-      <button>🔍</button>
-    </div>
-
-    <div class="platforms">
-        <a href="https://youtu.be/YcpMVsvK8pk?si=mlLRYIk-Co_wrOCS" target="_blank">
-          <img src="../assets/images/icons/youtube-white.png" alt="YouTube" class="platform-icon">
+      <div class="platforms">
+        <a
+          href="https://www.youtube.com/channel/UC7zjjW_bvcVsPcBiqUPJf1w"
+          target="_blank"
+        >
+          <img
+            src="../assets/images/icons/youtube-white.png"
+            alt="YouTube"
+            class="platform-icon"
+          />
         </a>
 
-        <a href="https://open.spotify.com/intl-pt/track/6vDVu9IM9s8L8XMQ1c1Yti?si=fb62e4b0197544cc" target="_blank">
-          <img src="../assets/images/icons/spotify-white.png" alt="Spotify" class="platform-icon">
+        <a
+          href="https://open.spotify.com/intl-pt/artist/2kRfqPViCqYdSGhYSM9R0Q?si=UsZTPObFR3W0n1cwU43o1w"
+          target="_blank"
+        >
+          <img
+            src="../assets/images/icons/spotify-white.png"
+            alt="Spotify"
+            class="platform-icon"
+          />
         </a>
 
-        <a href="https://music.apple.com/us/song/bittersweet/1846949429" target="_blank">
-          <img src="../assets/images/icons/music-white.png" alt="Apple Music" class="platform-icon">
+        <a
+          href="https://music.apple.com/br/artist/madison-beer/696146587"
+          target="_blank"
+        >
+          <img
+            src="../assets/images/icons/music-white.png"
+            alt="Apple Music"
+            class="platform-icon"
+          />
         </a>
       </div>
-  </header>
+    </header>
 
-  <script src="assets/js/script.js"></script>
-</body>
+    <script src="assets/js/script.js"></script>
+  </body>
 </html>
