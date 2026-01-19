@@ -148,9 +148,20 @@ body {
   font-size: 0.85rem;
 }
 
+.platforms {
+  display: flex;
+  gap: 8px;
+  margin: 22px auto;
+  justify-content: center; 
+}
 
-
-
+.platform-icon {
+  width: 23px;
+  height: 35px;
+  cursor: pointer;
+  transition: 0.2s;
+  transform: translateY(-28px);
+}
 
 
 
