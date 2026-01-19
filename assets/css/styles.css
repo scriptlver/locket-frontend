@@ -168,6 +168,110 @@ a {
   color: inherit;
 }
 
+/* MENU MOBILE */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background-color: black;
+  color: white;
+
+  padding: 2rem 1.5rem;
+
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobile-menu {
+  display: flex;
+}
+
+/* botão fechar */
+.close-btn {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* menu */
+.menu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.menu-nav a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+}
+
+.menu-nav a:hover {
+  opacity: 0.7;
+}
+
+.search-box {
+  display: flex;
+  background-color: white;
+  border-radius: 6px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 220px;
+  margin: 3rem auto 0 auto;
+}
+
+
+.search-box input {
+  flex: 1;
+  border: none;
+  padding: 0.6rem;
+  font-family: 'Cormorant Garamond', serif;
+  outline: none;
+}
+
+.search-box button {
+  border: none;
+  background: none;
+  padding: 0 0.7rem;
+  cursor: pointer;
+}
+
+.mobile-menu .title {
+  font-family: 'Kapakana', cursive;
+  font-size: 3rem;
+  color: white;
+
+  display: block;
+  opacity: 1;
+  position: static;
+  visibility: visible;
+
+  margin: 1rem 0;
+}
+
+.mobile-menu.platforms {
+  display: flex;
+  gap: 8px;
+  margin: 22px auto;
+  justify-content: center; 
+}
+
+.mobile-menu .platform-icon {
+  width: 23px;
+  height: 35px;
+  cursor: pointer;
+  transition: 0.2s;
+  transform: translateY(-28px);
+}
+
+
+
 
 
 

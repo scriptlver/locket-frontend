@@ -10,3 +10,11 @@ document.querySelectorAll('.fav-btn').forEach(btn => {
   });
 });
 
+const menu = document.getElementById('menu');
+const closeMenu = document.getElementById('closeMenu');
+
+closeMenu.addEventListener('click', () => {
+  menu.style.display = 'none';
+});
+
+
