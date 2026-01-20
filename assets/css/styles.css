@@ -186,7 +186,6 @@ a {
 }
 
 
-/* botão fechar */
 .close-btn {
   align-self: flex-start;
   background: none;
@@ -279,11 +278,14 @@ a {
   transform: translateY(-28px);
 }
 
+@media (min-width: 768px) {
+  .mobile-menu {
+    display: none !important;
+  }
 
-
-
-
-
-
+  .menu-icon {
+    display: none;
+  }
+}
 
 
