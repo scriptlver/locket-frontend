@@ -333,6 +333,12 @@ a {
     padding: 10px 0; 
   }
 
+  .platform-icon {
+    width: 35px;
+    height: 52px;
+    transform: translateY(-32px);
+  }
+
   .lyrics p {
   font-size: 1.2rem; 
 }
