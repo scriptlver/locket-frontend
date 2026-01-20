@@ -278,14 +278,53 @@ a {
   transform: translateY(-28px);
 }
 
+.menu-desktop {
+  display: none;
+}
+
 @media (min-width: 768px) {
-  .mobile-menu {
-    display: none !important;
+  .header {
+    justify-content: space-between;
+    padding: 0 6rem;
+  }
+
+  .album-title{
+    font-size: 2.8rem;
+  }
+
+  .album-cover {
+    max-width: 300px;
+  }
+
+  .title {
+    font-size: 3.4rem;
+    font-weight: 500;
+  }
+
+  .menu-desktop {
+    display: flex;
+    gap: 28px;
+  }
+
+  .menu-desktop a {
+    font-size: 1.3rem;
+    opacity: 0.85;
+  }
+
+  .menu-desktop a:hover {
+    opacity: 1;
   }
 
   .menu-icon {
     display: none;
   }
+
+  .album-actions p {
+    font-size: 1.5rem;
+  }
+
+   .album-button {
+    font-size: 0.95rem;   
+    padding: 0.5rem 1.3rem; 
+  }
 }
-
-
