@@ -1,4 +1,3 @@
-// FAVORITOS
 document.querySelectorAll('.fav-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const img = btn.querySelector('img');
@@ -15,7 +14,25 @@ document.querySelectorAll('.fav-btn').forEach(btn => {
   });
 });
 
-// MENU MOBILE
+document.addEventListener('DOMContentLoaded', function() {
+    const btnToggle = document.getElementById('btn-toggle');
+    const moreLyrics = document.getElementById('more-lyrics');
+
+    if (btnToggle && moreLyrics) {
+        btnToggle.addEventListener('click', function() {
+            if (moreLyrics.style.display === 'none' || moreLyrics.style.display === '') {
+                moreLyrics.style.display = 'block';
+                btnToggle.textContent = 'Ver menos';
+            } else {
+                moreLyrics.style.display = 'none';
+                btnToggle.textContent = 'Ver mais';
+                
+                btnToggle.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    }
+});
+
 const basePath = location.pathname.includes('/songs/')
   ? '../'
   : '';
