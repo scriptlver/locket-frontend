@@ -54,3 +54,4 @@ fetch(`${basePath}menu-mobile.html`)
       menu.classList.remove('active');
     });
   });
+
