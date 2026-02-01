@@ -55,3 +55,59 @@ fetch(`${basePath}menu-mobile.html`)
     });
   });
 
+// LOGIN (botão Entrar - submit do form)
+const loginForm = document.getElementById("login-field");
+
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, senha })
+      });
+
+      const data = await response.json();
+      alert(data.message);
+    } catch (error) {
+      alert("Erro no login");
+    }
+  });
+}
+
+// CRIAR CONTA (clique separado)
+const criarContaBtn = document.getElementById("btn-criar-conta");
+
+if (criarContaBtn) {
+  criarContaBtn.addEventListener("click", async () => {
+    const nomeInput = document.getElementById("nome");
+    const nome = nomeInput ? nomeInput.value : "";
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ nome, email, senha })
+      });
+
+      const data = await response.json();
+      alert(data.message);
+    } catch (error) {
+      alert("Erro ao criar conta");
+    }
+  });
+}
+
+
+
