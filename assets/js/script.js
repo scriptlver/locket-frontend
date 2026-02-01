@@ -1,3 +1,4 @@
+/* ================= FAVORITOS ================= */
 document.querySelectorAll('.fav-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const img = btn.querySelector('img');
@@ -14,25 +15,30 @@ document.querySelectorAll('.fav-btn').forEach(btn => {
   });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const btnToggle = document.getElementById('btn-toggle');
-    const moreLyrics = document.getElementById('more-lyrics');
 
-    if (btnToggle && moreLyrics) {
-        btnToggle.addEventListener('click', function() {
-            if (moreLyrics.style.display === 'none' || moreLyrics.style.display === '') {
-                moreLyrics.style.display = 'block';
-                btnToggle.textContent = 'Ver menos';
-            } else {
-                moreLyrics.style.display = 'none';
-                btnToggle.textContent = 'Ver mais';
-                
-                btnToggle.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        });
-    }
+/* ================= LETRAS ================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const btnToggle = document.getElementById('btn-toggle');
+  const moreLyrics = document.getElementById('more-lyrics');
+
+  if (btnToggle && moreLyrics) {
+    btnToggle.addEventListener('click', () => {
+      const isHidden =
+        moreLyrics.style.display === 'none' ||
+        moreLyrics.style.display === '';
+
+      moreLyrics.style.display = isHidden ? 'block' : 'none';
+      btnToggle.textContent = isHidden ? 'Ver menos' : 'Ver mais';
+
+      if (!isHidden) {
+        btnToggle.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  }
 });
 
+
+/* ================= MENU MOBILE ================= */
 const basePath = location.pathname.includes('/songs/')
   ? '../'
   : '';
@@ -46,19 +52,17 @@ fetch(`${basePath}menu-mobile.html`)
     const openBtn = document.querySelector('.menu-icon');
     const closeBtn = document.getElementById('closeMenu');
 
-    openBtn.addEventListener('click', () => {
-      menu.classList.add('active');
-    });
-
-    closeBtn.addEventListener('click', () => {
-      menu.classList.remove('active');
-    });
+    if (openBtn && closeBtn) {
+      openBtn.addEventListener('click', () => menu.classList.add('active'));
+      closeBtn.addEventListener('click', () => menu.classList.remove('active'));
+    }
   });
 
-// LOGIN (botão Entrar - submit do form)
+
+/* ================= LOGIN ================= */
 const loginForm = document.getElementById("login-field");
 
-if (loginForm) {
+if (loginForm && !document.getElementById("btn-criar-conta")) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -68,46 +72,61 @@ if (loginForm) {
     try {
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha })
       });
 
       const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.error);
+        return;
+      }
+
       alert(data.message);
-    } catch (error) {
+      localStorage.setItem("user", JSON.stringify(data.usuario));
+      window.location.href = "../index.html";
+
+    } catch {
       alert("Erro no login");
     }
   });
 }
 
-// CRIAR CONTA (clique separado)
+
+/* ================= CRIAR CONTA ================= */
 const criarContaBtn = document.getElementById("btn-criar-conta");
 
 if (criarContaBtn) {
   criarContaBtn.addEventListener("click", async () => {
-    const nomeInput = document.getElementById("nome");
-    const nome = nomeInput ? nomeInput.value : "";
+    const nome = document.getElementById("nome").value;
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
+
+    if (!nome || !email || !senha) {
+      alert("Preencha todos os campos");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:3000/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome, email, senha })
       });
 
       const data = await response.json();
-      alert(data.message);
-    } catch (error) {
+
+      if (!response.ok) {
+        alert(data.error);
+        return;
+      }
+
+      alert("Conta criada com sucesso!");
+      window.location.href = "../login.html";
+
+    } catch {
       alert("Erro ao criar conta");
     }
   });
 }
-
-
-
