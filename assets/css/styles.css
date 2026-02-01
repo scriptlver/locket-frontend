@@ -306,6 +306,56 @@ a {
   color: #555;
 }
 
+.login-card {
+  background: #f6f2ec;
+  width: 80%;
+  max-width: 360px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.login-field {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.login-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.login-field input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #d2b8a3;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.login-register {
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+
+.login-btn:hover {
+  background: #e0c6b1; /* cor mais suave */
+}
+
+
 
 
 @media (min-width: 768px) {
