@@ -352,6 +352,7 @@ a {
   cursor: pointer;
   font-family: "Cormorant Garamond", serif;
   font-size: 1rem;
+  margin-top: 12px;
 }
 
 .login-register {
