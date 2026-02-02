@@ -102,9 +102,15 @@ if (criarContaBtn) {
     const nome = document.getElementById("nome").value;
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
+    const termos = document.getElementById("aceitar-termos");
 
     if (!nome || !email || !senha) {
       alert("Preencha todos os campos");
+      return;
+    }
+
+    if (!termos.checked) {
+      alert("Você precisa aceitar os termos para criar a conta.");
       return;
     }
 
@@ -130,15 +136,3 @@ if (criarContaBtn) {
     }
   });
 }
-
-document.getElementById("btn-criar-conta").addEventListener("click", () => {
-  const termos = document.getElementById("aceitar-termos");
-
-  if (!termos.checked) {
-    alert("Você precisa aceitar os termos para criar a conta.");
-    return;
-  }
-
-  // aqui segue a lógica normal de criar conta
-  alert("Conta criada com sucesso!");
-});

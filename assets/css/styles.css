@@ -376,6 +376,20 @@ a {
   background: #e0c6b1;
 }
 
+.terms-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #9b8a7a;
+  cursor: pointer;
+}
+
+.terms-label a {
+  color: #6f5544;
+  text-decoration: none;
+}
+
 .terms {
   display: flex;
   align-items: center;
