@@ -231,7 +231,7 @@ a {
   border: none;
   padding: 0 0.8rem;
   font-family: "Cormorant Garamond", serif;
-  font-size: 0.9rem;
+  font-size: 1rem;
   line-height: 44px;
   outline: none;
   background: transparent;
@@ -341,6 +341,7 @@ a {
   border-radius: 6px;
   border: 1px solid #ccc;
   font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
 }
 
 .login-btn {
