@@ -403,6 +403,32 @@ a {
   width: auto;
 }
 
+.terms-container {
+  max-width: 720px;
+  margin: 2.5rem auto 5rem;
+  padding: 1.8rem 1.6rem;
+  background-color: #f6f2ec; /* mesmo tom do login-card */
+  border-radius: 18px;
+  line-height: 1.7;
+}
+
+.terms-container p {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  margin-bottom: 0.9rem;
+  text-align: center;
+}
+
+.terms-container h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 1.4rem;
+  margin-bottom: 0.4rem;
+  text-align: center;
+}
+
 
 @media (min-width: 768px) {
   .header {
@@ -480,5 +506,18 @@ a {
 
   .login-register {
     font-size: 14px;
+  }
+
+  .terms-container {
+    max-width: 860px;
+    padding: 2.5rem 3rem;
+  }
+
+  .terms-container p {
+    font-size: 1.1rem;
+  }
+
+  .terms-container h3 {
+    font-size: 1.3rem;
   }
 }
