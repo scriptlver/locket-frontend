@@ -130,3 +130,15 @@ if (criarContaBtn) {
     }
   });
 }
+
+document.getElementById("btn-criar-conta").addEventListener("click", () => {
+  const termos = document.getElementById("aceitar-termos");
+
+  if (!termos.checked) {
+    alert("Você precisa aceitar os termos para criar a conta.");
+    return;
+  }
+
+  // aqui segue a lógica normal de criar conta
+  alert("Conta criada com sucesso!");
+});
