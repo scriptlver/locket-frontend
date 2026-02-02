@@ -431,7 +431,6 @@ a {
   text-align: center;
 }
 
-
 @media (min-width: 768px) {
   .header {
     justify-content: space-between;

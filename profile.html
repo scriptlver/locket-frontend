@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meu Perfil</title>
+
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="../assets/css/profile.css" />
+  </head>
+
+  <body>
+    <div id="menu-mobile"></div>
+
+    <header class="header">
+      <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
+      <h1 class="title">Madison Beer</h1>
+
+      <nav class="menu-desktop">
+        <a href="../index.html">Home</a>
+        <a href="../songs.html">Músicas</a>
+        <a href="../favorites.html">Favoritos</a>
+        <a href="../profile.html">Perfil</a>
+      </nav>
+    </header>
+
+    <section class="profile-card">
+      <h2 class="profile-title">Meu Perfil</h2>
+
+      <div class="profile-photo">
+        <img id="preview" src="../assets/images/default-user.png" alt="Foto de perfil" />
+        <label class="photo-btn">
+          Alterar foto
+          <input type="file" id="photoInput" accept="image/*" hidden />
+        </label>
+      </div>
+
+      <form id="profile-form">
+        <div class="profile-field">
+          <label>Nome</label>
+          <input type="text" id="name" placeholder="Seu nome" />
+        </div>
+
+        <div class="profile-field">
+          <label>Email</label>
+          <input type="email" id="email" disabled />
+        </div>
+
+        <div class="profile-field">
+          <label>Nova senha</label>
+          <input type="password" id="password" placeholder="Nova senha" />
+        </div>
+
+        <button type="submit" class="save-btn">Salvar alterações</button>
+      </form>
+    </section>
+
+    <script src="../assets/js/profile.js"></script>
+  </body>
+</html>
