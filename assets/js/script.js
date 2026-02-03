@@ -111,26 +111,40 @@ if (registerForm) {
   registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    console.log("submit cadastro disparado");
-
     const nome = document.getElementById("nome").value.trim();
     const email = document.getElementById("email").value.trim();
     const senha = document.getElementById("senha").value;
     const senha2 = document.getElementById("senha2").value;
     const termos = document.getElementById("aceitar-termos");
 
+    // campos obrigatórios
     if (!nome || !email || !senha || !senha2) {
       alert("Preencha todos os campos");
       return;
     }
 
+    // senhas iguais
     if (senha !== senha2) {
       alert("As senhas não coincidem");
       return;
     }
 
+    // termos aceitos
     if (!termos.checked) {
       alert("Você precisa aceitar os termos");
+      return;
+    }
+
+    // email válido
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Digite um email válido");
+      return;
+    }
+
+    // senha mínima
+    if (senha.length < 6) {
+      alert("A senha deve ter no mínimo 6 caracteres");
       return;
     }
 
@@ -148,7 +162,7 @@ if (registerForm) {
         return;
       }
 
-      alert("Conta criada com sucesso!");
+      // redireciona direto, sem alert
       window.location.href = "../login.html";
 
     } catch (err) {
@@ -157,6 +171,8 @@ if (registerForm) {
     }
   });
 }
+
+
 
 
 /* ================= FOTO DE PERFIL (PREVIEW) ================= */
