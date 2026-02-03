@@ -1,5 +1,5 @@
 /* ================= FAVORITOS ================= */
-document.querySelectorAll(".fav-btn").forEach(btn => {
+document.querySelectorAll(".fav-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const img = btn.querySelector("img");
     const basePath = location.pathname.includes("/songs/") ? "../" : "";
@@ -17,11 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnToggle && moreLyrics) {
     btnToggle.addEventListener("click", () => {
-      const isHidden = moreLyrics.style.display === "none" || moreLyrics.style.display === "";
+      const isHidden =
+        moreLyrics.style.display === "none" || moreLyrics.style.display === "";
       moreLyrics.style.display = isHidden ? "block" : "none";
       btnToggle.textContent = isHidden ? "Ver menos" : "Ver mais";
 
-      if (!isHidden) btnToggle.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (!isHidden)
+        btnToggle.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }
 });
@@ -29,8 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ================= MENU MOBILE ================= */
 const basePath = location.pathname.includes("/songs/") ? "../" : "";
 fetch(`${basePath}menu-mobile.html`)
-  .then(res => res.text())
-  .then(html => {
+  .then((res) => res.text())
+  .then((html) => {
     const menuMobile = document.getElementById("menu-mobile");
     if (!menuMobile) return;
 
@@ -65,7 +67,7 @@ if (isLoginPage) {
         const response = await fetch("http://localhost:3000/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, senha })
+          body: JSON.stringify({ email, senha }),
         });
         const data = await response.json();
         if (!response.ok) return alert(data.error || "Erro no login");
@@ -73,7 +75,6 @@ if (isLoginPage) {
         // salvar usuário logado no localStorage
         localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
         window.location.href = "../index.html";
-
       } catch (err) {
         console.error(err);
         alert("Erro no login");
@@ -95,38 +96,43 @@ if (isAccountPage) {
       const senha2 = document.getElementById("senha2").value;
       const termos = document.getElementById("aceitar-termos");
 
-      if (!nome || !email || !senha || !senha2) return alert("Preencha todos os campos");
+      if (!nome || !email || !senha || !senha2)
+        return alert("Preencha todos os campos");
       if (senha !== senha2) return alert("As senhas não coincidem");
       if (!termos.checked) return alert("Você precisa aceitar os termos");
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) return alert("Digite um email válido");
-      if (senha.length < 6) return alert("A senha deve ter no mínimo 6 caracteres");
+      if (senha.length < 6)
+        return alert("A senha deve ter no mínimo 6 caracteres");
 
-      // foto em Base64
       const inputFoto = document.getElementById("foto");
       let fotoBase64 = null;
+
       if (inputFoto && inputFoto.files[0]) {
+        // converte para Base64
         fotoBase64 = await new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result);
-          reader.onerror = err => reject(err);
+          reader.onerror = (err) => reject(err);
           reader.readAsDataURL(inputFoto.files[0]);
         });
+      } else {
+        // se o usuário não selecionou foto, coloca uma imagem padrão
+        fotoBase64 = "../assets/images/icons/profile.png"; // ou Base64 padrão se quiser
       }
 
       try {
         const response = await fetch("http://localhost:3000/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nome, email, senha, foto: fotoBase64 })
+          body: JSON.stringify({ nome, email, senha, foto: fotoBase64 }),
         });
         const data = await response.json();
         if (!response.ok) return alert(data.error || "Erro ao criar conta");
 
         alert("Conta criada com sucesso! Faça login agora.");
         window.location.href = "../login.html";
-
       } catch (err) {
         console.error(err);
         alert("Erro ao criar conta");
