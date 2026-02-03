@@ -118,8 +118,9 @@ if (isAccountPage) {
           reader.readAsDataURL(inputFoto.files[0]);
         });
       } else {
-        // se o usuário não selecionou foto, coloca uma imagem padrão
-        fotoBase64 = "../assets/images/icons/profile.png"; // ou Base64 padrão se quiser
+        // se não escolher foto, usa Base64 de uma imagem padrão
+        // aqui você pode pegar a imagem do servidor e converter pra Base64 ou usar um Base64 já definido
+        fotoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA..."; // exemplo curto
       }
 
       try {
