@@ -19,7 +19,17 @@
         alt="Menu"
         class="menu-icon"
       />
+
       <h1 class="title">Madison Beer</h1>
+
+      <!-- MENU DESKTOP (VOLTOU!!!) -->
+      <nav class="menu-desktop">
+        <a href="../index.html">Home</a>
+        <a href="../songs.html">Músicas</a>
+        <a href="../account.html">Conta</a>
+        <a href="../favorites.html">Favoritos</a>
+        <a href="../terms.html" target="_blank">Termos de Uso</a>
+      </nav>
     </header>
 
     <!-- CARD EDITAR PERFIL -->
@@ -33,6 +43,7 @@
             src="../assets/images/icons/profile.png"
             id="preview-foto"
             class="profile-preview"
+            alt="Foto de perfil"
           />
           <span class="profile-text">Alterar foto de perfil</span>
         </label>
@@ -41,27 +52,40 @@
       </div>
 
       <!-- FORM -->
-      <form id="profile-form">
+      <form id="profile-form" autocomplete="on">
         <div class="login-field">
           <label for="nome">Nome</label>
-          <input type="text" id="nome" />
+          <input
+            type="text"
+            id="nome"
+            placeholder="Seu nome"
+            required
+          />
         </div>
 
         <div class="login-field">
           <label for="email">Email</label>
-          <input type="email" id="email" />
+          <input
+            type="email"
+            id="email"
+            placeholder="seuemail@email.com"
+            required
+          />
         </div>
 
         <div class="login-field">
-          <label for="senha">Senha</label>
-          <input type="password" id="senha" />
+          <label for="senha">Nova senha</label>
+          <input
+            type="password"
+            id="senha"
+            placeholder="••••••••"
+          />
         </div>
 
         <button type="submit" class="login-btn">
           Salvar
         </button>
       </form>
-    </section>
 
     <!-- JS -->
     <script src="../assets/js/script.js"></script>
