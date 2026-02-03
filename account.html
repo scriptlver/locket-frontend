@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,6 +27,20 @@
 
     <section class="login-card">
       <h2 class="login-title">Criar conta</h2>
+
+      <div class="profile-photo">
+  <label for="foto" class="profile-label">
+    <img
+      src="../assets/images/icons/profile.jpg"
+      alt="Foto de perfil"
+      id="preview-foto"
+      class="profile-preview"
+    />
+  </label>
+
+  <input type="file" id="foto" accept="image/*" hidden />
+</div>
+
 
       <form id="login-field">
         <div class="login-field">
@@ -64,6 +78,7 @@
       </form>
     </section>
 
+    <!-- JS PRINCIPAL -->
     <script src="../assets/js/script.js"></script>
   </body>
 </html>

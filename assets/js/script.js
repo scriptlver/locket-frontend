@@ -137,4 +137,24 @@ if (criarContaBtn) {
   });
 }
 
+const inputFoto = document.getElementById("foto");
+const previewFoto = document.getElementById("preview-foto");
+
+if (inputFoto && previewFoto) {
+  inputFoto.addEventListener("change", () => {
+    const file = inputFoto.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        previewFoto.src = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+
 
