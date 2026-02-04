@@ -170,3 +170,67 @@ document.addEventListener("DOMContentLoaded", () => {
   if (profileImg && usuario.foto) profileImg.src = usuario.foto;
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  if (!usuario) return;
+
+  const nomeInput = document.getElementById("nome");
+  const emailInput = document.getElementById("email");
+  const fotoPreview = document.getElementById("preview-foto");
+
+  if (nomeInput) nomeInput.value = usuario.nome;
+  if (emailInput) emailInput.value = usuario.email;
+  if (fotoPreview && usuario.foto) fotoPreview.src = usuario.foto;
+});
+
+const profileForm = document.getElementById("profile-form");
+
+if (profileForm) {
+  profileForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+    const nome = document.getElementById("nome").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const inputFoto = document.getElementById("foto");
+
+    let foto = usuario.foto;
+
+    if (inputFoto.files[0]) {
+      foto = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(inputFoto.files[0]);
+      });
+    }
+
+    const response = await fetch("http://localhost:3000/editar-perfil", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: usuario.id,
+        nome,
+        email,
+        senha,
+        foto
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return alert(data.error || "Erro ao atualizar perfil");
+    }
+
+    // 🔹 atualiza localStorage SEM senha
+    localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
+
+    alert("Perfil atualizado com sucesso 💙");
+    window.location.href = "profile.html";
+  });
+}
+
+
