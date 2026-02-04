@@ -169,3 +169,4 @@ document.addEventListener("DOMContentLoaded", () => {
   if (profileEmail) profileEmail.textContent = usuario.email;
   if (profileImg && usuario.foto) profileImg.src = usuario.foto;
 });
+
