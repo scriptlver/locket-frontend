@@ -403,16 +403,13 @@ a {
   width: auto;
 }
 
-/* =========================
-   TERMOS DE USO — BLOCO CENTRAL
-========================= */
 
 .terms-container {
   max-width: 680px;
-  margin: 0.7rem auto 1.5rem; /* margem externa BEM menor */
-  padding: 1.1rem 2.6rem;     /* bloco mais fechado */
+  margin: 0.7rem auto 1.5rem; 
+  padding: 1.1rem 2.6rem;     
   background-color: #f6f2ec;
-  border-radius: 6px;         /* quase quadrado */
+  border-radius: 6px;      
   line-height: 1.35;
 }
 

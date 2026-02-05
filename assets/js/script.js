@@ -1,4 +1,4 @@
-/* ================= FAVORITOS ================= */
+// favoritos
 document.querySelectorAll(".fav-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const img = btn.querySelector("img");
@@ -10,7 +10,7 @@ document.querySelectorAll(".fav-btn").forEach((btn) => {
   });
 });
 
-/* ================= LETRAS ================= */
+// ver mais nas letras
 document.addEventListener("DOMContentLoaded", () => {
   const btnToggle = document.getElementById("btn-toggle");
   const moreLyrics = document.getElementById("more-lyrics");
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ================= MENU MOBILE ================= */
+// menu mobile
 const basePath = location.pathname.includes("/songs/") ? "../" : "";
 fetch(`${basePath}menu-mobile.html`)
   .then((res) => res.text())
@@ -47,12 +47,12 @@ fetch(`${basePath}menu-mobile.html`)
     }
   });
 
-/* ================= DETECTAR PÁGINA ================= */
+// nn lembro mais o que é isso
 const path = location.pathname;
 const isLoginPage = path.includes("login.html");
 const isAccountPage = path.includes("account.html");
 
-/* ================= LOGIN ================= */
+// login
 if (isLoginPage) {
   const loginForm = document.getElementById("login-field");
   if (loginForm) {
@@ -72,7 +72,7 @@ if (isLoginPage) {
         const data = await response.json();
         if (!response.ok) return alert(data.error || "Erro no login");
 
-        // salvar usuário logado no localStorage
+        // salvar usuário logado no localstorage
         localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
         window.location.href = "../index.html";
       } catch (err) {
@@ -83,7 +83,7 @@ if (isLoginPage) {
   }
 }
 
-/* ================= CADASTRO ================= */
+// cadastro
 if (isAccountPage) {
   const registerForm = document.getElementById("login-field");
   if (registerForm) {
@@ -110,7 +110,6 @@ if (isAccountPage) {
       let fotoBase64 = null;
 
       if (inputFoto && inputFoto.files[0]) {
-        // converte para Base64
         fotoBase64 = await new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result);
@@ -118,9 +117,7 @@ if (isAccountPage) {
           reader.readAsDataURL(inputFoto.files[0]);
         });
       } else {
-        // se não escolher foto, usa Base64 de uma imagem padrão
-        // aqui você pode pegar a imagem do servidor e converter pra Base64 ou usar um Base64 já definido
-        fotoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA..."; // exemplo curto
+        fotoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA..."; 
       }
 
       try {
@@ -167,7 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (profileName) profileName.textContent = usuario.nome;
   if (profileEmail) profileEmail.textContent = usuario.email;
-  if (profileImg && usuario.foto) profileImg.src = usuario.foto;
+  if (profileImg && usuario.foto)
+  profileImg.src = `http://localhost:3000/uploads/${usuario.foto}`;
+
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -180,7 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (nomeInput) nomeInput.value = usuario.nome;
   if (emailInput) emailInput.value = usuario.email;
-  if (fotoPreview && usuario.foto) fotoPreview.src = usuario.foto;
+if (fotoPreview && usuario.foto)
+  fotoPreview.src = `http://localhost:3000/uploads/${usuario.foto}`;
 });
 
 const profileForm = document.getElementById("profile-form");
