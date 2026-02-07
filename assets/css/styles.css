@@ -463,6 +463,32 @@ a {
   gap: 12px;
 }
 
+.profile-photo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  margin-top: 10px;
+}
+
+.profile-preview {
+  width: 120px;        
+  height: 120px;
+  border-radius: 50%;  
+  object-fit: cover;   
+}
+
+.login-field textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d6bfae;
+  font-family: inherit;
+  resize: none;
+}
+
+
+
+
 
 @media (min-width: 768px) {
   .header {

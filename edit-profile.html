@@ -12,18 +12,14 @@
     <div id="menu-mobile"></div>
 
     <header class="header">
-      <img
-        src="../assets/images/icons/menu.png"
-        alt="Menu"
-        class="menu-icon"
-      />
+      <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
 
       <h1 class="title">Madison Beer</h1>
 
       <nav class="menu-desktop">
         <a href="../index.html">Home</a>
         <a href="../songs.html">Músicas</a>
-        <a href="../account.html">Conta</a>
+        <a href="../account.html">Perfil</a>
         <a href="../favorites.html">Favoritos</a>
         <a href="../terms.html" target="_blank">Termos de Uso</a>
       </nav>
@@ -46,36 +42,40 @@
         <input type="file" id="foto" accept="image/*" hidden />
       </div>
 
+       <form id="profile-form" autocomplete="on">
+        <div class="login-field">
+          <label>Nome de usuário</label>
+          <input type="text" id="nome-usuario" />
+        </div>
+
+
       <form id="profile-form" autocomplete="on">
         <div class="login-field">
           <label for="nome">Nome</label>
-          <input
-            type="text"
-            id="nome"
-          />
+          <input type="text" id="nome" />
         </div>
 
         <div class="login-field">
           <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
+          <input type="email" id="email" />
+        </div>
 
-          />
+        <div class="login-field">
+          <label for="bio">Biografia</label>
+          <textarea
+            id="bio"
+            rows="3"
+          ></textarea>
         </div>
 
         <div class="login-field">
           <label for="senha">Nova senha</label>
-          <input
-            type="password"
-            id="senha"
-          />
+          <input type="password" id="senha" />
         </div>
 
-        <button type="submit" class="login-btn">
-          Salvar
-        </button>
+        <button type="submit" class="login-btn">Salvar</button>
       </form>
+    </section>
 
     <script src="../assets/js/script.js"></script>
   </body>
