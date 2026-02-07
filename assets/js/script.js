@@ -1,16 +1,18 @@
-// favoritos
+const basePath = location.pathname.includes("/songs/") ? "../" : "";
+
 document.querySelectorAll(".fav-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const img = btn.querySelector("img");
-    const basePath = location.pathname.includes("/songs/") ? "../" : "";
+
     btn.classList.toggle("active");
+
     img.src = btn.classList.contains("active")
       ? `${basePath}assets/images/icons/favorite.png`
       : `${basePath}assets/images/icons/desfavorite.png`;
   });
 });
 
-// ver mais nas letras
+/* ================= VER MAIS LETRAS ================= */
 document.addEventListener("DOMContentLoaded", () => {
   const btnToggle = document.getElementById("btn-toggle");
   const moreLyrics = document.getElementById("more-lyrics");
@@ -19,17 +21,18 @@ document.addEventListener("DOMContentLoaded", () => {
     btnToggle.addEventListener("click", () => {
       const isHidden =
         moreLyrics.style.display === "none" || moreLyrics.style.display === "";
+
       moreLyrics.style.display = isHidden ? "block" : "none";
       btnToggle.textContent = isHidden ? "Ver menos" : "Ver mais";
 
-      if (!isHidden)
+      if (!isHidden) {
         btnToggle.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     });
   }
 });
 
-// menu mobile
-const basePath = location.pathname.includes("/songs/") ? "../" : "";
+/* ================= MENU MOBILE ================= */
 fetch(`${basePath}menu-mobile.html`)
   .then((res) => res.text())
   .then((html) => {
@@ -37,6 +40,7 @@ fetch(`${basePath}menu-mobile.html`)
     if (!menuMobile) return;
 
     menuMobile.innerHTML = html;
+
     const menu = document.getElementById("menu");
     const openBtn = document.querySelector(".menu-icon");
     const closeBtn = document.getElementById("closeMenu");
@@ -47,21 +51,25 @@ fetch(`${basePath}menu-mobile.html`)
     }
   });
 
-// nn lembro mais o que é isso
+/* ================= DETECTAR PÁGINAS ================= */
 const path = location.pathname;
 const isLoginPage = path.includes("login.html");
 const isAccountPage = path.includes("account.html");
 
-// login
+/* ================= LOGIN ================= */
 if (isLoginPage) {
   const loginForm = document.getElementById("login-field");
+
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const email = document.getElementById("email").value.trim();
       const senha = document.getElementById("senha").value;
-      if (!email || !senha) return alert("Preencha todos os campos");
+
+      if (!email || !senha) {
+        return alert("Preencha todos os campos");
+      }
 
       try {
         const response = await fetch("http://localhost:3000/api/login", {
@@ -69,10 +77,13 @@ if (isLoginPage) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, senha }),
         });
-        const data = await response.json();
-        if (!response.ok) return alert(data.error || "Erro no login");
 
-        // salvar usuário logado no localstorage
+        const data = await response.json();
+
+        if (!response.ok) {
+          return alert(data.error || "Erro no login");
+        }
+
         localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
         window.location.href = "../index.html";
       } catch (err) {
@@ -83,28 +94,41 @@ if (isLoginPage) {
   }
 }
 
-// cadastro
+/* ================= CADASTRO ================= */
 if (isAccountPage) {
   const registerForm = document.getElementById("login-field");
+
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      const nomeUsuario = document.getElementById("nome-usuario").value.trim();
       const nome = document.getElementById("nome").value.trim();
       const email = document.getElementById("email").value.trim();
       const senha = document.getElementById("senha").value;
       const senha2 = document.getElementById("senha2").value;
       const termos = document.getElementById("aceitar-termos");
 
-      if (!nome || !email || !senha || !senha2)
+      if (!nomeUsuario || !nome || !email || !senha || !senha2) {
         return alert("Preencha todos os campos");
-      if (senha !== senha2) return alert("As senhas não coincidem");
-      if (!termos.checked) return alert("Você precisa aceitar os termos");
+      }
+
+      if (senha !== senha2) {
+        return alert("As senhas não coincidem");
+      }
+
+      if (!termos.checked) {
+        return alert("Você precisa aceitar os termos");
+      }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) return alert("Digite um email válido");
-      if (senha.length < 6)
+      if (!emailRegex.test(email)) {
+        return alert("Digite um email válido");
+      }
+
+      if (senha.length < 6) {
         return alert("A senha deve ter no mínimo 6 caracteres");
+      }
 
       const inputFoto = document.getElementById("foto");
       let fotoBase64 = null;
@@ -113,21 +137,29 @@ if (isAccountPage) {
         fotoBase64 = await new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result);
-          reader.onerror = (err) => reject(err);
+          reader.onerror = reject;
           reader.readAsDataURL(inputFoto.files[0]);
         });
-      } else {
-        fotoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA..."; 
       }
 
       try {
         const response = await fetch("http://localhost:3000/api/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nome, email, senha, foto: fotoBase64 }),
+          body: JSON.stringify({
+            nomeUsuario,
+            nome,
+            email,
+            senha,
+            foto: fotoBase64,
+          }),
         });
+
         const data = await response.json();
-        if (!response.ok) return alert(data.error || "Erro ao criar conta");
+
+        if (!response.ok) {
+          return alert(data.error || "Erro ao criar conta");
+        }
 
         alert("Conta criada com sucesso! Faça login agora.");
         window.location.href = "../login.html";
@@ -139,15 +171,18 @@ if (isAccountPage) {
   }
 }
 
-/* ================= FOTO DE PERFIL (PREVIEW) ================= */
+/* ================= PREVIEW FOTO ================= */
 const inputFoto = document.getElementById("foto");
 const previewFoto = document.getElementById("preview-foto");
+
 if (inputFoto && previewFoto) {
   inputFoto.addEventListener("change", () => {
     const file = inputFoto.files[0];
+
     if (file) {
       const tempUrl = URL.createObjectURL(file);
       previewFoto.src = tempUrl;
+
       previewFoto.onload = () => URL.revokeObjectURL(tempUrl);
     }
   });
@@ -160,29 +195,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const profileImg = document.getElementById("profile-img");
   const profileName = document.getElementById("profile-name");
+  const profileNomeUsuario = document.getElementById("profile-nome-usuario");
   const profileEmail = document.getElementById("profile-email");
 
   if (profileName) profileName.textContent = usuario.nome;
+  if (profileNomeUsuario)
+    profileNomeUsuario.textContent = usuario.nomeUsuario;
   if (profileEmail) profileEmail.textContent = usuario.email;
-  if (profileImg && usuario.foto)
-  profileImg.src = `http://localhost:3000/api/uploads/${usuario.foto}`;
 
+  if (profileImg && usuario.foto) {
+    profileImg.src = `http://localhost:3000/api/uploads/${usuario.foto}`;
+  }
 });
 
+/* ================= PREENCHER FORM PERFIL ================= */
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
   if (!usuario) return;
 
+  const nomeUsernameInput = document.getElementById("nome-usuario");
   const nomeInput = document.getElementById("nome");
   const emailInput = document.getElementById("email");
   const fotoPreview = document.getElementById("preview-foto");
 
+  if (nomeUsernameInput) nomeUsernameInput.value = usuario.nomeUsuario;
   if (nomeInput) nomeInput.value = usuario.nome;
   if (emailInput) emailInput.value = usuario.email;
-if (fotoPreview && usuario.foto)
-  fotoPreview.src = `http://localhost:3000/api/uploads/${usuario.foto}`;
+
+  if (fotoPreview && usuario.foto) {
+    fotoPreview.src = `http://localhost:3000/api/uploads/${usuario.foto}`;
+  }
 });
 
+/* ================= EDITAR PERFIL ================= */
 const profileForm = document.getElementById("profile-form");
 
 if (profileForm) {
@@ -191,6 +236,7 @@ if (profileForm) {
 
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
+    const nomeUsuario = document.getElementById("nome-usuario").value.trim();
     const nome = document.getElementById("nome").value.trim();
     const email = document.getElementById("email").value.trim();
     const senha = document.getElementById("senha").value;
@@ -207,17 +253,21 @@ if (profileForm) {
       });
     }
 
-    const response = await fetch("http://localhost:3000/api/editar-perfil", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: usuario.id,
-        nome,
-        email,
-        senha,
-        foto
-      })
-    });
+    const response = await fetch(
+      "http://localhost:3000/api/editar-perfil",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: usuario.id,
+          nomeUsuario,
+          nome,
+          email,
+          senha,
+          foto,
+        }),
+      }
+    );
 
     const data = await response.json();
 
@@ -225,12 +275,9 @@ if (profileForm) {
       return alert(data.error || "Erro ao atualizar perfil");
     }
 
-    // 🔹 atualiza localStorage SEM senha
     localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
 
     alert("Perfil atualizado com sucesso");
     window.location.href = "profile.html";
   });
 }
-
-
