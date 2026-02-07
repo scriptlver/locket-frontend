@@ -64,7 +64,7 @@ if (isLoginPage) {
       if (!email || !senha) return alert("Preencha todos os campos");
 
       try {
-        const response = await fetch("http://localhost:3000/login", {
+        const response = await fetch("http://localhost:3000/api/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, senha }),
@@ -121,7 +121,7 @@ if (isAccountPage) {
       }
 
       try {
-        const response = await fetch("http://localhost:3000/register", {
+        const response = await fetch("http://localhost:3000/api/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ nome, email, senha, foto: fotoBase64 }),
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (profileName) profileName.textContent = usuario.nome;
   if (profileEmail) profileEmail.textContent = usuario.email;
   if (profileImg && usuario.foto)
-  profileImg.src = `http://localhost:3000/uploads/${usuario.foto}`;
+  profileImg.src = `http://localhost:3000/api/uploads/${usuario.foto}`;
 
 });
 
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nomeInput) nomeInput.value = usuario.nome;
   if (emailInput) emailInput.value = usuario.email;
 if (fotoPreview && usuario.foto)
-  fotoPreview.src = `http://localhost:3000/uploads/${usuario.foto}`;
+  fotoPreview.src = `http://localhost:3000/api/uploads/${usuario.foto}`;
 });
 
 const profileForm = document.getElementById("profile-form");
@@ -207,7 +207,7 @@ if (profileForm) {
       });
     }
 
-    const response = await fetch("http://localhost:3000/editar-perfil", {
+    const response = await fetch("http://localhost:3000/api/editar-perfil", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -228,7 +228,7 @@ if (profileForm) {
     // 🔹 atualiza localStorage SEM senha
     localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
 
-    alert("Perfil atualizado com sucesso 💙");
+    alert("Perfil atualizado com sucesso");
     window.location.href = "profile.html";
   });
 }
