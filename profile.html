@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil</title>
+
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+
+  <body>
+    <div id="menu-mobile"></div>
+
+    <header class="header">
+      <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
+
+      <h1 class="title">Madison Beer</h1>
+
+      <nav class="menu-desktop">
+        <a href="../index.html">Home</a>
+        <a href="../songs.html">Músicas</a>
+        <a href="../profile.html">Perfil</a>
+        <a href="../favorites.html">Favoritos</a>
+        <a href="../terms.html">Termos de Uso</a>
+      </nav>
+    </header>
+
+    <section class="login-card">
+      <h2 class="login-title">Perfil</h2>
+
+      <div class="profile-photo">
+        <img
+          id="profile-img"
+          class="profile-preview"
+          src="../assets/images/icons/profile.png"
+          alt="Foto do usuário"
+        />
+      </div>
+
+      <div class="profile-info">
+        <p id="profile-name">Nome completo</p>
+
+        <h3 id="profile-nome-usuario">username</h3>
+
+        <span id="profile-email">email@email.com</span>
+      </div>
+
+      <div class="profile-actions">
+        <button
+          class="login-btn"
+          onclick="window.location.href = 'edit-profile.html'"
+        >
+          Editar perfil
+        </button>
+
+        <button
+          class="login-btn"
+          onclick="window.location.href = '../favorites.html'"
+        >
+          Favoritos
+        </button>
+
+        <button class="login-btn" onclick="logout()">Sair da conta</button>
+
+        <button
+          class="login-btn"
+          onclick="window.location.href = '../delete-account.html'"
+        >
+          Deletar conta
+        </button>
+      </div>
+    </section>
+
+    <script src="../assets/js/script.js"></script>
+  </body>
+</html>

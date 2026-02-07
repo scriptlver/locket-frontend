@@ -1,5 +1,6 @@
 const basePath = location.pathname.includes("/songs/") ? "../" : "";
 
+/* ================= FAVORITOS ================= */
 document.querySelectorAll(".fav-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const img = btn.querySelector("img");
@@ -19,13 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnToggle && moreLyrics) {
     btnToggle.addEventListener("click", () => {
-      const isHidden =
-        moreLyrics.style.display === "none" || moreLyrics.style.display === "";
+      const hidden =
+        moreLyrics.style.display === "none" ||
+        moreLyrics.style.display === "";
 
-      moreLyrics.style.display = isHidden ? "block" : "none";
-      btnToggle.textContent = isHidden ? "Ver menos" : "Ver mais";
+      moreLyrics.style.display = hidden ? "block" : "none";
+      btnToggle.textContent = hidden ? "Ver menos" : "Ver mais";
 
-      if (!isHidden) {
+      if (!hidden) {
         btnToggle.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     });
@@ -47,7 +49,9 @@ fetch(`${basePath}menu-mobile.html`)
 
     if (openBtn && closeBtn && menu) {
       openBtn.addEventListener("click", () => menu.classList.add("active"));
-      closeBtn.addEventListener("click", () => menu.classList.remove("active"));
+      closeBtn.addEventListener("click", () =>
+        menu.classList.remove("active")
+      );
     }
   });
 
@@ -56,7 +60,9 @@ const path = location.pathname;
 const isLoginPage = path.includes("login.html");
 const isAccountPage = path.includes("account.html");
 
+/* ================================================= */
 /* ================= LOGIN ================= */
+/* ================================================= */
 if (isLoginPage) {
   const loginForm = document.getElementById("login-field");
 
@@ -94,7 +100,9 @@ if (isLoginPage) {
   }
 }
 
+/* ================================================= */
 /* ================= CADASTRO ================= */
+/* ================================================= */
 if (isAccountPage) {
   const registerForm = document.getElementById("login-field");
 
@@ -118,16 +126,7 @@ if (isAccountPage) {
       }
 
       if (!termos.checked) {
-        return alert("Você precisa aceitar os termos");
-      }
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        return alert("Digite um email válido");
-      }
-
-      if (senha.length < 6) {
-        return alert("A senha deve ter no mínimo 6 caracteres");
+        return alert("Aceite os termos");
       }
 
       const inputFoto = document.getElementById("foto");
@@ -158,76 +157,81 @@ if (isAccountPage) {
         const data = await response.json();
 
         if (!response.ok) {
-          return alert(data.error || "Erro ao criar conta");
+          return alert(data.error);
         }
 
-        alert("Conta criada com sucesso! Faça login agora.");
+        alert("Conta criada com sucesso!");
         window.location.href = "../login.html";
       } catch (err) {
         console.error(err);
-        alert("Erro ao criar conta");
       }
     });
   }
 }
 
-/* ================= PREVIEW FOTO ================= */
-const inputFoto = document.getElementById("foto");
-const previewFoto = document.getElementById("preview-foto");
-
-if (inputFoto && previewFoto) {
-  inputFoto.addEventListener("change", () => {
-    const file = inputFoto.files[0];
-
-    if (file) {
-      const tempUrl = URL.createObjectURL(file);
-      previewFoto.src = tempUrl;
-
-      previewFoto.onload = () => URL.revokeObjectURL(tempUrl);
-    }
-  });
-}
-
-/* ================= MOSTRAR USUÁRIO LOGADO ================= */
+/* ================================================= */
+/* ================= PERFIL ================= */
+/* ================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-  if (!usuario) return;
 
+  /* -------- PROTEÇÃO DE ROTA -------- */
+  if (!usuario && path.includes("profile")) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  /* -------- MOSTRAR INFO -------- */
   const profileImg = document.getElementById("profile-img");
   const profileName = document.getElementById("profile-name");
-  const profileNomeUsuario = document.getElementById("profile-nome-usuario");
+  const profileUsername = document.getElementById(
+    "profile-nome-usuario"
+  );
   const profileEmail = document.getElementById("profile-email");
 
-  if (profileName) profileName.textContent = usuario.nome;
-  if (profileNomeUsuario)
-    profileNomeUsuario.textContent = usuario.nomeUsuario;
-  if (profileEmail) profileEmail.textContent = usuario.email;
+  if (profileName) profileName.textContent = usuario?.nome || "";
+  if (profileUsername)
+    profileUsername.textContent = usuario?.nomeUsuario || "";
+  if (profileEmail) profileEmail.textContent = usuario?.email || "";
 
-  if (profileImg && usuario.foto) {
-    profileImg.src = `http://localhost:3000/api/uploads/${usuario.foto}`;
+  if (profileImg) {
+    profileImg.src = usuario?.foto
+      ? `http://localhost:3000/uploads/${usuario.foto}`
+      : `${basePath}assets/images/icons/profile.png`;
   }
-});
 
-/* ================= PREENCHER FORM PERFIL ================= */
-document.addEventListener("DOMContentLoaded", () => {
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-  if (!usuario) return;
-
-  const nomeUsernameInput = document.getElementById("nome-usuario");
+  /* -------- PREENCHER FORM -------- */
+  const nomeUsuarioInput = document.getElementById("nome-usuario");
   const nomeInput = document.getElementById("nome");
   const emailInput = document.getElementById("email");
-  const fotoPreview = document.getElementById("preview-foto");
+  const previewFoto = document.getElementById("preview-foto");
 
-  if (nomeUsernameInput) nomeUsernameInput.value = usuario.nomeUsuario;
-  if (nomeInput) nomeInput.value = usuario.nome;
-  if (emailInput) emailInput.value = usuario.email;
+  if (nomeUsuarioInput) nomeUsuarioInput.value = usuario?.nomeUsuario || "";
+  if (nomeInput) nomeInput.value = usuario?.nome || "";
+  if (emailInput) emailInput.value = usuario?.email || "";
 
-  if (fotoPreview && usuario.foto) {
-    fotoPreview.src = `http://localhost:3000/api/uploads/${usuario.foto}`;
+  if (previewFoto && usuario?.foto) {
+    previewFoto.src = `http://localhost:3000/uploads/${usuario.foto}`;
+  }
+
+  /* -------- PREVIEW FOTO -------- */
+  const inputFoto = document.getElementById("foto");
+
+  if (inputFoto && previewFoto) {
+    inputFoto.addEventListener("change", () => {
+      const file = inputFoto.files[0];
+
+      if (file) {
+        const tempUrl = URL.createObjectURL(file);
+        previewFoto.src = tempUrl;
+      }
+    });
   }
 });
 
+/* ================================================= */
 /* ================= EDITAR PERFIL ================= */
+/* ================================================= */
 const profileForm = document.getElementById("profile-form");
 
 if (profileForm) {
@@ -272,12 +276,24 @@ if (profileForm) {
     const data = await response.json();
 
     if (!response.ok) {
-      return alert(data.error || "Erro ao atualizar perfil");
+      return alert(data.error);
     }
 
     localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
 
-    alert("Perfil atualizado com sucesso");
-    window.location.href = "profile.html";
+    alert("Perfil atualizado!");
+    location.reload();
+  });
+}
+
+/* ================================================= */
+/* ================= LOGOUT ================= */
+/* ================================================= */
+const logoutBtn = document.getElementById("logout-btn");
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("usuarioLogado");
+    window.location.href = "login.html";
   });
 }
