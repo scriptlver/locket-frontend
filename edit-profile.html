@@ -28,8 +28,8 @@
     <section class="login-card">
       <h2 class="login-title">Editar perfil</h2>
 
-      <div class="profile-photo">
-        <label for="foto" class="profile-label">
+      <div class="profile-photo-edit">
+        <label for="foto" class="profile-label-edit">
           <img
             src="../assets/images/icons/profile.png"
             id="preview-foto"
@@ -48,16 +48,10 @@
           <input type="text" id="nome-usuario" />
         </div>
 
-
       <form id="profile-form" autocomplete="on">
         <div class="login-field">
           <label for="nome">Nome</label>
           <input type="text" id="nome" />
-        </div>
-
-        <div class="login-field">
-          <label for="email">Email</label>
-          <input type="email" id="email" />
         </div>
 
         <div class="login-field">
@@ -69,11 +63,16 @@
         </div>
 
         <div class="login-field">
-          <label for="senha">Nova senha</label>
+          <label for="email">Email</label>
+          <input type="email" id="email" />
+        </div>
+
+        <div class="login-field">
+          <label for="senha">Senha</label>
           <input type="password" id="senha" />
         </div>
 
-        <button type="submit" class="login-btn">Salvar</button>
+        <button type="submit" class="login-btn">Salvar alterações</button>
       </form>
     </section>
 

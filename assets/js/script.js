@@ -113,6 +113,7 @@ if (isAccountPage) {
       const nomeUsuario = document.getElementById("nome-usuario").value.trim();
       const nome = document.getElementById("nome").value.trim();
       const email = document.getElementById("email").value.trim();
+      const bio = document.getElementById("bio").value.trim();
       const senha = document.getElementById("senha").value;
       const senha2 = document.getElementById("senha2").value;
       const termos = document.getElementById("aceitar-termos");
@@ -184,6 +185,11 @@ document.addEventListener("DOMContentLoaded", () => {
   /* -------- MOSTRAR INFO -------- */
   const profileImg = document.getElementById("profile-img");
   const profileName = document.getElementById("profile-name");
+
+  const profileBio = document.getElementById("profile-bio");
+
+if (profileBio) profileBio.textContent = usuario?.bio || "";
+
   const profileUsername = document.getElementById(
     "profile-nome-usuario"
   );
@@ -242,6 +248,7 @@ if (profileForm) {
 
     const nomeUsuario = document.getElementById("nome-usuario").value.trim();
     const nome = document.getElementById("nome").value.trim();
+    const bio = document.getElementById("bio").value.trim();
     const email = document.getElementById("email").value.trim();
     const senha = document.getElementById("senha").value;
     const inputFoto = document.getElementById("foto");
@@ -257,21 +264,19 @@ if (profileForm) {
       });
     }
 
-    const response = await fetch(
-      "http://localhost:3000/api/editar-perfil",
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: usuario.id,
-          nomeUsuario,
-          nome,
-          email,
-          senha,
-          foto,
-        }),
-      }
-    );
+    const response = await fetch("http://localhost:3000/api/editar-perfil", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: usuario.id,
+        nomeUsuario,
+        nome,
+        bio,
+        email,
+        senha,
+        foto,
+      }),
+    });
 
     const data = await response.json();
 
@@ -281,8 +286,8 @@ if (profileForm) {
 
     localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
 
-    alert("Perfil atualizado!");
-    location.reload();
+    alert("Perfil atualizado com sucesso");
+    window.location.href = "profile.html";
   });
 }
 
