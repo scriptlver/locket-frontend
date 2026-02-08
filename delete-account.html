@@ -1,11 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deletar Conta</title>
+
+  <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
+
 <body>
-    
+
+  <!-- MENU MOBILE -->
+  <div id="menu-mobile"></div>
+
+  <!-- HEADER (igual seu padrão) -->
+  <header class="header">
+    <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
+
+    <h1 class="title">Madison Beer</h1>
+
+    <nav class="menu-desktop">
+      <a href="../index.html">Home</a>
+      <a href="../songs.html">Músicas</a>
+      <a href="#" id="perfil-link">Perfil</a>
+      <a href="../favorites.html">Favoritos</a>
+      <a href="../terms.html">Termos de Uso</a>
+    </nav>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <section class="delete-card">
+
+    <h2 class="login-title">Deletar conta</h2>
+
+    <p class="delete-question">
+      Tem certeza de que deseja excluir sua conta?
+    </p>
+
+    <p class="delete-warning">
+      Ao excluir sua conta, todos os seus dados, preferências, favoritos e conteúdos
+      serão removidos permanentemente. Essa ação não poderá ser desfeita.
+    </p>
+
+    <div class="delete-actions">
+      <button class="btn-delete" onclick="deleteAccount()">
+        Deletar conta
+      </button>
+
+      <button class="btn-cancel" onclick="history.back()">
+        Cancelar
+      </button>
+    </div>
+
+  </section>
+
+  <script src="../assets/js/script.js"></script>
+
 </body>
 </html>

@@ -607,6 +607,70 @@ a {
   background: #e03a3a;
 }
 
+/* ===== DELETE ACCOUNT ===== */
+
+.delete-card {
+  max-width: 380px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.delete-question {
+  font-size: 17px;
+  margin-bottom: 20px;
+  font-weight: 700;
+
+}
+
+.delete-warning {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* BOTÕES */
+
+.delete-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.btn-delete {
+  background: #e45757;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.btn-delete:hover {
+  background: #c94545;
+}
+
+.btn-cancel {
+  background: #d8c2b1;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.btn-cancel:hover {
+  background: #c4a996;
+}
+
+
 
 
 
@@ -707,3 +771,5 @@ a {
     margin-top: 2.2rem; 
   }
 }
+
+
