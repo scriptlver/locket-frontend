@@ -584,6 +584,7 @@ a {
   background: #e0e0e0;
   cursor: pointer;
   transition: 0.3s;
+  font-family: "Cormorant Garamond", serif;
 }
 
 #cancel-logout:hover {
@@ -599,6 +600,7 @@ a {
   color: white;
   cursor: pointer;
   transition: 0.3s;
+  font-family: "Cormorant Garamond", serif;
 }
 
 #confirm-logout:hover {
