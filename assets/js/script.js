@@ -21,8 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnToggle && moreLyrics) {
     btnToggle.addEventListener("click", () => {
       const hidden =
-        moreLyrics.style.display === "none" ||
-        moreLyrics.style.display === "";
+        moreLyrics.style.display === "none" || moreLyrics.style.display === "";
 
       moreLyrics.style.display = hidden ? "block" : "none";
       btnToggle.textContent = hidden ? "Ver menos" : "Ver mais";
@@ -46,12 +45,26 @@ fetch(`${basePath}menu-mobile.html`)
     const menu = document.getElementById("menu");
     const openBtn = document.querySelector(".menu-icon");
     const closeBtn = document.getElementById("closeMenu");
+    const perfilLink = document.getElementById("perfil-link");
+
+    if (perfilLink) {
+      perfilLink.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const usuario = localStorage.getItem("usuarioLogado");
+
+        if (usuario) {
+  window.location.href = basePath + "profile.html";
+} else {
+  window.location.href = basePath + "login.html";
+}
+
+      });
+    }
 
     if (openBtn && closeBtn && menu) {
       openBtn.addEventListener("click", () => menu.classList.add("active"));
-      closeBtn.addEventListener("click", () =>
-        menu.classList.remove("active")
-      );
+      closeBtn.addEventListener("click", () => menu.classList.remove("active"));
     }
   });
 
@@ -188,16 +201,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const profileBio = document.getElementById("profile-bio");
 
-if (profileBio) profileBio.textContent = usuario?.bio || "";
+  if (profileBio) profileBio.textContent = usuario?.bio || "";
 
-  const profileUsername = document.getElementById(
-    "profile-nome-usuario"
-  );
+  const profileUsername = document.getElementById("profile-nome-usuario");
   const profileEmail = document.getElementById("profile-email");
 
   if (profileName) profileName.textContent = usuario?.nome || "";
-  if (profileUsername)
-    profileUsername.textContent = usuario?.nomeUsuario || "";
+  if (profileUsername) profileUsername.textContent = usuario?.nomeUsuario || "";
   if (profileEmail) profileEmail.textContent = usuario?.email || "";
 
   if (profileImg) {
@@ -337,11 +347,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const usuario = localStorage.getItem("usuarioLogado");
 
     if (usuario) {
-      window.location.href = basePath + "profile.html";
-    } else {
-      window.location.href = basePath + "login.html";
-    }
+  window.location.href = basePath + "profile.html";
+} else {
+  window.location.href = basePath + "login.html";
+}
+
   });
 });
-
-
