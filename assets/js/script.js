@@ -294,11 +294,31 @@ if (profileForm) {
 /* ================================================= */
 /* ================= LOGOUT ================= */
 /* ================================================= */
-const logoutBtn = document.getElementById("logout-btn");
 
-if (logoutBtn) {
+const logoutBtn = document.getElementById("logout-btn");
+const logoutModal = document.getElementById("logout-modal");
+const cancelLogout = document.getElementById("cancel-logout");
+const confirmLogout = document.getElementById("confirm-logout");
+
+/* ---------- ABRIR POPUP ---------- */
+if (logoutBtn && logoutModal) {
   logoutBtn.addEventListener("click", () => {
+    logoutModal.style.display = "flex";
+  });
+}
+
+/* ---------- CANCELAR ---------- */
+if (cancelLogout && logoutModal) {
+  cancelLogout.addEventListener("click", () => {
+    logoutModal.style.display = "none";
+  });
+}
+
+/* ---------- CONFIRMAR LOGOUT ---------- */
+if (confirmLogout) {
+  confirmLogout.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogado");
     window.location.href = "login.html";
   });
 }
+
