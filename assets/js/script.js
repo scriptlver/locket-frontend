@@ -322,3 +322,26 @@ if (confirmLogout) {
   });
 }
 
+/* ================================================= */
+/* ================= LINK PERFIL ================= */
+/* ================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const perfilLink = document.getElementById("perfil-link");
+
+  if (!perfilLink) return;
+
+  perfilLink.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const usuario = localStorage.getItem("usuarioLogado");
+
+    if (usuario) {
+      window.location.href = basePath + "profile.html";
+    } else {
+      window.location.href = basePath + "login.html";
+    }
+  });
+});
+
+
