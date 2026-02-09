@@ -1,6 +1,14 @@
-const basePath = location.pathname.includes("/songs/") ? "../" : "";
+/* ================================================= */
+/* ================= BASE PATH ====================== */
+/* ================================================= */
 
-/* ================= FAVORITOS ================= */
+const basePath =
+  location.pathname.split("/").length > 2 ? "../" : "";
+
+/* ================================================= */
+/* ================= FAVORITOS ====================== */
+/* ================================================= */
+
 document.querySelectorAll(".fav-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const img = btn.querySelector("img");
@@ -13,7 +21,10 @@ document.querySelectorAll(".fav-btn").forEach((btn) => {
   });
 });
 
-/* ================= VER MAIS LETRAS ================= */
+/* ================================================= */
+/* ================= VER MAIS LETRAS ================ */
+/* ================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
   const btnToggle = document.getElementById("btn-toggle");
   const moreLyrics = document.getElementById("more-lyrics");
@@ -21,19 +32,19 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnToggle && moreLyrics) {
     btnToggle.addEventListener("click", () => {
       const hidden =
-        moreLyrics.style.display === "none" || moreLyrics.style.display === "";
+        moreLyrics.style.display === "none" ||
+        moreLyrics.style.display === "";
 
       moreLyrics.style.display = hidden ? "block" : "none";
       btnToggle.textContent = hidden ? "Ver menos" : "Ver mais";
-
-      if (!hidden) {
-        btnToggle.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
     });
   }
 });
 
-/* ================= MENU MOBILE ================= */
+/* ================================================= */
+/* ================= MENU MOBILE ==================== */
+/* ================================================= */
+
 fetch(`${basePath}menu-mobile.html`)
   .then((res) => res.text())
   .then((html) => {
@@ -47,114 +58,129 @@ fetch(`${basePath}menu-mobile.html`)
     const closeBtn = document.getElementById("closeMenu");
     const perfilLink = document.getElementById("perfil-link");
 
+    /* PERFIL LINK */
     if (perfilLink) {
       perfilLink.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const usuario = localStorage.getItem("usuarioLogado");
+        const usuario = JSON.parse(
+          localStorage.getItem("usuarioLogado")
+        );
 
-        if (usuario) {
-          window.location.href = basePath + "profile.html";
-        } else {
-          window.location.href = basePath + "login.html";
-        }
+        window.location.href = usuario
+          ? `${basePath}profile.html`
+          : `${basePath}login.html`;
       });
     }
 
+    /* ABRIR MENU */
     if (openBtn && closeBtn && menu) {
-      openBtn.addEventListener("click", () => menu.classList.add("active"));
-      closeBtn.addEventListener("click", () => menu.classList.remove("active"));
+      openBtn.addEventListener("click", () =>
+        menu.classList.add("active")
+      );
+
+      closeBtn.addEventListener("click", () =>
+        menu.classList.remove("active")
+      );
     }
-  });
-
-/* ================= DETECTAR PÁGINAS ================= */
-const path = location.pathname;
-const isLoginPage = path.includes("login.html");
-const isAccountPage = path.includes("account.html");
+  })
+  .catch((err) => console.error("Erro menu mobile:", err));
 
 /* ================================================= */
-/* ================= LOGIN ================= */
+/* ================= DETECTAR PÁGINAS =============== */
 /* ================================================= */
+
+const currentPath = location.pathname;
+const isLoginPage = currentPath.includes("login.html");
+const isAccountPage = currentPath.includes("account.html");
+
+/* ================================================= */
+/* ================= LOGIN ========================== */
+/* ================================================= */
+
 if (isLoginPage) {
   const loginForm = document.getElementById("login-field");
 
-  if (loginForm) {
-    loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  loginForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
 
-      if (!email || !senha) {
-        return alert("Preencha todos os campos");
-      }
+    if (!email || !senha) return alert("Preencha todos os campos");
 
-      try {
-        const response = await fetch("http://localhost:3000/api/login", {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/login",
+        {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, senha }),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          return alert(data.error || "Erro no login");
         }
+      );
 
-        localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
-        window.location.href = "../index.html";
-      } catch (err) {
-        console.error(err);
-        alert("Erro no login");
-      }
-    });
-  }
+      const data = await response.json();
+
+      if (!response.ok)
+        return alert(data.error || "Erro no login");
+
+      localStorage.setItem(
+        "usuarioLogado",
+        JSON.stringify(data.usuario)
+      );
+
+      window.location.href = "../index.html";
+    } catch (err) {
+      alert("Erro no login");
+    }
+  });
 }
 
 /* ================================================= */
-/* ================= CADASTRO ================= */
+/* ================= CADASTRO ======================= */
 /* ================================================= */
+
 if (isAccountPage) {
   const registerForm = document.getElementById("login-field");
 
-  if (registerForm) {
-    registerForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  registerForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const nomeUsuario = document.getElementById("nome-usuario").value.trim();
-      const nome = document.getElementById("nome").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
-      const senha2 = document.getElementById("senha2").value;
-      const termos = document.getElementById("aceitar-termos");
+    const nomeUsuario = document
+      .getElementById("nome-usuario")
+      .value.trim();
 
-      if (!nomeUsuario || !nome || !email || !senha || !senha2) {
-        return alert("Preencha todos os campos");
-      }
+    const nome = document.getElementById("nome").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const senha2 = document.getElementById("senha2").value;
+    const termos = document.getElementById("aceitar-termos");
 
-      if (senha !== senha2) {
-        return alert("As senhas não coincidem");
-      }
+    if (!nomeUsuario || !nome || !email || !senha || !senha2)
+      return alert("Preencha todos os campos");
 
-      if (!termos.checked) {
-        return alert("Aceite os termos");
-      }
+    if (senha !== senha2)
+      return alert("As senhas não coincidem");
 
-      const inputFoto = document.getElementById("foto");
-      let fotoBase64 = null;
+    if (!termos.checked)
+      return alert("Aceite os termos");
 
-      if (inputFoto && inputFoto.files[0]) {
-        fotoBase64 = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(inputFoto.files[0]);
-        });
-      }
+    /* FOTO */
+    const inputFoto = document.getElementById("foto");
+    let fotoBase64 = null;
 
-      try {
-        const response = await fetch("http://localhost:3000/api/register", {
+    if (inputFoto.files[0]) {
+      fotoBase64 = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(inputFoto.files[0]);
+      });
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/register",
+        {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -164,50 +190,53 @@ if (isAccountPage) {
             senha,
             foto: fotoBase64,
           }),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          console.log(data);
-          return alert(data.error || "Erro ao criar conta");
         }
+      );
 
-        alert("Conta criada com sucesso!");
-        window.location.href = "../login.html";
-      } catch (err) {
-        console.error(err);
-      }
-    });
-  }
+      const data = await response.json();
+
+      if (!response.ok)
+        return alert(data.error || "Erro ao criar conta");
+
+      alert("Conta criada com sucesso!");
+      window.location.href = "../login.html";
+    } catch {
+      alert("Erro ao criar conta");
+    }
+  });
 }
 
 /* ================================================= */
-/* ================= PERFIL ================= */
+/* ================= PERFIL ========================= */
 /* ================================================= */
-document.addEventListener("DOMContentLoaded", () => {
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-  /* -------- PROTEÇÃO DE ROTA -------- */
-  if (!usuario && path.includes("profile")) {
+document.addEventListener("DOMContentLoaded", () => {
+  const usuario = JSON.parse(
+    localStorage.getItem("usuarioLogado")
+  );
+
+  /* PROTEÇÃO ROTA */
+  if (!usuario && currentPath.includes("profile")) {
     window.location.href = "login.html";
     return;
   }
 
-  /* -------- MOSTRAR INFO -------- */
+  /* MOSTRAR INFO */
   const profileImg = document.getElementById("profile-img");
   const profileName = document.getElementById("profile-name");
-
   const profileBio = document.getElementById("profile-bio");
-
-  if (profileBio) profileBio.textContent = usuario?.bio || "";
-
-  const profileUsername = document.getElementById("profile-nome-usuario");
+  const profileUsername = document.getElementById(
+    "profile-nome-usuario"
+  );
   const profileEmail = document.getElementById("profile-email");
 
   if (profileName) profileName.textContent = usuario?.nome || "";
-  if (profileUsername) profileUsername.textContent = usuario?.nomeUsuario || "";
-  if (profileEmail) profileEmail.textContent = usuario?.email || "";
+  if (profileUsername)
+    profileUsername.textContent = usuario?.nomeUsuario || "";
+  if (profileEmail)
+    profileEmail.textContent = usuario?.email || "";
+  if (profileBio)
+    profileBio.textContent = usuario?.bio || "";
 
   if (profileImg) {
     profileImg.src = usuario?.foto
@@ -215,65 +244,54 @@ document.addEventListener("DOMContentLoaded", () => {
       : `${basePath}assets/images/icons/profile.png`;
   }
 
-  /* -------- PREENCHER FORM -------- */
-  const nomeUsuarioInput = document.getElementById("nome-usuario");
-  const nomeInput = document.getElementById("nome");
-  const emailInput = document.getElementById("email");
-  const previewFoto = document.getElementById("preview-foto");
-
-  if (nomeUsuarioInput) nomeUsuarioInput.value = usuario?.nomeUsuario || "";
-  if (nomeInput) nomeInput.value = usuario?.nome || "";
-  if (emailInput) emailInput.value = usuario?.email || "";
-
-  if (previewFoto && usuario?.foto) {
-    previewFoto.src = `http://localhost:3000/uploads/${usuario.foto}`;
-  }
-
-  /* -------- PREVIEW FOTO -------- */
+  /* PREVIEW FOTO */
   const inputFoto = document.getElementById("foto");
+  const previewFoto = document.getElementById("preview-foto");
 
   if (inputFoto && previewFoto) {
     inputFoto.addEventListener("change", () => {
       const file = inputFoto.files[0];
-
-      if (file) {
-        const tempUrl = URL.createObjectURL(file);
-        previewFoto.src = tempUrl;
-      }
+      if (file) previewFoto.src = URL.createObjectURL(file);
     });
   }
 });
 
 /* ================================================= */
-/* ================= EDITAR PERFIL ================= */
+/* ================= EDITAR PERFIL ================== */
 /* ================================================= */
+
 const profileForm = document.getElementById("profile-form");
 
-if (profileForm) {
-  profileForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+profileForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  const usuario = JSON.parse(
+    localStorage.getItem("usuarioLogado")
+  );
 
-    const nomeUsuario = document.getElementById("nome-usuario").value.trim();
-    const nome = document.getElementById("nome").value.trim();
-    const bio = document.getElementById("bio").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const senha = document.getElementById("senha").value;
-    const inputFoto = document.getElementById("foto");
+  const nomeUsuario = document
+    .getElementById("nome-usuario")
+    .value.trim();
 
-    let foto = usuario.foto;
+  const nome = document.getElementById("nome").value.trim();
+  const bio = document.getElementById("bio").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value;
 
-    if (inputFoto.files[0]) {
-      foto = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(inputFoto.files[0]);
-      });
-    }
+  const inputFoto = document.getElementById("foto");
+  let foto = usuario.foto;
 
-    const response = await fetch("http://localhost:3000/api/editar-perfil", {
+  if (inputFoto.files[0]) {
+    foto = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(inputFoto.files[0]);
+    });
+  }
+
+  const response = await fetch(
+    "http://localhost:3000/api/editar-perfil",
+    {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -285,91 +303,67 @@ if (profileForm) {
         senha,
         foto,
       }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return alert(data.error);
     }
+  );
 
-    localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
+  const data = await response.json();
 
-    alert("Perfil atualizado com sucesso");
-    window.location.href = "profile.html";
-  });
-}
+  if (!response.ok) return alert(data.error);
+
+  localStorage.setItem(
+    "usuarioLogado",
+    JSON.stringify(data.usuario)
+  );
+
+  alert("Perfil atualizado!");
+  window.location.href = "profile.html";
+});
 
 /* ================================================= */
-/* ================= LOGOUT ================= */
+/* ================= LOGOUT ========================= */
 /* ================================================= */
 
-const logoutBtn = document.getElementById("logout-btn");
-const logoutModal = document.getElementById("logout-modal");
-const cancelLogout = document.getElementById("cancel-logout");
-const confirmLogout = document.getElementById("confirm-logout");
-
-/* ---------- ABRIR POPUP ---------- */
-if (logoutBtn && logoutModal) {
-  logoutBtn.addEventListener("click", () => {
-    logoutModal.style.display = "flex";
-  });
-}
-
-/* ---------- CANCELAR ---------- */
-if (cancelLogout && logoutModal) {
-  cancelLogout.addEventListener("click", () => {
-    logoutModal.style.display = "none";
-  });
-}
-
-/* ---------- CONFIRMAR LOGOUT ---------- */
-if (confirmLogout) {
-  confirmLogout.addEventListener("click", () => {
+document
+  .getElementById("confirm-logout")
+  ?.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogado");
     window.location.href = "login.html";
   });
-}
-
-const openDeleteBtn = document.getElementById("open-delete-modal");
-const deleteModal = document.getElementById("delete-modal");
-const cancelDelete = document.getElementById("cancel-delete");
-const confirmDelete = document.getElementById("confirm-delete");
-
-/* ABRIR MODAL */
-openDeleteBtn?.addEventListener("click", () => {
-  deleteModal.style.display = "flex";
-});
-
-/* CANCELAR */
-cancelDelete?.addEventListener("click", () => {
-  deleteModal.style.display = "none";
-});
-
-/* CONFIRMAR */
-confirmDelete?.addEventListener("click", () => {
-  localStorage.clear();
-  window.location.href = "../login.html";
-});
 
 /* ================================================= */
-/* ================= LINK PERFIL ================= */
+/* ================= DELETAR CONTA ================== */
 /* ================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  const perfilLink = document.getElementById("perfil-link");
+document
+  .getElementById("open-delete-modal")
+  ?.addEventListener("click", () => {
+    document.getElementById("delete-modal").style.display =
+      "flex";
+  });
 
-  if (!perfilLink) return;
+document
+  .getElementById("cancel-delete")
+  ?.addEventListener("click", () => {
+    document.getElementById("delete-modal").style.display =
+      "none";
+  });
 
-  perfilLink.addEventListener("click", (e) => {
-    e.preventDefault();
+document
+  .getElementById("confirm-delete")
+  ?.addEventListener("click", async () => {
+    const usuario = JSON.parse(
+      localStorage.getItem("usuarioLogado")
+    );
 
-    const usuario = localStorage.getItem("usuarioLogado");
+    try {
+      await fetch(
+        `http://localhost:3000/api/users/${usuario.id}`,
+        { method: "DELETE" }
+      );
 
-    if (usuario) {
-      window.location.href = basePath + "profile.html";
-    } else {
-      window.location.href = basePath + "login.html";
+      localStorage.clear();
+      window.location.href = "../login.html";
+    } catch {
+      alert("Erro ao deletar conta");
     }
   });
-});
