@@ -9,61 +9,83 @@ const basePath =
 /* ================= FAVORITOS ====================== */
 /* ================================================= */
 
-document.querySelectorAll(".fav-btn").forEach((btn) => {
-  btn.addEventListener("click", async () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  const favButtons = document.querySelectorAll(".fav-btn");
 
-    if (!usuario) {
-      alert("Faça login para favoritar");
-      return;
-    }
+  /* ---------- CLIQUE FAVORITAR ---------- */
+
+  favButtons.forEach((btn) => {
 
     const musicaId = btn.dataset.musica;
     const img = btn.querySelector("img");
 
-    try {
-      const response = await fetch("http://localhost:3000/api/favoritos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: usuario.id,
-          musicaId
-        })
-      });
-
-      const data = await response.json();
-
-      /* Atualiza localStorage */
-      usuario.favoritos = data.favoritos;
-      localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-
-      /* Atualiza ícone */
-      const ativo = data.favoritos.includes(musicaId);
-
-      img.src = ativo
-        ? `${basePath}assets/images/icons/favorite.png`
-        : `${basePath}assets/images/icons/desfavorite.png`;
-
-    } catch {
-      alert("Erro ao salvar favorito");
+    /* Estado inicial do coração */
+    if (usuario?.favoritos?.includes(musicaId)) {
+      img.src = `${basePath}assets/images/icons/favorite.png`;
+      btn.classList.add("active");
     }
+
+    /* Clique */
+    btn.addEventListener("click", async () => {
+
+      if (!usuario) {
+        alert("Faça login para favoritar");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:3000/api/favoritos", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: usuario.id,
+            musicaId
+          })
+        });
+
+        const data = await response.json();
+
+        usuario.favoritos = data.favoritos;
+        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+        const ativo = data.favoritos.includes(musicaId);
+
+        img.src = ativo
+          ? `${basePath}assets/images/icons/favorite.png`
+          : `${basePath}assets/images/icons/desfavorite.png`;
+
+      } catch {
+        alert("Erro ao salvar favorito");
+      }
+    });
+
   });
-});
 
-document.querySelectorAll(".fav-btn").forEach(btn => {
+  /* ---------- FILTRAR APENAS FAVORITOS ---------- */
 
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-  if (!usuario) return;
+  if (window.location.pathname.includes("favorites")) {
 
-  const musicaId = btn.dataset.musica;
-  const img = btn.querySelector("img");
+    if (!usuario?.favoritos) return;
 
-  if (usuario.favoritos?.includes(musicaId)) {
-    img.src = `${basePath}assets/images/icons/favorite.png`;
-    btn.classList.add("active");
+    const songs = document.querySelectorAll(".song-item");
+
+    songs.forEach(song => {
+
+      const btn = song.querySelector(".fav-btn");
+      const musicaId = btn?.dataset.musica;
+
+      if (!usuario.favoritos.includes(musicaId)) {
+        song.style.display = "none";
+      }
+
+    });
+
   }
+
 });
+
 
 
 /* ================================================= */
