@@ -642,8 +642,8 @@ a {
   border-radius: 8px;
   border: none;
   background-color: #d85757;
-  color: white;
-  font-size: 14px;
+  color: black;
+  font-size: 15px;
   cursor: pointer;
   transition: 0.3s;
   font-family: "Cormorant Garamond", serif;
@@ -658,16 +658,18 @@ a {
   width: 220px;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #6b4c3b;
   background-color: #d2b8a6;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
   transition: 0.3s;
+  font-family: "Cormorant Garamond", serif;
 }
 
 .btn-cancel:hover {
   background-color: #c6a895;
 }
+
+/* desktop */
 
 @media (min-width: 768px) {
   .header {
