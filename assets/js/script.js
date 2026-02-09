@@ -54,11 +54,10 @@ fetch(`${basePath}menu-mobile.html`)
         const usuario = localStorage.getItem("usuarioLogado");
 
         if (usuario) {
-  window.location.href = basePath + "profile.html";
-} else {
-  window.location.href = basePath + "login.html";
-}
-
+          window.location.href = basePath + "profile.html";
+        } else {
+          window.location.href = basePath + "login.html";
+        }
       });
     }
 
@@ -332,6 +331,28 @@ if (confirmLogout) {
   });
 }
 
+const openDeleteBtn = document.getElementById("open-delete-modal");
+const deleteModal = document.getElementById("delete-modal");
+const cancelDelete = document.getElementById("cancel-delete");
+const confirmDelete = document.getElementById("confirm-delete");
+
+/* ABRIR MODAL */
+openDeleteBtn?.addEventListener("click", () => {
+  deleteModal.style.display = "flex";
+});
+
+/* CANCELAR */
+cancelDelete?.addEventListener("click", () => {
+  deleteModal.style.display = "none";
+});
+
+/* CONFIRMAR */
+confirmDelete?.addEventListener("click", () => {
+  localStorage.clear();
+  window.location.href = "../login.html";
+});
+
+
 /* ================================================= */
 /* ================= LINK PERFIL ================= */
 /* ================================================= */
@@ -347,10 +368,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const usuario = localStorage.getItem("usuarioLogado");
 
     if (usuario) {
-  window.location.href = basePath + "profile.html";
-} else {
-  window.location.href = basePath + "login.html";
-}
-
+      window.location.href = basePath + "profile.html";
+    } else {
+      window.location.href = basePath + "login.html";
+    }
   });
 });

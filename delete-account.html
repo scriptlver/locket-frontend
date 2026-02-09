@@ -38,10 +38,34 @@
       </p>
 
       <div class="delete-buttons">
-        <button class="btn-delete">Deletar conta</button>
+        <button class="btn-delete" id="open-delete-modal">Deletar conta</button>
+
         <button class="btn-cancel">Cancelar</button>
       </div>
     </section>
+
+    <!-- MODAL -->
+    <div id="delete-modal" class="delete-modal">
+      <div class="delete-box">
+        <img
+          src="../assets/images/icons/icon-alert.png"
+          alt="Alerta"
+          class="delete-icon"
+        />
+
+        <h3 class="delete-modal-title">Atenção!</h3>
+
+        <p class="delete-modal-text">
+          Esta ação é permanente e apagará todos os dados associados à sua
+          conta. Tem certeza de que deseja continuar?
+        </p>
+
+        <div class="delete-actions">
+          <button id="cancel-delete" class="modal-cancel">Cancelar</button>
+          <button id="confirm-delete" class="modal-confirm">Confirmar</button>
+        </div>
+      </div>
+    </div>
 
     <script src="../assets/js/script.js"></script>
   </body>
