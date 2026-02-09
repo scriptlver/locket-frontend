@@ -10,16 +10,61 @@ const basePath =
 /* ================================================= */
 
 document.querySelectorAll(".fav-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
+  btn.addEventListener("click", async () => {
+
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+    if (!usuario) {
+      alert("Faça login para favoritar");
+      return;
+    }
+
+    const musicaId = btn.dataset.musica;
     const img = btn.querySelector("img");
 
-    btn.classList.toggle("active");
+    try {
+      const response = await fetch("http://localhost:3000/api/favoritos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: usuario.id,
+          musicaId
+        })
+      });
 
-    img.src = btn.classList.contains("active")
-      ? `${basePath}assets/images/icons/favorite.png`
-      : `${basePath}assets/images/icons/desfavorite.png`;
+      const data = await response.json();
+
+      /* Atualiza localStorage */
+      usuario.favoritos = data.favoritos;
+      localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+      /* Atualiza ícone */
+      const ativo = data.favoritos.includes(musicaId);
+
+      img.src = ativo
+        ? `${basePath}assets/images/icons/favorite.png`
+        : `${basePath}assets/images/icons/desfavorite.png`;
+
+    } catch {
+      alert("Erro ao salvar favorito");
+    }
   });
 });
+
+document.querySelectorAll(".fav-btn").forEach(btn => {
+
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  if (!usuario) return;
+
+  const musicaId = btn.dataset.musica;
+  const img = btn.querySelector("img");
+
+  if (usuario.favoritos?.includes(musicaId)) {
+    img.src = `${basePath}assets/images/icons/favorite.png`;
+    btn.classList.add("active");
+  }
+});
+
 
 /* ================================================= */
 /* ================= VER MAIS LETRAS ================ */
@@ -56,24 +101,23 @@ fetch(`${basePath}menu-mobile.html`)
     const menu = document.getElementById("menu");
     const openBtn = document.querySelector(".menu-icon");
     const closeBtn = document.getElementById("closeMenu");
-    const perfilLink = document.getElementById("perfil-link");
 
-    /* PERFIL LINK */
-    if (perfilLink) {
-      perfilLink.addEventListener("click", (e) => {
+    /* PERFIL LINKS (desktop + mobile) */
+    const perfilLinks = document.querySelectorAll("#perfil-link");
+
+    perfilLinks.forEach(link => {
+      link.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const usuario = JSON.parse(
-          localStorage.getItem("usuarioLogado")
-        );
+        const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
         window.location.href = usuario
           ? `${basePath}profile.html`
           : `${basePath}login.html`;
       });
-    }
+    });
 
-    /* ABRIR MENU */
+    /* MENU */
     if (openBtn && closeBtn && menu) {
       openBtn.addEventListener("click", () =>
         menu.classList.add("active")
