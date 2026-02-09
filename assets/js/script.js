@@ -125,7 +125,6 @@ if (isAccountPage) {
       const nomeUsuario = document.getElementById("nome-usuario").value.trim();
       const nome = document.getElementById("nome").value.trim();
       const email = document.getElementById("email").value.trim();
-      const bio = document.getElementById("bio").value.trim();
       const senha = document.getElementById("senha").value;
       const senha2 = document.getElementById("senha2").value;
       const termos = document.getElementById("aceitar-termos");
@@ -170,7 +169,8 @@ if (isAccountPage) {
         const data = await response.json();
 
         if (!response.ok) {
-          return alert(data.error);
+          console.log(data);
+          return alert(data.error || "Erro ao criar conta");
         }
 
         alert("Conta criada com sucesso!");
@@ -351,7 +351,6 @@ confirmDelete?.addEventListener("click", () => {
   localStorage.clear();
   window.location.href = "../login.html";
 });
-
 
 /* ================================================= */
 /* ================= LINK PERFIL ================= */
