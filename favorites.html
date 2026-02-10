@@ -1,122 +1,119 @@
 <!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Locket</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favoritos - Locket</title>
 
-  <link rel="stylesheet" href="assets/css/styles.css" />
-</head>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
 
-<body>
-  <div id="menu-mobile"></div>
+  <body>
+    <div id="menu-mobile"></div>
 
-  <!-- HEADER -->
-  <header class="header">
-    <img src="assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
+    <header class="header">
+      <img src="assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
 
-    <h1 class="title">Madison Beer</h1>
+      <h1 class="title">Madison Beer</h1>
 
-    <nav class="menu-desktop">
-      <a href="index.html">Home</a>
-      <a href="songs.html">Músicas</a>
-      <a href="#" id="perfil-link">Perfil</a>
-      <a href="favorites.html">Favoritos</a>
-      <a href="terms.html" target="_blank">Termos de Uso</a>
-    </nav>
-  </header>
+      <nav class="menu-desktop">
+        <a href="index.html">Home</a>
+        <a href="songs.html">Músicas</a>
+        <a href="#" id="perfil-link">Perfil</a>
+        <a href="favorites.html">Favoritos</a>
+        <a href="terms.html" target="_blank">Termos de Uso</a>
+      </nav>
+    </header>
 
-  <!-- ALBUM -->
-  <section class="album-card">
-    <h2 class="album-title">Locket</h2>
-  </section>
+    <section class="album-card">
+      <h2 class="album-title">Locket</h2>
+    </section>
 
-  <!-- LISTA DE MUSICAS -->
-  <section class="album-songs">
-    <ul>
+    <section class="album-songs">
+      <ul>
+        <li class="song-item">
+          <a href="songs/locket-theme.html" class="song-name">Locket Theme</a>
+          <button class="fav-btn" data-musica="locket-theme">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/locket-theme.html" class="song-name">Locket Theme</a>
-        <button class="fav-btn" data-musica="locket-theme">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/yes-baby.html" class="song-name">Yes Baby</a>
+          <button class="fav-btn" data-musica="yes-baby">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/yes-baby.html" class="song-name">Yes Baby</a>
-        <button class="fav-btn" data-musica="yes-baby">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/angel-wings.html" class="song-name">Angel Wings</a>
+          <button class="fav-btn" data-musica="angel-wings">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/angel-wings.html" class="song-name">Angel Wings</a>
-        <button class="fav-btn" data-musica="angel-wings">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/for-the-night.html" class="song-name">For The Night</a>
+          <button class="fav-btn" data-musica="for-the-night">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/for-the-night.html" class="song-name">For The Night</a>
-        <button class="fav-btn" data-musica="for-the-night">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/bad-enough.html" class="song-name">Bad Enough</a>
+          <button class="fav-btn" data-musica="bad-enough">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/bad-enough.html" class="song-name">Bad Enough</a>
-        <button class="fav-btn" data-musica="bad-enough">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/healthy-habit.html" class="song-name">Healthy Habit</a>
+          <button class="fav-btn" data-musica="healthy-habit">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/healthy-habit.html" class="song-name">Healthy Habit</a>
-        <button class="fav-btn" data-musica="healthy-habit">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/youre-still-everything.html" class="song-name">
+            You're Still Everything
+          </a>
+          <button class="fav-btn" data-musica="youre-still-everything">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/youre-still-everything.html" class="song-name">
-          You're Still Everything
-        </a>
-        <button class="fav-btn" data-musica="youre-still-everything">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/bittersweet.html" class="song-name">Bittersweet</a>
+          <button class="fav-btn" data-musica="bittersweet">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/bittersweet.html" class="song-name">Bittersweet</a>
-        <button class="fav-btn" data-musica="bittersweet">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/complexity.html" class="song-name">Complexity</a>
+          <button class="fav-btn" data-musica="complexity">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/complexity.html" class="song-name">Complexity</a>
-        <button class="fav-btn" data-musica="complexity">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/make-you-mine.html" class="song-name">Make You Mine</a>
+          <button class="fav-btn" data-musica="make-you-mine">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
 
-      <li class="song-item">
-        <a href="songs/make-you-mine.html" class="song-name">Make You Mine</a>
-        <button class="fav-btn" data-musica="make-you-mine">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
+        <li class="song-item">
+          <a href="songs/nothing-at-all.html" class="song-name"
+            >Nothing At All</a
+          >
+          <button class="fav-btn" data-musica="nothing-at-all">
+            <img src="assets/images/icons/desfavorite.png" />
+          </button>
+        </li>
+      </ul>
+    </section>
 
-      <li class="song-item">
-        <a href="songs/nothing-at-all.html" class="song-name">Nothing At All</a>
-        <button class="fav-btn" data-musica="nothing-at-all">
-          <img src="assets/images/icons/desfavorite.png" />
-        </button>
-      </li>
-
-    </ul>
-  </section>
-
-  <script src="assets/js/script.js"></script>
-</body>
+    <script src="assets/js/script.js"></script>
+  </body>
 </html>

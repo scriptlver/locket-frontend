@@ -1,99 +1,88 @@
 <!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Locket</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil - Locket</title>
 
-  <link rel="stylesheet" href="../assets/css/styles.css" />
-</head>
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
 
-<body>
+  <body>
+    <div id="menu-mobile"></div>
 
-  <div id="menu-mobile"></div>
+    <header class="header">
+      <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
 
-  <header class="header">
-    <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
+      <h1 class="title">Madison Beer</h1>
 
-    <h1 class="title">Madison Beer</h1>
+      <nav class="menu-desktop">
+        <a href="../index.html">Home</a>
+        <a href="../songs.html">Músicas</a>
+        <a href="#" id="perfil-link">Perfil</a>
+        <a href="../favorites.html">Favoritos</a>
+        <a href="../terms.html">Termos de Uso</a>
+      </nav>
+    </header>
 
-    <nav class="menu-desktop">
-      <a href="../index.html">Home</a>
-      <a href="../songs.html">Músicas</a>
-      <a href="#" id="perfil-link">Perfil</a>
-      <a href="../favorites.html">Favoritos</a>
-      <a href="../terms.html">Termos de Uso</a>
-    </nav>
-  </header>
+    <section class="login-card">
+      <h2 class="login-title">Perfil</h2>
 
-  <section class="login-card">
-
-    <h2 class="login-title">Perfil</h2>
-
-    <div class="profile-photo">
-      <img
-        id="profile-img"
-        class="profile-preview"
-        src="../assets/images/icons/profile.png"
-        alt="Foto do usuário"
-      />
-    </div>
-
-    <div class="profile-info">
-      <p id="profile-name">Nome completo</p>
-      <h3 id="profile-nome-usuario">username</h3>
-      <span id="profile-bio">biografia</span>
-    </div>
-
-    <div class="profile-actions">
-
-      <button
-        class="login-btn"
-        onclick="window.location.href='edit-profile.html'"
-      >
-        Editar perfil
-      </button>
-
-      <button
-        class="login-btn"
-        onclick="window.location.href='../favorites.html'"
-      >
-        Favoritos
-      </button>
-
-      <button class="login-btn" id="logout-btn">
-        Sair da conta
-      </button>
-
-      <button
-        class="login-btn"
-        onclick="window.location.href='../delete-account.html'"
-      >
-        Deletar conta
-      </button>
-
-    </div>
-
-  </section>
-
-  <!-- MODAL LOGOUT -->
-  <div id="logout-modal" class="logout-modal">
-    <div class="logout-box">
-
-      <img src="../assets/images/icons/icon-alert.png" />
-
-      <h3>Atenção!</h3>
-      <p>Deseja sair da sua conta?</p>
-
-      <div class="logout-actions">
-        <button id="cancel-logout">Cancelar</button>
-        <button id="confirm-logout">Confirmar</button>
+      <div class="profile-photo">
+        <img
+          id="profile-img"
+          class="profile-preview"
+          src="../assets/images/icons/profile.png"
+          alt="Foto do usuário"
+        />
       </div>
 
+      <div class="profile-info">
+        <p id="profile-name">Nome completo</p>
+        <h3 id="profile-nome-usuario">username</h3>
+        <span id="profile-bio">biografia</span>
+      </div>
+
+      <div class="profile-actions">
+        <button
+          class="login-btn"
+          onclick="window.location.href = 'edit-profile.html'"
+        >
+          Editar perfil
+        </button>
+
+        <button
+          class="login-btn"
+          onclick="window.location.href = '../favorites.html'"
+        >
+          Favoritos
+        </button>
+
+        <button class="login-btn" id="logout-btn">Sair da conta</button>
+
+        <button
+          class="login-btn"
+          onclick="window.location.href = '../delete-account.html'"
+        >
+          Deletar conta
+        </button>
+      </div>
+    </section>
+
+    <div id="logout-modal" class="logout-modal">
+      <div class="logout-box">
+        <img src="../assets/images/icons/icon-alert.png" />
+
+        <h3>Atenção!</h3>
+        <p>Deseja sair da sua conta?</p>
+
+        <div class="logout-actions">
+          <button id="cancel-logout">Cancelar</button>
+          <button id="confirm-logout">Confirmar</button>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <script src="../assets/js/script.js"></script>
-
-</body>
+    <script src="../assets/js/script.js"></script>
+  </body>
 </html>
