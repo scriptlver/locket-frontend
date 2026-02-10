@@ -865,6 +865,19 @@ a {
     font-size: 18px;
   }
 
+  .album-title {
+    font-size: 32px;
+  }
+
+  .delete-warning {
+    font-size: 18px;
+  }
+
+  .delete-buttons button {
+    font-size: 16px;
+  }
+
+
 
 }
 
