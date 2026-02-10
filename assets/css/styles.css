@@ -852,6 +852,20 @@ a {
     font-size: 1.5rem;
     margin-top: 2.2rem; 
   }
+
+   #profile-name {
+    font-size: 28px;
+  }
+
+  #profile-nome-usuario {
+    font-size: 18px;
+  }
+
+  #profile-bio {
+    font-size: 18px;
+  }
+
+
 }
 
 
