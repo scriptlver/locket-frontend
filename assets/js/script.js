@@ -449,9 +449,11 @@ document
 document
   .getElementById("cancel-delete")
   ?.addEventListener("click", () => {
-    document.getElementById("delete-modal").style.display =
-      "none";
+    document.getElementById("delete-modal").style.display = "none";
+
+    window.location.href = basePath + "profile.html";
   });
+
 
 document
   .getElementById("confirm-delete")
