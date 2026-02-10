@@ -385,16 +385,55 @@ profileForm?.addEventListener("submit", async (e) => {
   window.location.href = "profile.html";
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+
+  if (!window.location.pathname.includes("edit-profile")) return;
+
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  if (!usuario) return;
+
+  document.getElementById("nome-usuario").value = usuario.nomeUsuario || "";
+  document.getElementById("nome").value = usuario.nome || "";
+  document.getElementById("bio").value = usuario.bio || "";
+  document.getElementById("email").value = usuario.email || "";
+
+  /* Preview foto */
+  const preview = document.getElementById("preview-foto");
+  if (preview && usuario.foto) {
+    preview.src = `http://localhost:3000/uploads/${usuario.foto}`;
+  }
+
+});
+
+
 /* ================================================= */
 /* ================= LOGOUT ========================= */
 /* ================================================= */
+document.addEventListener("DOMContentLoaded", () => {
 
-document
-  .getElementById("confirm-logout")
-  ?.addEventListener("click", () => {
-    localStorage.removeItem("usuarioLogado");
-    window.location.href = "login.html";
+  const logoutBtn = document.getElementById("logout-btn");
+  const logoutModal = document.getElementById("logout-modal");
+  const cancelLogout = document.getElementById("cancel-logout");
+  const confirmLogout = document.getElementById("confirm-logout");
+
+  /* ABRIR MODAL */
+  logoutBtn?.addEventListener("click", () => {
+    logoutModal.style.display = "flex";
   });
+
+  /* CANCELAR */
+  cancelLogout?.addEventListener("click", () => {
+    logoutModal.style.display = "none";
+  });
+
+  /* CONFIRMAR LOGOUT */
+  confirmLogout?.addEventListener("click", () => {
+    localStorage.removeItem("usuarioLogado");
+    window.location.href = basePath + "login.html";
+  });
+
+});
+
 
 /* ================================================= */
 /* ================= DELETAR CONTA ================== */

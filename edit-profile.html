@@ -1,81 +1,84 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Locket</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Locket</title>
 
-    <link rel="stylesheet" href="../assets/css/styles.css" />
-  </head>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
 
-  <body>
-    <div id="menu-mobile"></div>
+<body>
 
-    <header class="header">
-      <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
+  <div id="menu-mobile"></div>
 
-      <h1 class="title">Madison Beer</h1>
+  <header class="header">
+    <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
 
-      <nav class="menu-desktop">
-        <a href="../index.html">Home</a>
-        <a href="../songs.html">Músicas</a>
-        <a href="#" id="perfil-link">Perfil</a>
-        <a href="../favorites.html">Favoritos</a>
-        <a href="../terms.html" target="_blank">Termos de Uso</a>
-      </nav>
-    </header>
+    <h1 class="title">Madison Beer</h1>
 
-    <section class="login-card">
-      <h2 class="login-title">Editar perfil</h2>
+    <nav class="menu-desktop">
+      <a href="../index.html">Home</a>
+      <a href="../songs.html">Músicas</a>
+      <a href="#" id="perfil-link">Perfil</a>
+      <a href="../favorites.html">Favoritos</a>
+      <a href="../terms.html" target="_blank">Termos de Uso</a>
+    </nav>
+  </header>
 
-      <div class="profile-photo-edit">
-        <label for="foto" class="profile-label-edit">
-          <img
-            src="../assets/images/icons/profile.png"
-            id="preview-foto"
-            class="profile-preview"
-            alt="Foto de perfil"
-          />
-          <span class="profile-text">Alterar foto de perfil</span>
-        </label>
+  <section class="login-card">
+    <h2 class="login-title">Editar perfil</h2>
 
-        <input type="file" id="foto" accept="image/*" hidden />
+    <div class="profile-photo-edit">
+      <label for="foto" class="profile-label-edit">
+        <img
+          src="../assets/images/icons/profile.png"
+          id="preview-foto"
+          class="profile-preview"
+          alt="Foto de perfil"
+        />
+        <span class="profile-text">Alterar foto de perfil</span>
+      </label>
+
+      <input type="file" id="foto" accept="image/*" hidden />
+    </div>
+
+    <form id="profile-form" autocomplete="on">
+
+      <div class="login-field">
+        <label>Nome de usuário</label>
+        <input type="text" id="nome-usuario" />
       </div>
 
-       <form id="profile-form" autocomplete="on">
-        <div class="login-field">
-          <label>Nome de usuário</label>
-          <input type="text" id="nome-usuario" />
-        </div>
+      <div class="login-field">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" />
+      </div>
 
-      <form id="profile-form" autocomplete="on">
-        <div class="login-field">
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" />
-        </div>
+      <div class="login-field">
+        <label for="bio">Biografia</label>
+        <textarea id="bio" rows="3"></textarea>
+      </div>
 
-        <div class="login-field">
-          <label for="bio">Biografia</label>
-          <textarea
-            id="bio"
-            rows="3"
-          ></textarea>
-        </div>
+      <div class="login-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" />
+      </div>
 
-        <div class="login-field">
-          <label for="email">Email</label>
-          <input type="email" id="email" />
-        </div>
+      <div class="login-field">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" />
+      </div>
 
-        <div class="login-field">
-          <label for="senha">Senha</label>
-          <input type="password" id="senha" />
-        </div>
+      <button type="submit" class="login-btn">
+        Salvar alterações
+      </button>
 
-        <button type="submit" class="login-btn">Salvar alterações</button>
-      </form>
-    </section>
+    </form>
 
-    <script src="../assets/js/script.js"></script>
-  </body>
+  </section>
+
+  <script src="../assets/js/script.js"></script>
+
+</body>
 </html>
