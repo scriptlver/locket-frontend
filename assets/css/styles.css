@@ -635,13 +635,12 @@ a {
   align-items: center;
 }
 
-/* BOTÃO DELETAR */
+/* deletar conta */
 .btn-delete {
   width: 220px;
   padding: 10px;
   border-radius: 8px;
-  border: none;
-  background-color: #d85757;
+  border: 1px solid black;   background-color: #d85757;
   color: black;
   font-size: 15px;
   cursor: pointer;
@@ -653,13 +652,14 @@ a {
   background-color: #c54646;
 }
 
-/* BOTÃO CANCELAR */
+/* cancelar */
 .btn-cancel {
   width: 220px;
   padding: 10px;
   border-radius: 8px;
   background-color: #d2b8a6;
   font-size: 15px;
+  border: 1px solid black; 
   cursor: pointer;
   transition: 0.3s;
   font-family: "Cormorant Garamond", serif;
@@ -721,7 +721,7 @@ a {
   justify-content: center;
 }
 
-/* BOTÃO CANCELAR */
+/* botão cancelar do pop do delete */
 #cancel-delete {
   padding: 10px 20px;
   border-radius: 10px;
@@ -732,27 +732,21 @@ a {
   font-family: "Cormorant Garamond", serif;
 }
 
-#cancel-delete:hover {
-  background: #d3d3d3;
-}
-
-/* BOTÃO CONFIRMAR */
+/* botão confirmar do pop do delete */
 #confirm-delete {
   padding: 10px 20px;
   border-radius: 10px;
-  background: #ff4d4d;
-  color: white;
+  border: none;
+  background: #e0e0e0;
   cursor: pointer;
   transition: 0.3s;
   font-family: "Cormorant Garamond", serif;
 }
 
-#confirm-delete:hover {
-  background: #e03a3a;
-}
 
-.break-desktop {
-  display: none;
+
+#cancel-delete:hover {
+  background: #d3d3d3;
 }
 
 
@@ -873,12 +867,16 @@ a {
   }
 
   .delete-warning {
-    font-size: 20px;
+    max-width: 700px;
+    text-align: center;   
+    margin: 0 auto 30px;
+    font-size: 20px; 
   }
 
-
   .delete-buttons button {
-    font-size: 16px;
+    width: 260px;
+    padding: 11px 23px;
+    font-size: 17px;
   }
 
 
