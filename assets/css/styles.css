@@ -639,11 +639,10 @@ a {
   width: 220px;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid black;
   background-color: #d85757;
-  color: black;
   font-size: 15px;
   cursor: pointer;
+  border: none;
   transition: 0.3s;
   font-family: "Cormorant Garamond", serif;
 }
@@ -659,7 +658,7 @@ a {
   border-radius: 8px;
   background-color: #d2b8a6;
   font-size: 15px;
-  border: 1px solid black;
+  border: none;
   cursor: pointer;
   transition: 0.3s;
   font-family: "Cormorant Garamond", serif;
