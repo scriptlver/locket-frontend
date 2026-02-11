@@ -740,7 +740,6 @@ a {
 #confirm-delete {
   padding: 10px 20px;
   border-radius: 10px;
-  border: none;
   background: #ff4d4d;
   color: white;
   cursor: pointer;
@@ -750,6 +749,10 @@ a {
 
 #confirm-delete:hover {
   background: #e03a3a;
+}
+
+.break-desktop {
+  display: none;
 }
 
 
@@ -865,13 +868,14 @@ a {
     font-size: 18px;
   }
 
-  .album-title {
-    font-size: 32px;
+  .delete-question{
+    font-size: 20px;
   }
 
   .delete-warning {
-    font-size: 18px;
+    font-size: 20px;
   }
+
 
   .delete-buttons button {
     font-size: 16px;
