@@ -23,8 +23,6 @@ body {
   transition: opacity 0.4s ease;
 }
 
-
-
 .header {
   display: flex;
   align-items: center;
@@ -570,14 +568,14 @@ a {
   margin-bottom: 25px;
 }
 
-/* BOTÕES */
+/* botões */
 .logout-actions {
   display: flex;
   gap: 15px;
   justify-content: center;
 }
 
-/* BOTÃO CANCELAR */
+/* botão cancelar */
 #cancel-logout {
   padding: 10px 20px;
   border-radius: 10px;
@@ -592,7 +590,7 @@ a {
   background: #d3d3d3;
 }
 
-/* BOTÃO CONFIRMAR */
+/* botão confirmar */
 #confirm-logout {
   padding: 10px 20px;
   border-radius: 10px;
@@ -608,9 +606,9 @@ a {
   background: #e03a3a;
 }
 
-/* ===== DELETE ACCOUNT ===== */
+/* deletar conta */
 
-/* PERGUNTA */
+/* pergunta */
 .delete-question {
   font-size: 17px;
   margin-bottom: 24px;
@@ -619,7 +617,6 @@ a {
   text-align: center;
 }
 
-/* TEXTO DE AVISO */
 .delete-warning {
   font-size: 13px;
   color: #444;
@@ -628,7 +625,6 @@ a {
   text-align: center;
 }
 
-/* CONTAINER DOS BOTÕES */
 .delete-buttons {
   display: flex;
   flex-direction: column;
@@ -682,7 +678,6 @@ a {
   align-items: center;
 }
 
-/* CAIXA DO POPUP */
 .delete-box {
   background: #ffffff;
   padding: 30px 35px;
@@ -695,26 +690,22 @@ a {
   animation: popupFade 0.3s ease;
 }
 
-/* ÍCONE */
 .delete-box img {
   width: 60px;
   margin-bottom: 15px;
 }
 
-/* TÍTULO */
 .delete-box h3 {
   font-size: 20px;
   margin-bottom: 10px;
 }
 
-/* TEXTO */
 .delete-box p {
   font-size: 15px;
   color: #555;
   margin-bottom: 25px;
 }
 
-/* BOTÕES */
 .delete-actions {
   display: flex;
   gap: 15px;

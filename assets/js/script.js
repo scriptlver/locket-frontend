@@ -1,35 +1,23 @@
-/* ================================================= */
-/* ================= BASE PATH ====================== */
-/* ================================================= */
+const basePath = location.pathname.split("/").length > 2 ? "../" : "";
 
-const basePath =
-  location.pathname.split("/").length > 2 ? "../" : "";
-
-/* ================================================= */
-/* ================= FAVORITOS ====================== */
-/* ================================================= */
+/* favoritos */
 
 document.addEventListener("DOMContentLoaded", () => {
-
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
   const favButtons = document.querySelectorAll(".fav-btn");
 
-  /* ---------- CLIQUE FAVORITAR ---------- */
+  /* coração mudando de cor */
 
   favButtons.forEach((btn) => {
-
     const musicaId = btn.dataset.musica;
     const img = btn.querySelector("img");
 
-    /* Estado inicial do coração */
     if (usuario?.favoritos?.includes(musicaId)) {
       img.src = `${basePath}assets/images/icons/favorite.png`;
       btn.classList.add("active");
     }
 
-    /* Clique */
     btn.addEventListener("click", async () => {
-
       if (!usuario) {
         alert("Faça login para favoritar");
         return;
@@ -41,8 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userId: usuario.id,
-            musicaId
-          })
+            musicaId,
+          }),
         });
 
         const data = await response.json();
@@ -55,42 +43,31 @@ document.addEventListener("DOMContentLoaded", () => {
         img.src = ativo
           ? `${basePath}assets/images/icons/favorite.png`
           : `${basePath}assets/images/icons/desfavorite.png`;
-
       } catch {
         alert("Erro ao salvar favorito");
       }
     });
-
   });
 
-  /* ---------- FILTRAR APENAS FAVORITOS ---------- */
+  /* filtrar favoritos */
 
   if (window.location.pathname.includes("favorites")) {
-
     if (!usuario?.favoritos) return;
 
     const songs = document.querySelectorAll(".song-item");
 
-    songs.forEach(song => {
-
+    songs.forEach((song) => {
       const btn = song.querySelector(".fav-btn");
       const musicaId = btn?.dataset.musica;
 
       if (!usuario.favoritos.includes(musicaId)) {
         song.style.display = "none";
       }
-
     });
-
   }
-
 });
 
-
-
-/* ================================================= */
-/* ================= VER MAIS LETRAS ================ */
-/* ================================================= */
+/* ver mais (letras) */
 
 document.addEventListener("DOMContentLoaded", () => {
   const btnToggle = document.getElementById("btn-toggle");
@@ -99,8 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnToggle && moreLyrics) {
     btnToggle.addEventListener("click", () => {
       const hidden =
-        moreLyrics.style.display === "none" ||
-        moreLyrics.style.display === "";
+        moreLyrics.style.display === "none" || moreLyrics.style.display === "";
 
       moreLyrics.style.display = hidden ? "block" : "none";
       btnToggle.textContent = hidden ? "Ver menos" : "Ver mais";
@@ -108,9 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ================================================= */
-/* ================= MENU MOBILE ==================== */
-/* ================================================= */
+/* menu mobile */
 
 fetch(`${basePath}menu-mobile.html`)
   .then((res) => res.text())
@@ -124,10 +98,9 @@ fetch(`${basePath}menu-mobile.html`)
     const openBtn = document.querySelector(".menu-icon");
     const closeBtn = document.getElementById("closeMenu");
 
-    /* PERFIL LINKS (desktop + mobile) */
     const perfilLinks = document.querySelectorAll("#perfil-link");
 
-    perfilLinks.forEach(link => {
+    perfilLinks.forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
 
@@ -139,30 +112,20 @@ fetch(`${basePath}menu-mobile.html`)
       });
     });
 
-    /* MENU */
+    /* menu */
     if (openBtn && closeBtn && menu) {
-      openBtn.addEventListener("click", () =>
-        menu.classList.add("active")
-      );
+      openBtn.addEventListener("click", () => menu.classList.add("active"));
 
-      closeBtn.addEventListener("click", () =>
-        menu.classList.remove("active")
-      );
+      closeBtn.addEventListener("click", () => menu.classList.remove("active"));
     }
   })
   .catch((err) => console.error("Erro menu mobile:", err));
-
-/* ================================================= */
-/* ================= DETECTAR PÁGINAS =============== */
-/* ================================================= */
 
 const currentPath = location.pathname;
 const isLoginPage = currentPath.includes("login.html");
 const isAccountPage = currentPath.includes("account.html");
 
-/* ================================================= */
-/* ================= LOGIN ========================== */
-/* ================================================= */
+/* login */
 
 if (isLoginPage) {
   const loginForm = document.getElementById("login-field");
@@ -176,24 +139,17 @@ if (isLoginPage) {
     if (!email || !senha) return alert("Preencha todos os campos");
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, senha }),
-        }
-      );
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, senha }),
+      });
 
       const data = await response.json();
 
-      if (!response.ok)
-        return alert(data.error || "Erro no login");
+      if (!response.ok) return alert(data.error || "Erro no login");
 
-      localStorage.setItem(
-        "usuarioLogado",
-        JSON.stringify(data.usuario)
-      );
+      localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
 
       window.location.href = "../index.html";
     } catch (err) {
@@ -202,9 +158,7 @@ if (isLoginPage) {
   });
 }
 
-/* ================================================= */
-/* ================= CADASTRO ======================= */
-/* ================================================= */
+/* cadastro */
 
 if (isAccountPage) {
   const registerForm = document.getElementById("login-field");
@@ -212,9 +166,7 @@ if (isAccountPage) {
   registerForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const nomeUsuario = document
-      .getElementById("nome-usuario")
-      .value.trim();
+    const nomeUsuario = document.getElementById("nome-usuario").value.trim();
 
     const nome = document.getElementById("nome").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -225,13 +177,10 @@ if (isAccountPage) {
     if (!nomeUsuario || !nome || !email || !senha || !senha2)
       return alert("Preencha todos os campos");
 
-    if (senha !== senha2)
-      return alert("As senhas não coincidem");
+    if (senha !== senha2) return alert("As senhas não coincidem");
 
-    if (!termos.checked)
-      return alert("Aceite os termos");
+    if (!termos.checked) return alert("Aceite os termos");
 
-    /* FOTO */
     const inputFoto = document.getElementById("foto");
     let fotoBase64 = null;
 
@@ -244,25 +193,21 @@ if (isAccountPage) {
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            nomeUsuario,
-            nome,
-            email,
-            senha,
-            foto: fotoBase64,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:3000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nomeUsuario,
+          nome,
+          email,
+          senha,
+          foto: fotoBase64,
+        }),
+      });
 
       const data = await response.json();
 
-      if (!response.ok)
-        return alert(data.error || "Erro ao criar conta");
+      if (!response.ok) return alert(data.error || "Erro ao criar conta");
 
       alert("Conta criada com sucesso!");
       window.location.href = "../login.html";
@@ -272,37 +217,26 @@ if (isAccountPage) {
   });
 }
 
-/* ================================================= */
-/* ================= PERFIL ========================= */
-/* ================================================= */
+/* perfil */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const usuario = JSON.parse(
-    localStorage.getItem("usuarioLogado")
-  );
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-  /* PROTEÇÃO ROTA */
   if (!usuario && currentPath.includes("profile")) {
     window.location.href = "login.html";
     return;
   }
 
-  /* MOSTRAR INFO */
   const profileImg = document.getElementById("profile-img");
   const profileName = document.getElementById("profile-name");
   const profileBio = document.getElementById("profile-bio");
-  const profileUsername = document.getElementById(
-    "profile-nome-usuario"
-  );
+  const profileUsername = document.getElementById("profile-nome-usuario");
   const profileEmail = document.getElementById("profile-email");
 
   if (profileName) profileName.textContent = usuario?.nome || "";
-  if (profileUsername)
-    profileUsername.textContent = usuario?.nomeUsuario || "";
-  if (profileEmail)
-    profileEmail.textContent = usuario?.email || "";
-  if (profileBio)
-    profileBio.textContent = usuario?.bio || "";
+  if (profileUsername) profileUsername.textContent = usuario?.nomeUsuario || "";
+  if (profileEmail) profileEmail.textContent = usuario?.email || "";
+  if (profileBio) profileBio.textContent = usuario?.bio || "";
 
   if (profileImg) {
     profileImg.src = usuario?.foto
@@ -310,7 +244,6 @@ document.addEventListener("DOMContentLoaded", () => {
       : `${basePath}assets/images/icons/profile.png`;
   }
 
-  /* PREVIEW FOTO */
   const inputFoto = document.getElementById("foto");
   const previewFoto = document.getElementById("preview-foto");
 
@@ -322,22 +255,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ================================================= */
-/* ================= EDITAR PERFIL ================== */
-/* ================================================= */
+/* editar perfil */
 
 const profileForm = document.getElementById("profile-form");
 
 profileForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const usuario = JSON.parse(
-    localStorage.getItem("usuarioLogado")
-  );
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-  const nomeUsuario = document
-    .getElementById("nome-usuario")
-    .value.trim();
+  const nomeUsuario = document.getElementById("nome-usuario").value.trim();
 
   const nome = document.getElementById("nome").value.trim();
   const bio = document.getElementById("bio").value.trim();
@@ -355,38 +282,31 @@ profileForm?.addEventListener("submit", async (e) => {
     });
   }
 
-  const response = await fetch(
-    "http://localhost:3000/api/editar-perfil",
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: usuario.id,
-        nomeUsuario,
-        nome,
-        bio,
-        email,
-        senha,
-        foto,
-      }),
-    }
-  );
+  const response = await fetch("http://localhost:3000/api/editar-perfil", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      id: usuario.id,
+      nomeUsuario,
+      nome,
+      bio,
+      email,
+      senha,
+      foto,
+    }),
+  });
 
   const data = await response.json();
 
   if (!response.ok) return alert(data.error);
 
-  localStorage.setItem(
-    "usuarioLogado",
-    JSON.stringify(data.usuario)
-  );
+  localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
 
   alert("Perfil atualizado!");
   window.location.href = "profile.html";
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-
   if (!window.location.pathname.includes("edit-profile")) return;
 
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
@@ -397,86 +317,65 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("bio").value = usuario.bio || "";
   document.getElementById("email").value = usuario.email || "";
 
-  /* Preview foto */
   const preview = document.getElementById("preview-foto");
   if (preview && usuario.foto) {
     preview.src = `http://localhost:3000/uploads/${usuario.foto}`;
   }
-
 });
 
-
-/* ================================================= */
-/* ================= LOGOUT ========================= */
-/* ================================================= */
+/* logout */
 document.addEventListener("DOMContentLoaded", () => {
-
   const logoutBtn = document.getElementById("logout-btn");
   const logoutModal = document.getElementById("logout-modal");
   const cancelLogout = document.getElementById("cancel-logout");
   const confirmLogout = document.getElementById("confirm-logout");
 
-  /* ABRIR MODAL */
+  /* abrir */
   logoutBtn?.addEventListener("click", () => {
     logoutModal.style.display = "flex";
   });
 
-  /* CANCELAR */
+  /* cancelar */
   cancelLogout?.addEventListener("click", () => {
     logoutModal.style.display = "none";
   });
 
-  /* CONFIRMAR LOGOUT */
+  /* confirmar logout */
   confirmLogout?.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogado");
     window.location.href = basePath + "login.html";
   });
-
 });
 
+/* deletar conta */
 
-/* ================================================= */
-/* ================= DELETAR CONTA ================== */
-/* ================================================= */
+document.getElementById("open-delete-modal")?.addEventListener("click", () => {
+  document.getElementById("delete-modal").style.display = "flex";
+});
 
-document
-  .getElementById("open-delete-modal")
-  ?.addEventListener("click", () => {
-    document.getElementById("delete-modal").style.display =
-      "flex";
-  });
+document.getElementById("cancel-delete")?.addEventListener("click", () => {
+  document.getElementById("delete-modal").style.display = "none";
 
-document
-  .getElementById("cancel-delete")
-  ?.addEventListener("click", () => {
-    document.getElementById("delete-modal").style.display = "none";
-
-    window.location.href = basePath + "profile.html";
-  });
-
+  window.location.href = basePath + "profile.html";
+});
 
 document
   .getElementById("confirm-delete")
   ?.addEventListener("click", async () => {
-    const usuario = JSON.parse(
-      localStorage.getItem("usuarioLogado")
-    );
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
     try {
-      await fetch(
-        `http://localhost:3000/api/users/${usuario.id}`,
-        { method: "DELETE" }
-      );
+      await fetch(`http://localhost:3000/api/users/${usuario.id}`, {
+        method: "DELETE",
+      });
 
       localStorage.clear();
-      window.location.href = "../login.html";
+      window.location.href = "../profile.html";
     } catch {
       alert("Erro ao deletar conta");
     }
   });
 
-
 document.addEventListener("DOMContentLoaded", () => {
   document.body.style.opacity = "1";
 });
-

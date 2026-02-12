@@ -6,6 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
       window.location.href = "index.html";
-    }, 300); // mesmo tempo do CSS
+    }, 300); 
   });
 });
