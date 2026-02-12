@@ -1,0 +1,74 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #9BB5BF;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+
+  transition: opacity 0.6s ease;
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+/* ===== NOISE EFFECT ===== */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.99;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* CONTAINER */
+.locket-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* MEDALHÃO */
+.medalhao {
+  width: 480px; /* AUMENTEI AQUI */
+
+  cursor: pointer;
+  transition: transform 0.4s ease, filter 0.4s ease;
+
+  animation: fadeIn 1.2s ease forwards;
+  opacity: 0;
+
+  filter: drop-shadow(0 25px 50px rgba(0,0,0,0.25));
+}
+
+/* HOVER */
+.medalhao:hover {
+  transform: scale(1.08) rotate(-2deg);
+  filter: brightness(1.1);
+}
+
+/* CLIQUE */
+.medalhao:active {
+  transform: scale(0.95);
+}
+
+/* ANIMAÇÃO */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
