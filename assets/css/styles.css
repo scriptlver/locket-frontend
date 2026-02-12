@@ -432,7 +432,7 @@ a {
   text-align: center;
 }
 
-/* profile */
+/* perfil */
 
 .profile-info {
   text-align: center;
@@ -458,7 +458,7 @@ a {
   color: #6b6b6b;
 }
 
-/* ===== BOTÕES PROFILE ===== */
+/* botões - perfil */
 
 .profile-photo-edit {
   display: flex;
@@ -516,7 +516,6 @@ a {
   resize: none;
 }
 
-/* FUNDO ESCURO */
 .logout-modal {
   display: none;
   position: fixed;
@@ -529,7 +528,7 @@ a {
   z-index: 999;
 }
 
-/* CAIXA DO POPUP */
+/* popout - logout */
 .logout-box {
   background: #ffffff;
   padding: 30px 35px;
@@ -542,7 +541,7 @@ a {
   animation: popupFade 0.3s ease;
 }
 
-/* ANIMAÇÃO SUAVE */
+/* animação ne kkkk */
 @keyframes popupFade {
   from {
     transform: translateY(20px);
@@ -554,19 +553,17 @@ a {
   }
 }
 
-/* ÍCONE */
+/* icone logout */
 .logout-box img {
   width: 60px;
   margin-bottom: 15px;
 }
 
-/* TÍTULO */
 .logout-box h3 {
   font-size: 20px;
   margin-bottom: 10px;
 }
 
-/* TEXTO */
 .logout-box p {
   font-size: 15px;
   color: #555;
