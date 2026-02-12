@@ -44,7 +44,9 @@ body::before {
 
 /* MEDALHÃO */
 .medalhao {
-  width: 480px; /* AUMENTEI AQUI */
+   width: 115vw;
+  max-width: 380px;
+  margin-bottom: 98px;
 
   cursor: pointer;
   transition: transform 0.4s ease, filter 0.4s ease;
@@ -72,3 +74,11 @@ body::before {
     opacity: 1;
   }
 }
+
+@media (min-width: 768px) {
+  .medalhao {
+    max-width: 450px;
+    margin-top: 110px;  
+  }
+}
+
