@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("fade-out");
 
     setTimeout(() => {
-      window.location.href = "index.html";
+      window.location.href = "locket.html";
     }, 300); 
   });
 });

@@ -151,7 +151,7 @@ if (isLoginPage) {
 
       localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
 
-      window.location.href = "../index.html";
+      window.location.href = "../locket.html";
     } catch (err) {
       alert("Erro no login");
     }

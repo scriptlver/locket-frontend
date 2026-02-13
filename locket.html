@@ -1,30 +1,52 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Locket</title>
-
-    <link rel="stylesheet" href="assets/css/locket.css" />
+    <title>Home - Locket</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
 
   <body>
-    <div class="locket-container">
-      <img
-        src="assets/images/heart-locket.png"
-        alt="Medalhão Locket"
-        class="medalhao"
-        id="medalhao"
-      />
+    <div id="menu-mobile"></div>
+
+    <header class="header">
+      <img src="assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
+      <h1 class="title">Madison Beer</h1>
+
+      <nav class="menu-desktop">
+        <a href="index.html">Home</a>
+        <a href="songs.html">Músicas</a>
+        <a href="#" id="perfil-link">Perfil</a>
+        <a href="favorites.html">Favoritos</a>
+        <a href="terms.html" target="_blank">Termos de Uso</a>
+      </nav>
+    </header>
+
+    <div class="main-content">
+      <section class="album-card">
+        <h2 class="album-title">Locket</h2>
+
+        <img
+          src="assets/images/locket.png"
+          alt="Capa do álbum Locket"
+          class="album-cover"
+        />
+
+        <div class="album-actions">
+          <p>Escute agora!</p>
+          <a href="songs.html" class="album-button">Locket</a>
+        </div>
+      </section>
     </div>
 
     <footer class="footer">
       <p>
         © 2026 Locket — por
-        <a href="https://github.com/scriptlver" target="_blank"> scriptlver </a>
+        <a href="https://github.com/scriptlver" target="_blank">scriptlver</a>
       </p>
     </footer>
 
-    <script src="assets/js/locket.js"></script>
+    <script src="assets/js/script.js"></script>
   </body>
 </html>
