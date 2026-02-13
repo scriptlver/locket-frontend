@@ -5,6 +5,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
+}
+
+html, body {
+  height: 100%;
 }
 
 :root {
@@ -15,13 +20,22 @@
 }
 
 body {
+  display: flex;              
+  flex-direction: column;     
+  min-height: 100vh;   
   font-family: "Cormorant Garamond", serif;
   background-color: var(--background-color);
   color: var(--text-color);
-
+  
   opacity: 0;
   transition: opacity 0.4s ease;
 }
+
+/* Conteúdo principal que cresce para preencher o espaço entre header e footer */
+.main-content {
+  flex: 1;
+}
+
 
 .header {
   display: flex;
@@ -746,7 +760,30 @@ a {
 }
 
 /* footer, vou ter q fazer um pra cada página pq né */
+.main-content {
+  flex: 1; 
+}
 
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 1.5rem 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+.footer a {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+  font-weight: 300;
+  transition: opacity 0.3s ease;
+}
+
+.footer a:hover {
+  opacity: 0.6;
+}
 
 
 /* desktop */
