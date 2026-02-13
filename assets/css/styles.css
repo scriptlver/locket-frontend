@@ -482,7 +482,9 @@ a {
 }
 
 .profile-text {
-  font-size: 12px;
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.6);
+
 }
 
 .profile-actions {
@@ -744,21 +746,23 @@ a {
 }
 
 /* footer, vou ter q fazer um pra cada página pq né */
-
-.footer-1 {
+.footer-index {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
   text-align: center;
-  padding: 20px 0;
 
   font-family: "Cormorant Garamond", serif;
   font-size: 14px;
 
   color: rgba(0, 0, 0, 0.5);
+
   letter-spacing: 1px;
 
-  margin-top: 120px;
+  z-index: 2;
 }
 
-.footer-1 a {
+.footer-index a {
   color: rgba(0, 0, 0, 0.5);
   text-decoration: none;
   font-weight: 300;
@@ -766,24 +770,31 @@ a {
   transition: opacity 0.3s ease;
 }
 
-.footer-1 a:hover {
+.footer-index a:hover {
   opacity: 0.6;
 }
 
-.footer-2 {
+.footer-account {
+  bottom: 0;         
+  left: 0;
+  width: 100%;
+
   text-align: center;
-  padding: 20px 0;
 
   font-family: "Cormorant Garamond", serif;
   font-size: 14px;
 
   color: rgba(0, 0, 0, 0.5);
+
   letter-spacing: 1px;
 
-  margin-top: 340px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+
 }
 
-.footer-2 a {
+
+.footer-account a {
   color: rgba(0, 0, 0, 0.5);
   text-decoration: none;
   font-weight: 300;
@@ -791,57 +802,7 @@ a {
   transition: opacity 0.3s ease;
 }
 
-.footer-2 a:hover {
-  opacity: 0.6;
-}
-
-.footer-3 {
-  text-align: center;
-  padding: 20px 0;
-
-  font-family: "Cormorant Garamond", serif;
-  font-size: 14px;
-
-  color: rgba(0, 0, 0, 0.5);
-  letter-spacing: 1px;
-
-  margin-top: 240px;
-}
-
-.footer-3 {
-  color: rgba(0, 0, 0, 0.5);
-  text-decoration: none;
-  font-weight: 300;
-
-  transition: opacity 0.3s ease;
-}
-
-.footer-3 a:hover {
-  opacity: 0.6;
-}
-
-.footer-4 {
-  text-align: center;
-  padding: 20px 0;
-
-  font-family: "Cormorant Garamond", serif;
-  font-size: 14px;
-
-  color: rgba(0, 0, 0, 0.5);
-  letter-spacing: 1px;
-
-  margin-top: 1px;
-}
-
-.footer-4 a {
-  color: rgba(0, 0, 0, 0.5);
-  text-decoration: none;
-  font-weight: 300;
-
-  transition: opacity 0.3s ease;
-}
-
-.footer-4 a:hover {
+.footer-account a:hover {
   opacity: 0.6;
 }
 
@@ -1010,15 +971,4 @@ a {
     font-size: 15px;
   }
 
-  .footer-1 {
-    margin-top: 38px;
-  }
-
-  .footer-2 {
-    margin-top: 244px;
-  }
-
-  .footer-3 {
-    margin-top: 98px;
-  }
 }
