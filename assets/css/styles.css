@@ -746,65 +746,7 @@ a {
 }
 
 /* footer, vou ter q fazer um pra cada página pq né */
-.footer-index {
-  position: absolute;
-  bottom: 25px;
-  width: 100%;
-  text-align: center;
 
-  font-family: "Cormorant Garamond", serif;
-  font-size: 14px;
-
-  color: rgba(0, 0, 0, 0.5);
-
-  letter-spacing: 1px;
-
-  z-index: 2;
-}
-
-.footer-index a {
-  color: rgba(0, 0, 0, 0.5);
-  text-decoration: none;
-  font-weight: 300;
-
-  transition: opacity 0.3s ease;
-}
-
-.footer-index a:hover {
-  opacity: 0.6;
-}
-
-.footer-account {
-  bottom: 0;         
-  left: 0;
-  width: 100%;
-
-  text-align: center;
-
-  font-family: "Cormorant Garamond", serif;
-  font-size: 14px;
-
-  color: rgba(0, 0, 0, 0.5);
-
-  letter-spacing: 1px;
-
-  margin-top: 40px;
-  margin-bottom: 30px;
-
-}
-
-
-.footer-account a {
-  color: rgba(0, 0, 0, 0.5);
-  text-decoration: none;
-  font-weight: 300;
-
-  transition: opacity 0.3s ease;
-}
-
-.footer-account a:hover {
-  opacity: 0.6;
-}
 
 
 /* desktop */
