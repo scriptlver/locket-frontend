@@ -31,7 +31,6 @@ body {
   transition: opacity 0.4s ease;
 }
 
-/* Conteúdo principal que cresce para preencher o espaço entre header e footer */
 .main-content {
   flex: 1;
 }
@@ -331,7 +330,6 @@ a {
 }
 
 .login-card {
-  background: #f6f2ec;
   width: 80%;
   max-width: 360px;
   margin: 40px auto;
@@ -365,12 +363,14 @@ a {
   width: 100%;
   padding: 11px;
   border: none;
+  margin-bottom: 0;
   border-radius: 8px;
   background: #d2b8a3;
   cursor: pointer;
   font-family: "Cormorant Garamond", serif;
   font-size: 1rem;
 }
+
 
 .login-register {
   margin-top: 12px;
@@ -759,10 +759,6 @@ a {
   background: #c6a895;
 }
 
-/* footer, vou ter q fazer um pra cada página pq né */
-.main-content {
-  flex: 1; 
-}
 
 .footer {
   width: 100%;

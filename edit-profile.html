@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Editar Perfil - Locket</title>
-
     <link rel="stylesheet" href="../assets/css/styles.css" />
   </head>
 
@@ -13,7 +12,6 @@
 
     <header class="header">
       <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
-
       <h1 class="title">Madison Beer</h1>
 
       <nav class="menu-desktop">
@@ -25,52 +23,61 @@
       </nav>
     </header>
 
-    <section class="login-card">
-      <h2 class="login-title">Editar perfil</h2>
+    <div class="main-content">
+      <section class="login-card">
+        <h2 class="login-title">Editar perfil</h2>
 
-      <div class="profile-photo-edit">
-        <label for="foto" class="profile-label-edit">
-          <img
-            src="../assets/images/icons/profile.png"
-            id="preview-foto"
-            class="profile-preview"
-            alt="Foto de perfil"
-          />
-          <span class="profile-text">Alterar foto de perfil</span>
-        </label>
+        <div class="profile-photo-edit">
+          <label for="foto" class="profile-label-edit">
+            <img
+              src="../assets/images/icons/profile.png"
+              id="preview-foto"
+              class="profile-preview"
+              alt="Foto de perfil"
+            />
+            <span class="profile-text">Alterar foto de perfil</span>
+          </label>
 
-        <input type="file" id="foto" accept="image/*" hidden />
-      </div>
-
-      <form id="profile-form" autocomplete="on">
-        <div class="login-field">
-          <label>Nome de usuário</label>
-          <input type="text" id="nome-usuario" />
+          <input type="file" id="foto" accept="image/*" hidden />
         </div>
 
-        <div class="login-field">
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" />
-        </div>
+        <form id="profile-form" autocomplete="on">
+          <div class="login-field">
+            <label>Nome de usuário</label>
+            <input type="text" id="nome-usuario" />
+          </div>
 
-        <div class="login-field">
-          <label for="bio">Biografia</label>
-          <textarea id="bio" rows="3"></textarea>
-        </div>
+          <div class="login-field">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" />
+          </div>
 
-        <div class="login-field">
-          <label for="email">Email</label>
-          <input type="email" id="email" />
-        </div>
+          <div class="login-field">
+            <label for="bio">Biografia</label>
+            <textarea id="bio" rows="3"></textarea>
+          </div>
 
-        <div class="login-field">
-          <label for="senha">Senha</label>
-          <input type="password" id="senha" />
-        </div>
+          <div class="login-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" />
+          </div>
 
-        <button type="submit" class="login-btn">Salvar alterações</button>
-      </form>
-    </section>
+          <div class="login-field">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" />
+          </div>
+
+          <button type="submit" class="login-btn">Salvar alterações</button>
+        </form>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <p>
+        © 2026 Locket — por
+        <a href="https://github.com/scriptlver" target="_blank">scriptlver</a>
+      </p>
+    </footer>
 
     <script src="../assets/js/script.js"></script>
   </body>

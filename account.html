@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Criar Conta - Locket</title>
-
     <link rel="stylesheet" href="../assets/css/styles.css" />
   </head>
 
@@ -13,7 +12,6 @@
 
     <header class="header">
       <img src="../assets/images/icons/menu.png" alt="Menu" class="menu-icon" />
-
       <h1 class="title">Madison Beer</h1>
 
       <nav class="menu-desktop">
@@ -25,63 +23,70 @@
       </nav>
     </header>
 
-    <section class="login-card">
-      <h2 class="login-title">Criar conta</h2>
+    <div class="main-content">
+      <section class="login-card">
+        <h2 class="login-title">Criar conta</h2>
 
-      <div class="profile-photo">
-        <label for="foto" class="profile-label">
-          <img
-            src="../assets/images/icons/profile.png"
-            id="preview-foto"
-            class="profile-preview"
-          />
-
-          <span class="profile-text">Adicionar foto de perfil</span>
-        </label>
-
-        <input type="file" id="foto" accept="image/*" hidden />
-      </div>
-
-      <form id="login-field">
-        <div class="login-field">
-          <label>Nome de usuário</label>
-          <input type="text" id="nome-usuario" />
-        </div>
-
-        <div class="login-field">
-          <label>Nome</label>
-          <input type="text" id="nome" />
-        </div>
-
-        <div class="login-field">
-          <label>Email</label>
-          <input type="email" id="email" />
-        </div>
-
-        <div class="login-field">
-          <label>Senha</label>
-          <input type="password" id="senha" />
-        </div>
-
-        <div class="login-field">
-          <label>Repita a sua senha</label>
-          <input type="password" id="senha2" />
-        </div>
-
-        <div class="login-field terms">
-          <label class="terms-label">
-            <input type="checkbox" id="aceitar-termos" />
-            <span class="custom-checkbox"></span>
-            Eu aceito os
-            <a href="../terms.html" target="_blank">Termos de Uso</a>
+        <div class="profile-photo">
+          <label for="foto" class="profile-label">
+            <img
+              src="../assets/images/icons/profile.png"
+              id="preview-foto"
+              class="profile-preview"
+            />
+            <span class="profile-text">Adicionar foto de perfil</span>
           </label>
+          <input type="file" id="foto" accept="image/*" hidden />
         </div>
 
-        <button type="submit" class="login-btn" id="btn-criar-conta">
-          Criar conta
-        </button>
-      </form>
-    </section>
+        <form id="login-field">
+          <div class="login-field">
+            <label>Nome de usuário</label>
+            <input type="text" id="nome-usuario" />
+          </div>
+
+          <div class="login-field">
+            <label>Nome</label>
+            <input type="text" id="nome" />
+          </div>
+
+          <div class="login-field">
+            <label>Email</label>
+            <input type="email" id="email" />
+          </div>
+
+          <div class="login-field">
+            <label>Senha</label>
+            <input type="password" id="senha" />
+          </div>
+
+          <div class="login-field">
+            <label>Repita a sua senha</label>
+            <input type="password" id="senha2" />
+          </div>
+
+          <div class="login-field terms">
+            <label class="terms-label">
+              <input type="checkbox" id="aceitar-termos" />
+              <span class="custom-checkbox"></span>
+              Eu aceito os
+              <a href="../terms.html" target="_blank">Termos de Uso</a>
+            </label>
+          </div>
+
+          <button type="submit" class="login-btn" id="btn-criar-conta">
+            Criar conta
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <p>
+        © 2026 Locket — por
+        <a href="https://github.com/scriptlver" target="_blank">scriptlver</a>
+      </p>
+    </footer>
 
     <script src="../assets/js/script.js"></script>
   </body>
