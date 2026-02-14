@@ -8,7 +8,7 @@
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,13 +44,14 @@ body::before {
 }
 
 .medalhao {
-  width: 150vw;
-  max-width: 800px;
-  padding-bottom: 300px;
+  width: 75%;
+  max-width: 360px;
+  height: auto;
   cursor: pointer;
+
   transition:
-  transform 0.4s ease,
-  filter 0.4s ease;
+    transform 0.4s ease,
+    filter 0.4s ease;
 
   animation: fadeIn 1.2s ease forwards;
   opacity: 0;
@@ -103,7 +104,7 @@ body::before {
 
 @media (min-width: 768px) {
   .medalhao {
-    max-width: 450px;
-    margin-top: 110px;
+    max-width: 460px;
+    margin-top: 60px;
   }
 }
