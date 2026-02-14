@@ -101,3 +101,11 @@ body::before {
 .footer a:hover {
   opacity: 0.6;
 }
+
+@media (min-width: 768px) {
+  .medalhao {
+    max-width: 650px;     /* diminui o tamanho */
+    margin-top: -180px;   /* levanta o medalhão */
+  }
+}
+
