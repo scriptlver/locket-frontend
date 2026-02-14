@@ -17,7 +17,6 @@ body {
   background-color: #9bb5bf;
   font-family: Arial, sans-serif;
 
-  overflow-x: hidden;
   position: relative;
 
   transition: opacity 0.6s ease;
@@ -49,14 +48,15 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 60px; /* sobe o conjunto */
+  padding-top: 40px;
 }
 
-.medalhao {
-  width: 100vw;
-  max-width: 800px;
 
-  transform: scale(1.2) translateY(-100px);
+.medalhao {
+  width: 120%;
+  max-width: 850px;
+
+  margin-top: -80px;
 
   filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.3));
 }
