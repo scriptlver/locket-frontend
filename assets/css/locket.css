@@ -58,9 +58,8 @@ body::before {
 /* ================= MEDALHÃO ================= */
 
 .medalhao {
-  width: min(90vw, 600px);
+  width: min(110vw, 750px);
   height: auto;
-  margin-top: 0;
 
   transition: transform 0.4s ease, filter 0.4s ease;
   animation: fadeIn 1.2s ease forwards;
