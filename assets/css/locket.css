@@ -105,7 +105,7 @@ body::before {
 @media (min-width: 768px) {
   .medalhao {
     max-width: 650px;     /* diminui o tamanho */
-    margin-top: -220px;   /* levanta o medalhão */
+    margin-top: -320px;   /* levanta o medalhão */
   }
 }
 
