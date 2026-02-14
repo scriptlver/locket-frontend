@@ -29,10 +29,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.99;
-
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent);
   pointer-events: none;
   z-index: 0;
 }
