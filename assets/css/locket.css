@@ -71,6 +71,7 @@ body::before {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.5);
   letter-spacing: 1px;
+    margin-top: auto;
 }
 
 .footer a {
@@ -91,7 +92,8 @@ body::before {
   }
 
   .footer{
-    margin-top: -30px;
+      transform: translateY(-30px);
+
   }
 
 
