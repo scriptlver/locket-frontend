@@ -53,10 +53,10 @@ body::before {
 }
 
 .medalhao {
-  width: 99vw;   /* nunca passa de 100 */
-  max-width: 780px; /* controla em telas grandes */
+  width: 100vw;   /* nunca passa de 100 */
+  max-width: 800px; /* controla em telas grandes */
 
-  transform: translateY(-40px); /* sobe sem quebrar layout */
+transform: translateY(-180px);
 
   transition: transform 0.4s ease, filter 0.4s ease;
   animation: fadeIn 1.2s ease forwards;
