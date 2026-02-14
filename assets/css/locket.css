@@ -83,7 +83,7 @@ body::before {
   width: 100%;
   text-align: center;
 
-  margin-top: -90px; /* sobe */
+  margin-top: 90px; /* sobe */
 
   font-family: "Cormorant Garamond", serif;
   font-size: 14px;
