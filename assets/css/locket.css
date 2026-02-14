@@ -92,7 +92,7 @@ body::before {
   width: 100%;
   text-align: center;
 
-    margin-top: -40px; /* sobe */
+    margin-top: -30px; /* sobe */
 
   font-family: "Cormorant Garamond", serif;
   font-size: 14px;
@@ -109,17 +109,4 @@ body::before {
 
 .footer a:hover {
   opacity: 0.6;
-}
-
-@media screen and (max-width: 768px) {
-  .medalhao {
-    width: 200vw;
-    margin-top: -400px;
-  }
-
-  .footer {
-    font-size: 12px;
-    margin-top: -30px;
-  }
-  
 }
