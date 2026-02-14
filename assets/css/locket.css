@@ -47,19 +47,21 @@ body::before {
 .locket-container {
   flex: 1;
   width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; 
   z-index: 1;
 }
+
 
 /* ================= MEDALHÃO ================= */
 
 .medalhao {
-  width: 90%;
-  max-width: 480px;
+  width: 160vw;
+  max-width: none;
   height: auto;
-
+  margin-top: -300px;
   transition: transform 0.4s ease, filter 0.4s ease;
   animation: fadeIn 1.2s ease forwards;
   opacity: 0;
@@ -89,7 +91,6 @@ body::before {
 .footer {
   width: 100%;
   text-align: center;
-  padding: 30px 0;
 
   font-family: "Cormorant Garamond", serif;
   font-size: 14px;
@@ -106,12 +107,4 @@ body::before {
 
 .footer a:hover {
   opacity: 0.6;
-}
-
-/* ================= DESKTOP ================= */
-
-@media (min-width: 768px) {
-  .medalhao {
-    max-width: 520px;
-  }
 }
