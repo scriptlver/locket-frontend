@@ -4,8 +4,6 @@
   box-sizing: border-box;
 }
 
-/* ================= BODY ================= */
-
 body {
   min-height: 100dvh;
   display: flex;
@@ -13,20 +11,16 @@ body {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
-
   background-color: #9bb5bf;
   font-family: Arial, sans-serif;
-
   position: relative;
-
+  opacity: 0;
   transition: opacity 0.6s ease;
 }
 
 body.loaded {
   opacity: 1;
 }
-
-/* Luz suave no fundo */
 
 body::before {
   content: "";
@@ -41,43 +35,35 @@ body::before {
   z-index: 0;
 }
 
-/* ================= CONTAINER ================= */
-
 .locket-container {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding-top: 40px;
+  z-index: 1;
 }
 
 .medalhao {
   width: 100%;
   max-width: 850px;
-
   margin-top: -100px;
-
   filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.3));
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.35s ease;
+  transform-origin: center;
+  will-change: transform;
 }
 
 .medalhao:hover {
-  transform: scale(1.08) rotate(-2deg);
-  filter: brightness(1.1);
+  transform: scale(1.05) rotate(-1.5deg);
+  filter: drop-shadow(0 50px 90px rgba(0, 0, 0, 0.35)) brightness(1.08);
 }
 
 .medalhao:active {
   transform: scale(0.96);
 }
-
-/* ================= ANIMAÇÃO ================= */
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-/* ================= FOOTER ================= */
 
 .footer {
   width: 100%;
@@ -101,9 +87,7 @@ body::before {
 
 @media (min-width: 768px) {
   .medalhao {
-    max-width: 650px;     /* diminui o tamanho */
-    margin-top: -400px;   /* levanta o medalhão */
+    max-width: 650px;
+    margin-top: -400px;
   }
-
 }
-
