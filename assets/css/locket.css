@@ -105,8 +105,5 @@ body::before {
     margin-top: -400px;   /* levanta o medalhão */
   }
 
-  .footer{
-    margin-top: -200px;   /* levanta o footer */
-  }
 }
 
