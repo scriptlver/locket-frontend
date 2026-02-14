@@ -8,14 +8,14 @@
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
 
   background-color: #9bb5bf;
   font-family: Arial, sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
 
   transition: opacity 0.6s ease;
