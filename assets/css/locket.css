@@ -44,9 +44,9 @@ body::before {
 }
 
 .medalhao {
-  width: 90vw;
-  max-width: 380px;
-  padding-bottom: 140px;
+  width: 150vw;
+  max-width: 800px;
+  padding-bottom: 300px;
   cursor: pointer;
   transition:
   transform 0.4s ease,
@@ -75,7 +75,7 @@ body::before {
 
 .footer {
   position: absolute;
-  bottom: 25px;
+  bottom: 40px;
   width: 100%;
   text-align: center;
 
