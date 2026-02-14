@@ -44,9 +44,9 @@ body::before {
 }
 
 .medalhao {
-  width: 150vw;
-  max-width: 800px;
-  padding-bottom: 300px;
+  width: 165vw;
+  max-width: 700px;
+  padding-bottom: 350px;
   cursor: pointer;
   transition:
   transform 0.4s ease,
