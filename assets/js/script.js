@@ -99,7 +99,7 @@ fetch(`${basePath}menu-mobile.html`)
       .getElementById("closeMenu")
       ?.addEventListener("click", () => menu.classList.remove("active"));
 
-    document.querySelectorAll("#perfil-link").forEach((link) => {
+    document.querySelectorAll(".perfil-link").forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
 
