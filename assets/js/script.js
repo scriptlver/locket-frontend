@@ -354,26 +354,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ================= DELETAR CONTA ================= */
 
-document
-  .getElementById("confirm-delete")
-  ?.addEventListener("click", async () => {
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-    if (!usuario) return;
+document.addEventListener("DOMContentLoaded", () => {
+  document
+    .getElementById("confirm-delete")
+    ?.addEventListener("click", async () => {
+      const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+      if (!usuario) return;
 
-    const response = await fetch(
-      `${API_URL}/api/users/${usuario.id}`,
-      { method: "DELETE" }
-    );
+      const response = await fetch(
+        `${API_URL}/api/users/${usuario.id}`,
+        { method: "DELETE" }
+      );
 
-    if (!response.ok) {
-      alert("Erro ao deletar conta");
-      return;
-    }
+      if (!response.ok) {
+        alert("Erro ao deletar conta");
+        return;
+      }
 
-    localStorage.removeItem("usuarioLogado");
-    window.location.href = basePath + "login.html";
-  });
-
+      localStorage.removeItem("usuarioLogado");
+      window.location.href = basePath + "login.html";
+    });
+});
 
 /* ================= FADE IN ================= */
 
