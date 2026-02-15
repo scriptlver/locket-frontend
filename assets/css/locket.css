@@ -4,6 +4,8 @@
   box-sizing: border-box;
 }
 
+/* ================= BODY ================= */
+
 body {
   min-height: 100dvh;
   display: flex;
@@ -11,17 +13,21 @@ body {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
+
   background-color: #9bb5bf;
   font-family: Arial, sans-serif;
+
   position: relative;
+  isolation: isolate;
+
   transition: opacity 0.6s ease;
 }
-
-
 
 body.loaded {
   opacity: 1;
 }
+
+/* ================= LUZ SUAVE ================= */
 
 body::before {
   content: "";
@@ -29,27 +35,27 @@ body::before {
   inset: 0;
   background: radial-gradient(
     circle at center,
-    rgba(255, 255, 255, 0.2),
-    transparent
+    rgba(255, 255, 255, 0.22),
+    transparent 65%
   );
   pointer-events: none;
-  z-index: -2;
+  z-index: 0;
 }
+
+/* ================= NOISE / GRAIN ================= */
 
 body::after {
   content: "";
   position: fixed;
   inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+  opacity: 0.9;
   pointer-events: none;
-  z-index: -1;
-
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-
-  opacity: 0.99;
+  z-index: 1;
 }
 
-
-
+/* ================= CONTEÚDO ================= */
 
 .locket-container {
   flex: 1;
@@ -57,17 +63,22 @@ body::after {
   justify-content: center;
   align-items: flex-start;
   padding-top: 40px;
-  z-index: 1;
+
+  position: relative;
+  z-index: 2;
 }
 
 .medalhao {
   width: 100%;
   max-width: 850px;
   margin-top: -100px;
+
   filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.3));
+
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.35s ease;
+
   transform-origin: center;
   will-change: transform;
 }
@@ -81,15 +92,22 @@ body::after {
   transform: scale(0.96);
 }
 
+/* ================= FOOTER ================= */
+
 .footer {
   width: 100%;
   text-align: center;
+
   font-family: "Cormorant Garamond", serif;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.35);
   letter-spacing: 1px;
+
   margin-top: auto;
   transform: translateY(-20px);
+
+  position: relative;
+  z-index: 2;
 }
 
 .footer a {
@@ -102,6 +120,8 @@ body::after {
 .footer a:hover {
   opacity: 0.6;
 }
+
+/* ================= DESKTOP ================= */
 
 @media (min-width: 768px) {
   .medalhao {
