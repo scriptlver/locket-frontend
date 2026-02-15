@@ -303,14 +303,31 @@ document
     window.location.href = "profile.html";
   });
 
-/* ================= LOGOUT (GLOBAL) ================= */
+/* ================= LOGOUT PERFIL (MODAL) ================= */
 
-document.addEventListener("click", (e) => {
-  if (e.target.id === "confirm-logout") {
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logout-btn");
+  const modal = document.getElementById("logout-modal");
+  const cancelBtn = document.getElementById("cancel-logout");
+  const confirmBtn = document.getElementById("confirm-logout");
+
+  // abrir modal
+  logoutBtn?.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  // cancelar
+  cancelBtn?.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // CONFIRMAR LOGOUT (AQUI É O REAL)
+  confirmBtn?.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogado");
     window.location.href = basePath + "login.html";
-  }
+  });
 });
+
 
 
 /* ================= DELETAR CONTA ================= */
