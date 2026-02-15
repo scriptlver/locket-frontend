@@ -106,8 +106,8 @@ fetch(`${basePath}menu-mobile.html`)
         const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
         window.location.href = usuario
-          ? `${basePath}profile.html`
-          : `${basePath}login.html`;
+          ? `/profile.html`
+          : `/login.html`;
       });
     });
   });
