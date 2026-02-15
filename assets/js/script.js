@@ -103,7 +103,6 @@ fetch(`${basePath}menu-mobile.html`)
       menu.classList.remove("active");
     });
 
-    // perfil (mantém tua lógica)
     document.querySelectorAll(".perfil-link").forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -111,14 +110,8 @@ fetch(`${basePath}menu-mobile.html`)
         window.location.href = usuario ? "/profile.html" : "/login.html";
       });
     });
-
-    // 🔥 LOGOUT CERTO (AGORA FUNCIONA)
-    document.getElementById("confirm-logout")
-      ?.addEventListener("click", () => {
-        localStorage.removeItem("usuarioLogado");
-        window.location.href = basePath + "login.html";
-      });
   });
+
 
 /* ================= LOGIN ================= */
 
@@ -310,15 +303,15 @@ document
     window.location.href = "profile.html";
   });
 
-/* ================= LOGOUT ================= */
+/* ================= LOGOUT (GLOBAL) ================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("confirm-logout")?.addEventListener("click", () => {
+document.addEventListener("click", (e) => {
+  if (e.target.id === "confirm-logout") {
     localStorage.removeItem("usuarioLogado");
     window.location.href = basePath + "login.html";
-  });
-
+  }
 });
+
 
 /* ================= DELETAR CONTA ================= */
 
