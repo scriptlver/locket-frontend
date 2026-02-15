@@ -193,11 +193,28 @@ if (currentPath.includes("account.html")) {
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
+  // 🔐 Se tentar acessar perfil sem login
   if (!usuario && currentPath.includes("profile")) {
     window.location.href = "login.html";
     return;
   }
 
+  // 🧼 Valida se usuário ainda existe no backend
+  if (currentPath.includes("profile") && usuario?.id) {
+    fetch(`${API_URL}/api/users/${usuario.id}`)
+      .then((res) => {
+        if (!res.ok) {
+          localStorage.removeItem("usuarioLogado");
+          window.location.href = "login.html";
+        }
+      })
+      .catch(() => {
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = "login.html";
+      });
+  }
+
+  // 🖼️ Foto de perfil
   const profileImg = document.getElementById("profile-img");
   if (profileImg) {
     profileImg.src = usuario?.foto
@@ -205,29 +222,50 @@ document.addEventListener("DOMContentLoaded", () => {
       : `${basePath}assets/images/icons/profile.png`;
   }
 
+  // 🧾 Dados do perfil
   const map = {
     nome: "profile-name",
-    nomeUsuario: "profile-username",
+    nomeUsuario: "profile-nome-usuario",
     email: "profile-email",
     bio: "profile-bio",
   };
 
-  if (currentPath.includes("profile")) {
-  fetch(`${API_URL}/api/users/${usuario?.id}`)
-    .then(res => {
-      if (!res.ok) {
-        localStorage.removeItem("usuarioLogado");
-        window.location.href = "login.html";
-      }
-    });
-}
+  Object.entries(map).forEach(([campo, id]) => {
+    const el = document.getElementById(id);
+    if (el && usuario) el.textContent = usuario[campo] || "";
+  });
+});
+
+/* ================= LOGOUT ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logout-btn");
+  const modal = document.getElementById("logout-modal");
+  const cancel = document.getElementById("cancel-logout");
+  const confirm = document.getElementById("confirm-logout");
+
+  // Abrir modal
+  logoutBtn?.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  // Cancelar
+  cancel?.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // Confirmar logout
+  confirm?.addEventListener("click", () => {
+    localStorage.removeItem("usuarioLogado");
+    window.location.href = basePath + "login.html";
+  });
+});
 
 
   Object.entries(map).forEach(([campo, id]) => {
     const el = document.getElementById(id);
     if (el) el.textContent = usuario?.[campo] || "";
   });
-});
 
 /* ================= EDITAR PERFIL ================= */
 
