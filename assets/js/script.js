@@ -7,6 +7,8 @@ const API_URL =
     ? "http://localhost:3000"
     : "https://locket-backend-78sy.onrender.com";
 
+const currentPath = location.pathname;
+
 /* ================= FAVORITOS ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -39,12 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const data = await response.json();
-
         usuario.favoritos = data.favoritos;
         localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
 
         const ativo = data.favoritos.includes(musicaId);
-
         img.src = ativo
           ? `${basePath}assets/images/icons/favorite.png`
           : `${basePath}assets/images/icons/desfavorite.png`;
@@ -54,9 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  if (window.location.pathname.includes("favorites")) {
-    if (!usuario?.favoritos) return;
-
+  if (currentPath.includes("favorites") && usuario?.favoritos) {
     document.querySelectorAll(".song-item").forEach((song) => {
       const musicaId = song.querySelector(".fav-btn")?.dataset.musica;
       if (!usuario.favoritos.includes(musicaId)) {
@@ -95,8 +93,12 @@ fetch(`${basePath}menu-mobile.html`)
     menuMobile.innerHTML = html;
 
     const menu = document.getElementById("menu");
-    const openBtn = document.querySelector(".menu-icon");
-    const closeBtn = document.getElementById("closeMenu");
+    document.querySelector(".menu-icon")?.addEventListener("click", () =>
+      menu.classList.add("active")
+    );
+    document.getElementById("closeMenu")?.addEventListener("click", () =>
+      menu.classList.remove("active")
+    );
 
     document.querySelectorAll("#perfil-link").forEach((link) => {
       link.addEventListener("click", (e) => {
@@ -107,14 +109,9 @@ fetch(`${basePath}menu-mobile.html`)
           : `${basePath}login.html`;
       });
     });
-
-    openBtn?.addEventListener("click", () => menu.classList.add("active"));
-    closeBtn?.addEventListener("click", () => menu.classList.remove("active"));
   });
 
 /* ================= LOGIN ================= */
-
-const currentPath = location.pathname;
 
 if (currentPath.includes("login.html")) {
   document.getElementById("login-field")?.addEventListener("submit", async (e) => {
@@ -132,7 +129,6 @@ if (currentPath.includes("login.html")) {
     });
 
     const data = await response.json();
-
     if (!response.ok) return alert(data.error || "Erro no login");
 
     localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
@@ -174,9 +170,9 @@ if (currentPath.includes("account.html")) {
     });
 
     const data = await response.json();
-    if (!response.ok) return alert(data.error);
+    if (!response.ok) return alert(data.error || "Erro ao criar conta");
 
-    alert("Conta criada!");
+    alert("Conta criada com sucesso!");
     window.location.href = "../login.html";
   });
 }
@@ -198,13 +194,37 @@ document.addEventListener("DOMContentLoaded", () => {
       : `${basePath}assets/images/icons/profile.png`;
   }
 
-  ["nome", "nomeUsuario", "email", "bio"].forEach((campo) => {
-    const el = document.getElementById(`profile-${campo}`);
+  const map = {
+    nome: "profile-name",
+    nomeUsuario: "profile-username",
+    email: "profile-email",
+    bio: "profile-bio",
+  };
+
+  Object.entries(map).forEach(([campo, id]) => {
+    const el = document.getElementById(id);
     if (el) el.textContent = usuario?.[campo] || "";
   });
 });
 
 /* ================= EDITAR PERFIL ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (!currentPath.includes("edit-profile")) return;
+
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  if (!usuario) return;
+
+  document.getElementById("nome-usuario").value = usuario.nomeUsuario || "";
+  document.getElementById("nome").value = usuario.nome || "";
+  document.getElementById("email").value = usuario.email || "";
+  document.getElementById("bio").value = usuario.bio || "";
+
+  const preview = document.getElementById("preview-foto");
+  if (preview && usuario.foto) {
+    preview.src = `${API_URL}/uploads/${usuario.foto}`;
+  }
+});
 
 document.getElementById("profile-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -237,7 +257,7 @@ document.getElementById("profile-form")?.addEventListener("submit", async (e) =>
   });
 
   const data = await response.json();
-  if (!response.ok) return alert(data.error);
+  if (!response.ok) return alert(data.error || "Erro ao atualizar");
 
   localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
   alert("Perfil atualizado!");
@@ -246,9 +266,11 @@ document.getElementById("profile-form")?.addEventListener("submit", async (e) =>
 
 /* ================= LOGOUT ================= */
 
-document.getElementById("confirm-logout")?.addEventListener("click", () => {
-  localStorage.clear();
-  window.location.href = basePath + "login.html";
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("confirm-logout")?.addEventListener("click", () => {
+    localStorage.removeItem("usuarioLogado");
+    window.location.href = basePath + "login.html";
+  });
 });
 
 /* ================= DELETAR CONTA ================= */
@@ -260,7 +282,7 @@ document.getElementById("confirm-delete")?.addEventListener("click", async () =>
     method: "DELETE",
   });
 
-  localStorage.clear();
+  localStorage.removeItem("usuarioLogado");
   window.location.href = basePath + "login.html";
 });
 
