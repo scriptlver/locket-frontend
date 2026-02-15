@@ -301,6 +301,23 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("usuarioLogado");
     window.location.href = basePath + "login.html";
   });
+
+  fetch(`${basePath}menu-mobile.html`)
+  .then((res) => res.text())
+  .then((html) => {
+    const menuMobile = document.getElementById("menu-mobile");
+    if (!menuMobile) return;
+
+    menuMobile.innerHTML = html;
+
+    // 🔥 AQUI DENTRO
+    document.getElementById("confirm-logout")
+      ?.addEventListener("click", () => {
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = basePath + "login.html";
+      });
+  });
+
 });
 
 /* ================= DELETAR CONTA ================= */
