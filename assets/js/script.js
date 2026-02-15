@@ -212,6 +212,17 @@ document.addEventListener("DOMContentLoaded", () => {
     bio: "profile-bio",
   };
 
+  if (currentPath.includes("profile")) {
+  fetch(`${API_URL}/api/users/${usuario?.id}`)
+    .then(res => {
+      if (!res.ok) {
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = "login.html";
+      }
+    });
+}
+
+
   Object.entries(map).forEach(([campo, id]) => {
     const el = document.getElementById(id);
     if (el) el.textContent = usuario?.[campo] || "";
@@ -298,14 +309,22 @@ document
   .getElementById("confirm-delete")
   ?.addEventListener("click", async () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    if (!usuario) return;
 
-    await fetch(`${API_URL}/api/users/${usuario.id}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `${API_URL}/api/users/${usuario.id}`,
+      { method: "DELETE" }
+    );
+
+    if (!response.ok) {
+      alert("Erro ao deletar conta");
+      return;
+    }
 
     localStorage.removeItem("usuarioLogado");
     window.location.href = basePath + "login.html";
   });
+
 
 /* ================= FADE IN ================= */
 
