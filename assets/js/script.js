@@ -115,17 +115,22 @@ fetch(`${basePath}menu-mobile.html`)
 
 /* ================= LOGIN ================= */
 
-if (currentPath.includes("login.html")) {
-  document
-    .getElementById("login-field")
-    ?.addEventListener("submit", async (e) => {
-      e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("login-field");
+  if (!form) return;
 
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      if (!email || !senha) return alert("Preencha todos os campos");
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
 
+    if (!email || !senha) {
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    try {
       const response = await fetch(`${API_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -137,27 +142,28 @@ if (currentPath.includes("login.html")) {
 
       localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
       window.location.href = "../locket.html";
-    });
-}
+    } catch {
+      alert("Erro de conexão com o servidor");
+    }
+  });
+});
+
 
 /* ================= CADASTRO ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
-
   if (!form) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    console.log("SUBMIT PEGOU");
-
-    const nomeUsuario = document.getElementById("nome-usuario")?.value.trim();
-    const nome = document.getElementById("nome")?.value.trim();
-    const email = document.getElementById("email")?.value.trim();
-    const senha = document.getElementById("senha")?.value;
-    const senha2 = document.getElementById("senha2")?.value;
-    const termos = document.getElementById("aceitar-termos")?.checked;
+    const nomeUsuario = document.getElementById("nome-usuario").value.trim();
+    const nome = document.getElementById("nome").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const senha2 = document.getElementById("senha2").value;
+    const termos = document.getElementById("aceitar-termos").checked;
 
     if (!nomeUsuario || !nome || !email || !senha || senha !== senha2) {
       alert("Preencha todos os campos corretamente");
@@ -170,8 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let fotoBase64 = null;
-    const inputFoto = document.getElementById("foto");
-    const file = inputFoto?.files[0];
+    const file = document.getElementById("foto")?.files[0];
 
     if (file) {
       fotoBase64 = await new Promise((resolve, reject) => {
@@ -196,21 +201,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        alert(data.error || "Erro ao criar conta");
-        return;
-      }
+      if (!response.ok) return alert(data.error || "Erro ao criar conta");
 
       alert("Conta criada com sucesso!");
       window.location.href = "../login.html";
-
-    } catch (err) {
-      console.error(err);
+    } catch {
       alert("Erro de conexão com o servidor");
     }
   });
 });
+
 
 
 /* ================= PERFIL ================= */
