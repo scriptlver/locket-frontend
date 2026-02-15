@@ -142,33 +142,47 @@ if (currentPath.includes("login.html")) {
 
 /* ================= CADASTRO ================= */
 
-if (document.getElementById("login-field")) {
-  document
-    .getElementById("login-field")
-    ?.addEventListener("submit", async (e) => {
-      e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("login-field");
 
-      const nomeUsuario = document.getElementById("nome-usuario").value.trim();
-      const nome = document.getElementById("nome").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
-      const senha2 = document.getElementById("senha2").value;
+  if (!form) return;
 
-      if (!nomeUsuario || !nome || !email || !senha || senha !== senha2) {
-        return alert("Dados inválidos");
-      }
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      let fotoBase64 = null;
-      const file = document.getElementById("foto").files[0];
+    console.log("SUBMIT PEGOU");
 
-      if (file) {
-        fotoBase64 = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.readAsDataURL(file);
-        });
-      }
+    const nomeUsuario = document.getElementById("nome-usuario")?.value.trim();
+    const nome = document.getElementById("nome")?.value.trim();
+    const email = document.getElementById("email")?.value.trim();
+    const senha = document.getElementById("senha")?.value;
+    const senha2 = document.getElementById("senha2")?.value;
+    const termos = document.getElementById("aceitar-termos")?.checked;
 
+    if (!nomeUsuario || !nome || !email || !senha || senha !== senha2) {
+      alert("Preencha todos os campos corretamente");
+      return;
+    }
+
+    if (!termos) {
+      alert("Você precisa aceitar os termos");
+      return;
+    }
+
+    let fotoBase64 = null;
+    const inputFoto = document.getElementById("foto");
+    const file = inputFoto?.files[0];
+
+    if (file) {
+      fotoBase64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    try {
       const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -182,12 +196,22 @@ if (document.getElementById("login-field")) {
       });
 
       const data = await response.json();
-      if (!response.ok) return alert(data.error || "Erro ao criar conta");
+
+      if (!response.ok) {
+        alert(data.error || "Erro ao criar conta");
+        return;
+      }
 
       alert("Conta criada com sucesso!");
       window.location.href = "../login.html";
-    });
-}
+
+    } catch (err) {
+      console.error(err);
+      alert("Erro de conexão com o servidor");
+    }
+  });
+});
+
 
 /* ================= PERFIL ================= */
 
