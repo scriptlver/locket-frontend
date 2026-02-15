@@ -257,11 +257,20 @@ document.getElementById("profile-form")?.addEventListener("submit", async (e) =>
   });
 
   const data = await response.json();
-  if (!response.ok) return alert(data.error || "Erro ao atualizar");
+if (!response.ok) return alert(data.error || "Erro ao atualizar");
 
-  localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
-  alert("Perfil atualizado!");
-  window.location.href = "profile.html";
+const usuarioAtualizado = {
+  ...usuario,
+  ...data.usuario,
+};
+
+localStorage.setItem(
+  "usuarioLogado",
+  JSON.stringify(usuarioAtualizado)
+);
+
+alert("Perfil atualizado!");
+window.location.href = "profile.html";
 });
 
 /* ================= LOGOUT ================= */
