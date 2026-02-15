@@ -261,12 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-  Object.entries(map).forEach(([campo, id]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = usuario?.[campo] || "";
-  });
-
 /* ================= EDITAR PERFIL ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
