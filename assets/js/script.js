@@ -376,6 +376,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+/* ================= MODAL DE DELETAR CONTA ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const openBtn = document.getElementById("open-delete-modal");
+  const modal = document.getElementById("delete-modal");
+  const cancelBtn = document.getElementById("cancel-delete");
+
+  // Abrir modal
+  openBtn?.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  // Cancelar
+  cancelBtn?.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+});
+
+
 /* ================= FADE IN ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
