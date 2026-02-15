@@ -142,7 +142,7 @@ if (currentPath.includes("login.html")) {
 
 /* ================= CADASTRO ================= */
 
-if (currentPath.includes("account.html")) {
+if (document.getElementById("login-field")) {
   document
     .getElementById("login-field")
     ?.addEventListener("submit", async (e) => {
