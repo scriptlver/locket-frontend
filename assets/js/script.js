@@ -92,24 +92,32 @@ fetch(`${basePath}menu-mobile.html`)
     menuMobile.innerHTML = html;
 
     const menu = document.getElementById("menu");
-    document
-      .querySelector(".menu-icon")
-      ?.addEventListener("click", () => menu.classList.add("active"));
-    document
-      .getElementById("closeMenu")
-      ?.addEventListener("click", () => menu.classList.remove("active"));
+    const openBtn = document.querySelector(".menu-icon");
+    const closeBtn = document.getElementById("closeMenu");
 
+    openBtn?.addEventListener("click", () => {
+      menu.classList.add("active");
+    });
+
+    closeBtn?.addEventListener("click", () => {
+      menu.classList.remove("active");
+    });
+
+    // perfil (mantém tua lógica)
     document.querySelectorAll(".perfil-link").forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
-
         const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-
-        window.location.href = usuario
-          ? `/profile.html`
-          : `/login.html`;
+        window.location.href = usuario ? "/profile.html" : "/login.html";
       });
     });
+
+    // 🔥 LOGOUT CERTO (AGORA FUNCIONA)
+    document.getElementById("confirm-logout")
+      ?.addEventListener("click", () => {
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = basePath + "login.html";
+      });
   });
 
 /* ================= LOGIN ================= */
@@ -236,30 +244,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* ================= LOGOUT ================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-  const logoutBtn = document.getElementById("logout-btn");
-  const modal = document.getElementById("logout-modal");
-  const cancel = document.getElementById("cancel-logout");
-  const confirm = document.getElementById("confirm-logout");
-
-  // Abrir modal
-  logoutBtn?.addEventListener("click", () => {
-    modal.style.display = "flex";
-  });
-
-  // Cancelar
-  cancel?.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-
-  // Confirmar logout
-  confirm?.addEventListener("click", () => {
-    localStorage.removeItem("usuarioLogado");
-    window.location.href = basePath + "login.html";
-  });
-});
 
 /* ================= EDITAR PERFIL ================= */
 
@@ -332,22 +316,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("confirm-logout")?.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogado");
     window.location.href = basePath + "login.html";
-  });
-
-  fetch(`${basePath}menu-mobile.html`)
-  .then((res) => res.text())
-  .then((html) => {
-    const menuMobile = document.getElementById("menu-mobile");
-    if (!menuMobile) return;
-
-    menuMobile.innerHTML = html;
-
-    // 🔥 AQUI DENTRO
-    document.getElementById("confirm-logout")
-      ?.addEventListener("click", () => {
-        localStorage.removeItem("usuarioLogado");
-        window.location.href = basePath + "login.html";
-      });
   });
 
 });
