@@ -112,7 +112,6 @@ fetch(`${basePath}menu-mobile.html`)
     });
   });
 
-
 /* ================= LOGIN ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -147,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
 
 /* ================= CADASTRO ================= */
 
@@ -209,7 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
   const inputFoto = document.getElementById("foto");
   const preview = document.getElementById("preview-foto");
@@ -227,9 +224,6 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsDataURL(file);
   });
 });
-
-
-
 
 /* ================= PERFIL ================= */
 
@@ -257,17 +251,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-// 🖼️ Foto de perfil (corrigido)
-const profileImg = document.getElementById("profile-img");
-if (profileImg) {
-  if (usuario?.foto) {
-    profileImg.src = usuario.foto.startsWith("data:image")
-      ? usuario.foto
-      : `${API_URL}/uploads/${usuario.foto}`;
-  } else {
-    profileImg.src = `${basePath}assets/images/icons/profile.png`;
+  // 🖼️ Foto de perfil (corrigido)
+  const profileImg = document.getElementById("profile-img");
+  if (profileImg) {
+    if (usuario?.foto) {
+      profileImg.src = usuario.foto.startsWith("data:image")
+        ? usuario.foto
+        : `${API_URL}/uploads/${usuario.foto}`;
+    } else {
+      profileImg.src = `${basePath}assets/images/icons/profile.png`;
+    }
   }
-}
 
   // 🧾 Dados do perfil
   const map = {
@@ -283,7 +277,6 @@ if (profileImg) {
   });
 });
 
-
 /* ================= EDITAR PERFIL ================= */
 document.addEventListener("DOMContentLoaded", () => {
   if (!currentPath.includes("edit-profile")) return;
@@ -298,13 +291,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("bio").value = usuario.bio || "";
 
   // Preview da foto (corrigido)
-const preview = document.getElementById("preview-foto");
-if (preview && usuario.foto) {
-  preview.src = usuario.foto.startsWith("data:image")
-    ? usuario.foto
-    : `${API_URL}/uploads/${usuario.foto}`;
-}
-
+  const preview = document.getElementById("preview-foto");
+  if (preview && usuario.foto) {
+    preview.src = usuario.foto.startsWith("data:image")
+      ? usuario.foto
+      : `${API_URL}/uploads/${usuario.foto}`;
+  }
 
   // Preview ao trocar a imagem
   const inputFoto = document.getElementById("foto");
@@ -365,15 +357,19 @@ document
     }
 
     // 🔥 ATUALIZA LOCALSTORAGE
+    const usuarioAtual = JSON.parse(localStorage.getItem("usuarioLogado"));
+
     localStorage.setItem(
       "usuarioLogado",
-      JSON.stringify(data.usuario)
+      JSON.stringify({
+        ...usuarioAtual,
+        ...data.usuario,
+      }),
     );
 
     alert("Perfil atualizado com sucesso!");
-window.location.href = `${basePath}profile.html`;
+    window.location.href = `${basePath}profile.html`;
   });
-
 
 /* ================= LOGOUT PERFIL (MODAL) ================= */
 
@@ -400,8 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-
 /* ================= DELETAR CONTA ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -411,10 +405,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
       if (!usuario) return;
 
-      const response = await fetch(
-        `${API_URL}/api/users/${usuario.id}`,
-        { method: "DELETE" }
-      );
+      const response = await fetch(`${API_URL}/api/users/${usuario.id}`, {
+        method: "DELETE",
+      });
 
       if (!response.ok) {
         alert("Erro ao deletar conta");
@@ -443,7 +436,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "none";
   });
 });
-
 
 /* ================= FADE IN ================= */
 
