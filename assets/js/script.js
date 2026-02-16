@@ -151,70 +151,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ================= CADASTRO ================= */
 
-if (currentPath.includes("account")) {
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("login-field");
-    if (!form) return;
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("login-field");
+  if (!form) return;
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const nomeUsuario = document.getElementById("nome-usuario").value.trim();
-      const nome = document.getElementById("nome").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
-      const senha2 = document.getElementById("senha2").value;
-      const termos = document.getElementById("aceitar-termos").checked;
+    const nomeUsuario = document.getElementById("nome-usuario").value.trim();
+    const nome = document.getElementById("nome").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const senha2 = document.getElementById("senha2").value;
+    const termos = document.getElementById("aceitar-termos").checked;
 
-      if (!nomeUsuario || !nome || !email || !senha || senha !== senha2) {
-        alert("Preencha todos os campos corretamente");
-        return;
-      }
+    if (!nomeUsuario || !nome || !email || !senha || senha !== senha2) {
+      alert("Preencha todos os campos corretamente");
+      return;
+    }
 
-      if (!termos) {
-        alert("Você precisa aceitar os termos");
-        return;
-      }
+    if (!termos) {
+      alert("Você precisa aceitar os termos");
+      return;
+    }
 
-      let fotoBase64 = null;
-      const file = document.getElementById("foto")?.files[0];
+    let fotoBase64 = null;
+    const file = document.getElementById("foto")?.files[0];
 
-      if (file) {
-        fotoBase64 = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.readAsDataURL(file);
-        });
-      }
+    if (file) {
+      fotoBase64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
 
-      try {
-        const response = await fetch(`${API_URL}/api/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            nomeUsuario,
-            nome,
-            email,
-            senha,
-            foto: fotoBase64,
-          }),
-        });
+    try {
+      const response = await fetch(`${API_URL}/api/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nomeUsuario,
+          nome,
+          email,
+          senha,
+          foto: fotoBase64,
+        }),
+      });
 
-        const data = await response.json();
-        if (!response.ok) {
-          alert(data.error || "Erro ao criar conta");
-          return;
-        }
+      const data = await response.json();
+      if (!response.ok) return alert(data.error || "Erro ao criar conta");
 
-        alert("Conta criada com sucesso!");
-        window.location.href = "../login.html";
-      } catch (err) {
-        console.error(err);
-        alert("Erro de conexão com o servidor");
-      }
-    });
+      alert("Conta criada com sucesso!");
+      window.location.href = "../login.html";
+    } catch {
+      alert("Erro de conexão com o servidor");
+    }
   });
-}
+});
 
 
 
