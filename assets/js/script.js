@@ -211,6 +211,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const inputFoto = document.getElementById("foto");
+  const preview = document.getElementById("preview-foto");
+
+  if (!inputFoto || !preview) return;
+
+  inputFoto.addEventListener("change", () => {
+    const file = inputFoto.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      preview.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+
 
 
 /* ================= PERFIL ================= */
