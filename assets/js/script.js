@@ -367,6 +367,19 @@ document
       }),
     );
 
+    // 🔄 Atualiza os dados visíveis do perfil imediatamente
+if (currentPath.includes("profile") || window.location.href.includes("profile")) {
+  document.getElementById("profile-bio").textContent =
+    data.usuario.bio || "";
+
+  document.getElementById("profile-nome-usuario").textContent =
+    data.usuario.nomeUsuario || "";
+
+  document.getElementById("profile-name").textContent =
+    data.usuario.nome || "";
+}
+
+
     alert("Perfil atualizado com sucesso!");
     window.location.href = `${basePath}profile.html`;
   });
