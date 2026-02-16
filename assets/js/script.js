@@ -84,11 +84,13 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ================= MENU MOBILE ================= */
 
 fetch(`${basePath}menu-mobile.html`)
-  .then((res) => res.text())
+  .then((res) => {
+    if (!res.ok) throw new Error("menu não encontrado");
+    return res.text();
+  })
   .then((html) => {
     const menuMobile = document.getElementById("menu-mobile");
     if (!menuMobile) return;
-
     menuMobile.innerHTML = html;
 
     const menu = document.getElementById("menu");
@@ -107,16 +109,22 @@ fetch(`${basePath}menu-mobile.html`)
       link.addEventListener("click", (e) => {
         e.preventDefault();
         const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-        window.location.href = usuario ? "/profile.html" : "/login.html";
+        window.location.href = usuario
+          ? `${basePath}profile.html`
+          : `${basePath}login.html`;
       });
     });
-  });
+  })
+  .catch((err) => console.error("Erro ao carregar menu:", err));
 
 /* ================= LOGIN ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
   if (!form) return;
+
+  // Evita que o script de login rode na página de cadastro
+  if (document.getElementById("nome-usuario")) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -187,26 +195,31 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    const response = await fetch(`${API_URL}/api/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nomeUsuario,
-        nome,
-        email,
-        senha,
-        foto: fotoBase64,
-      }),
-    });
+    try {
+      const response = await fetch(`${API_URL}/api/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nomeUsuario,
+          nome,
+          email,
+          senha,
+          foto: fotoBase64,
+        }),
+      });
 
-    const data = await response.json();
-    if (!response.ok) return alert(data.error || "Erro ao criar conta");
+      const data = await response.json();
+      if (!response.ok) return alert(data.error || "Erro ao criar conta");
 
-    alert("Conta criada com sucesso!");
-    window.location.href = "../login.html";
+      alert("Conta criada com sucesso!");
+      window.location.href = "../login.html";
+    } catch {
+      alert("Erro ao cadastrar");
+    }
   });
 });
 
+// PREVIEW DA FOTO NO CADASTRO
 document.addEventListener("DOMContentLoaded", () => {
   const inputFoto = document.getElementById("foto");
   const preview = document.getElementById("preview-foto");
@@ -277,31 +290,25 @@ function renderPerfil(usuario) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+  if (!usuario || !currentPath.includes("edit-profile")) return;
 
-  // 🔐 se não estiver logado
-  if (!usuario) {
-    window.location.href = "../login.html";
-    return;
-  }
-
-  // FOTO
+  // FOTO NO EDITAR
   const preview = document.getElementById("preview-foto");
   if (preview) {
     preview.src = usuario.foto
       ? usuario.foto.startsWith("data:image")
         ? usuario.foto
-        : `https://locket-backend-78sy.onrender.com/uploads/${usuario.foto}`
+        : `${API_URL}/uploads/${usuario.foto}`
       : "../assets/images/icons/profile.png";
   }
 
   // INPUTS
-document.getElementById("nome-usuario")?.value = usuario.nomeUsuario || "";
-document.getElementById("nome")?.value = usuario.nome || "";
-document.getElementById("email")?.value = usuario.email || "";
-document.getElementById("bio")?.value = usuario.bio || "";
+  if (document.getElementById("nome-usuario")) document.getElementById("nome-usuario").value = usuario.nomeUsuario || "";
+  if (document.getElementById("nome")) document.getElementById("nome").value = usuario.nome || "";
+  if (document.getElementById("email")) document.getElementById("email").value = usuario.email || "";
+  if (document.getElementById("bio")) document.getElementById("bio").value = usuario.bio || "";
 
-
-  // PREVIEW DA FOTO
+  // PREVIEW DA FOTO AO MUDAR NO EDITAR
   const inputFoto = document.getElementById("foto");
   inputFoto?.addEventListener("change", () => {
     const file = inputFoto.files[0];
@@ -309,7 +316,7 @@ document.getElementById("bio")?.value = usuario.bio || "";
 
     const reader = new FileReader();
     reader.onload = () => {
-      preview.src = reader.result;
+      if (preview) preview.src = reader.result;
     };
     reader.readAsDataURL(file);
   });
@@ -352,23 +359,25 @@ document.addEventListener("DOMContentLoaded", () => {
       foto: fotoFinal,
     };
 
-    const response = await fetch(`${API_URL}/api/users/${usuario.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(usuarioAtualizado),
-    });
+    try {
+      const response = await fetch(`${API_URL}/api/users/${usuario.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(usuarioAtualizado),
+      });
 
-    if (!response.ok) {
-      alert("Erro ao atualizar perfil");
-      return;
+      if (!response.ok) {
+        alert("Erro ao atualizar perfil");
+        return;
+      }
+
+      localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAtualizado));
+      window.location.href = "profile.html";
+    } catch {
+      alert("Erro ao salvar alterações");
     }
-
-    localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAtualizado));
-    window.location.href = "profile.html";
   });
 });
-
-
 
 /* ================= LOGOUT PERFIL (MODAL) ================= */
 
@@ -380,12 +389,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // abrir modal
   logoutBtn?.addEventListener("click", () => {
-    modal.style.display = "flex";
+    if (modal) modal.style.display = "flex";
   });
 
   // cancelar
   cancelBtn?.addEventListener("click", () => {
-    modal.style.display = "none";
+    if (modal) modal.style.display = "none";
   });
 
   // CONFIRMAR LOGOUT (AQUI É O REAL)
@@ -404,17 +413,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
       if (!usuario) return;
 
-      const response = await fetch(`${API_URL}/api/users/${usuario.id}`, {
-        method: "DELETE",
-      });
+      try {
+        const response = await fetch(`${API_URL}/api/users/${usuario.id}`, {
+          method: "DELETE",
+        });
 
-      if (!response.ok) {
-        alert("Erro ao deletar conta");
-        return;
+        if (!response.ok) {
+          alert("Erro ao deletar conta");
+          return;
+        }
+
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = basePath + "login.html";
+      } catch {
+        alert("Erro ao conectar com o servidor");
       }
-
-      localStorage.removeItem("usuarioLogado");
-      window.location.href = basePath + "login.html";
     });
 });
 
@@ -427,12 +440,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Abrir modal
   openBtn?.addEventListener("click", () => {
-    modal.style.display = "flex";
+    if (modal) modal.style.display = "flex";
   });
 
   // Cancelar
   cancelBtn?.addEventListener("click", () => {
-    modal.style.display = "none";
+    if (modal) modal.style.display = "none";
   });
 });
 
