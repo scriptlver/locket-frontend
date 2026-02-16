@@ -356,34 +356,20 @@ document
       return;
     }
 
-    // 🔥 ATUALIZA LOCALSTORAGE
-    const usuarioAtual = JSON.parse(localStorage.getItem("usuarioLogado"));
+    // 🔥 ATUALIZA LOCALSTORAGE (merge)
+const usuarioAtual = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-    localStorage.setItem(
-      "usuarioLogado",
-      JSON.stringify({
-        ...usuarioAtual,
-        ...data.usuario,
-      }),
-    );
+localStorage.setItem(
+  "usuarioLogado",
+  JSON.stringify({
+    ...usuarioAtual,
+    ...data.usuario,
+  })
+);
 
-    // 🔄 Atualiza os dados visíveis do perfil imediatamente
-if (currentPath.includes("profile") || window.location.href.includes("profile")) {
-  document.getElementById("profile-bio").textContent =
-    data.usuario.bio || "";
-
-  document.getElementById("profile-nome-usuario").textContent =
-    data.usuario.nomeUsuario || "";
-
-  document.getElementById("profile-name").textContent =
-    data.usuario.nome || "";
-}
-
-
-    alert("Perfil atualizado com sucesso!");
-    window.location.href = `${basePath}profile.html`;
+alert("Perfil atualizado com sucesso!");
+window.location.href = `${basePath}profile.html`;
   });
-
 /* ================= LOGOUT PERFIL (MODAL) ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
