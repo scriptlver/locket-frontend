@@ -155,6 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
   if (!form) return;
 
+  // ✅ só entra se for cadastro
+  if (!document.getElementById("nome-usuario")) return;
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -179,37 +182,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const file = document.getElementById("foto")?.files[0];
 
     if (file) {
-      fotoBase64 = await new Promise((resolve, reject) => {
+      fotoBase64 = await new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
         reader.readAsDataURL(file);
       });
     }
 
-    try {
-      const response = await fetch(`${API_URL}/api/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nomeUsuario,
-          nome,
-          email,
-          senha,
-          foto: fotoBase64,
-        }),
-      });
+    const response = await fetch(`${API_URL}/api/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nomeUsuario,
+        nome,
+        email,
+        senha,
+        foto: fotoBase64,
+      }),
+    });
 
-      const data = await response.json();
-      if (!response.ok) return alert(data.error || "Erro ao criar conta");
+    const data = await response.json();
+    if (!response.ok) return alert(data.error || "Erro ao criar conta");
 
-      alert("Conta criada com sucesso!");
-      window.location.href = "../login.html";
-    } catch {
-      alert("Erro de conexão com o servidor");
-    }
+    alert("Conta criada com sucesso!");
+    window.location.href = "../login.html";
   });
 });
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const inputFoto = document.getElementById("foto");
