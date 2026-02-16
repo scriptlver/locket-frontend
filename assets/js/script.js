@@ -273,6 +273,48 @@ function renderPerfil(usuario) {
   });
 }
 
+/* ================= EDITAR PERFIL ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+  // 🔐 se não estiver logado
+  if (!usuario) {
+    window.location.href = "../login.html";
+    return;
+  }
+
+  // FOTO
+  const preview = document.getElementById("preview-foto");
+  if (preview) {
+    preview.src = usuario.foto
+      ? usuario.foto.startsWith("data:image")
+        ? usuario.foto
+        : `https://locket-backend-78sy.onrender.com/uploads/${usuario.foto}`
+      : "../assets/images/icons/profile.png";
+  }
+
+  // INPUTS
+  document.getElementById("nome-usuario").value = usuario.nomeUsuario || "";
+  document.getElementById("nome").value = usuario.nome || "";
+  document.getElementById("email").value = usuario.email || "";
+  document.getElementById("bio").value = usuario.bio || "";
+
+  // PREVIEW DA FOTO
+  const inputFoto = document.getElementById("foto");
+  inputFoto?.addEventListener("change", () => {
+    const file = inputFoto.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      preview.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+
 /* ================= LOGOUT PERFIL (MODAL) ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
