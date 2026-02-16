@@ -257,13 +257,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // 🖼️ Foto de perfil
-  const profileImg = document.getElementById("profile-img");
-  if (profileImg) {
-    profileImg.src = usuario?.foto
-      ? `${API_URL}/uploads/${usuario.foto}`
-      : `${basePath}assets/images/icons/profile.png`;
+// 🖼️ Foto de perfil (corrigido)
+const profileImg = document.getElementById("profile-img");
+if (profileImg) {
+  if (usuario?.foto) {
+    profileImg.src = usuario.foto.startsWith("data:image")
+      ? usuario.foto
+      : `${API_URL}/uploads/${usuario.foto}`;
+  } else {
+    profileImg.src = `${basePath}assets/images/icons/profile.png`;
   }
+}
 
   // 🧾 Dados do perfil
   const map = {
@@ -293,11 +297,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("email").value = usuario.email || "";
   document.getElementById("bio").value = usuario.bio || "";
 
-  // Preview da foto
-  const preview = document.getElementById("preview-foto");
-  if (preview && usuario.foto) {
-    preview.src = `${API_URL}/uploads/${usuario.foto}`;
-  }
+  // Preview da foto (corrigido)
+const preview = document.getElementById("preview-foto");
+if (preview && usuario.foto) {
+  preview.src = usuario.foto.startsWith("data:image")
+    ? usuario.foto
+    : `${API_URL}/uploads/${usuario.foto}`;
+}
+
 
   // Preview ao trocar a imagem
   const inputFoto = document.getElementById("foto");
