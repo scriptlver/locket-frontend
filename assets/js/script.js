@@ -286,29 +286,37 @@ function renderPerfil(usuario) {
   });
 }
 
-/* ================= EDITAR PERFIL ================= */
+/* ================= EDITAR PERFIL (CARREGAR DADOS) ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-  if (!usuario || !currentPath.includes("edit-profile")) return;
+  
+  // Verificamos se o formulário de edição existe na página atual
+  const formEdicao = document.getElementById("edit-profile-form");
+  if (!formEdicao || !usuario) return;
 
   // FOTO NO EDITAR
   const preview = document.getElementById("preview-foto");
   if (preview) {
     preview.src = usuario.foto
-      ? usuario.foto.startsWith("data:image")
+      ? (usuario.foto.startsWith("data:image")
         ? usuario.foto
-        : `${API_URL}/uploads/${usuario.foto}`
-      : "../assets/images/icons/profile.png";
+        : `${API_URL}/uploads/${usuario.foto}`)
+      : `${basePath}assets/images/icons/profile.png`;
   }
 
-  // INPUTS
-  if (document.getElementById("nome-usuario")) document.getElementById("nome-usuario").value = usuario.nomeUsuario || "";
-  if (document.getElementById("nome")) document.getElementById("nome").value = usuario.nome || "";
-  if (document.getElementById("email")) document.getElementById("email").value = usuario.email || "";
-  if (document.getElementById("bio")) document.getElementById("bio").value = usuario.bio || "";
+  // PREENCHER INPUTS (Usando IDs que você definiu)
+  const campos = ["nome-usuario", "nome", "email", "bio"];
+  campos.forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+      // Mapeia o ID do HTML para a chave do objeto usuario
+      const chaveUsuario = id === "nome-usuario" ? "nomeUsuario" : id;
+      input.value = usuario[chaveUsuario] || "";
+    }
+  });
 
-  // PREVIEW DA FOTO AO MUDAR NO EDITAR
+  // PREVIEW DA FOTO AO SELECIONAR ARQUIVO
   const inputFoto = document.getElementById("foto");
   inputFoto?.addEventListener("change", () => {
     const file = inputFoto.files[0];
@@ -334,6 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
     if (!usuario) return;
 
+    // Pegar valores atuais dos inputs
     const nomeUsuario = document.getElementById("nome-usuario")?.value.trim();
     const nome = document.getElementById("nome")?.value.trim();
     const email = document.getElementById("email")?.value.trim();
@@ -342,6 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let fotoFinal = usuario.foto;
     const fotoInput = document.getElementById("foto");
 
+    // Converter nova foto para Base64 se o usuário subiu uma
     if (fotoInput?.files[0]) {
       fotoFinal = await new Promise((resolve) => {
         const reader = new FileReader();
@@ -367,14 +377,18 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (!response.ok) {
-        alert("Erro ao atualizar perfil");
-        return;
+        const erroData = await response.json();
+        throw new Error(erroData.error || "Erro na resposta do servidor");
       }
 
+      // Atualiza o localstorage e volta para o perfil
       localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAtualizado));
+      alert("Perfil atualizado com sucesso!");
       window.location.href = "profile.html";
-    } catch {
-      alert("Erro ao salvar alterações");
+      
+    } catch (err) {
+      console.error("Erro ao atualizar:", err);
+      alert("Erro ao atualizar perfil: " + err.message);
     }
   });
 });
