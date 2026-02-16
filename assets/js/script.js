@@ -116,7 +116,7 @@ fetch(`${basePath}menu-mobile.html`)
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
-  if (!form || document.getElementById("nome-usuario")) return;
+  if (!form) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -151,7 +151,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
-  if (!form || !document.getElementById("nome-usuario")) return;
+  if (!form) return;
+
+  // ✅ só entra se for cadastro
+  if (!document.getElementById("nome-usuario")) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -204,11 +207,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const inputFoto = document.getElementById("foto");
+  const preview = document.getElementById("preview-foto");
+
+  if (!inputFoto || !preview) return;
+
+  inputFoto.addEventListener("change", () => {
+    const file = inputFoto.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      preview.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
 /* ================= PERFIL ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
+  // 🔐 Bloqueia acesso sem login
   if (!usuario && currentPath.includes("profile")) {
     window.location.replace(`${basePath}login.html`);
     return;
@@ -216,8 +238,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!usuario) return;
 
+  // 🔥 RENDERIZA IMEDIATAMENTE COM LOCALSTORAGE
   renderPerfil(usuario);
 
+  // 🔐 Validação leve no backend (sem travar UI)
   fetch(`${API_URL}/api/users/${usuario.id}`).catch(() => {
     localStorage.removeItem("usuarioLogado");
     window.location.replace(`${basePath}login.html`);
@@ -225,6 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function renderPerfil(usuario) {
+  // 🖼️ Foto (cache bust)
   const profileImg = document.getElementById("profile-img");
   if (profileImg) {
     profileImg.src = usuario.foto
@@ -234,6 +259,7 @@ function renderPerfil(usuario) {
       : `${basePath}assets/images/icons/profile.png`;
   }
 
+  // 🧾 Dados
   const map = {
     nome: "profile-name",
     nomeUsuario: "profile-nome-usuario",
@@ -250,29 +276,32 @@ function renderPerfil(usuario) {
 /* ================= EDITAR PERFIL ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("edit-profile-form");
-  if (!form) return;
-
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+  // 🔐 se não estiver logado
   if (!usuario) {
     window.location.href = "../login.html";
     return;
   }
 
+  // FOTO
   const preview = document.getElementById("preview-foto");
   if (preview) {
     preview.src = usuario.foto
       ? usuario.foto.startsWith("data:image")
         ? usuario.foto
-        : `${API_URL}/uploads/${usuario.foto}`
+        : `https://locket-backend-78sy.onrender.com/uploads/${usuario.foto}`
       : "../assets/images/icons/profile.png";
   }
 
-  document.getElementById("nome-usuario").value = usuario.nomeUsuario || "";
-  document.getElementById("nome").value = usuario.nome || "";
-  document.getElementById("email").value = usuario.email || "";
-  document.getElementById("bio").value = usuario.bio || "";
+  // INPUTS
+document.getElementById("nome-usuario")?.value = usuario.nomeUsuario || "";
+document.getElementById("nome")?.value = usuario.nome || "";
+document.getElementById("email")?.value = usuario.email || "";
+document.getElementById("bio")?.value = usuario.bio || "";
 
+
+  // PREVIEW DA FOTO
   const inputFoto = document.getElementById("foto");
   inputFoto?.addEventListener("change", () => {
     const file = inputFoto.files[0];
@@ -284,33 +313,49 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     reader.readAsDataURL(file);
   });
+});
+
+/* ================= SALVAR EDITAR PERFIL ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("edit-profile-form");
+  if (!form) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    let fotoFinal = usuario.foto;
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    if (!usuario) return;
 
-    if (inputFoto?.files[0]) {
+    const nomeUsuario = document.getElementById("nome-usuario")?.value.trim();
+    const nome = document.getElementById("nome")?.value.trim();
+    const email = document.getElementById("email")?.value.trim();
+    const bio = document.getElementById("bio")?.value.trim();
+
+    let fotoFinal = usuario.foto;
+    const fotoInput = document.getElementById("foto");
+
+    if (fotoInput?.files[0]) {
       fotoFinal = await new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
-        reader.readAsDataURL(inputFoto.files[0]);
+        reader.readAsDataURL(fotoInput.files[0]);
       });
     }
 
-    const atualizado = {
+    const usuarioAtualizado = {
       ...usuario,
-      nomeUsuario: document.getElementById("nome-usuario").value.trim(),
-      nome: document.getElementById("nome").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      bio: document.getElementById("bio").value.trim(),
+      nomeUsuario,
+      nome,
+      email,
+      bio,
       foto: fotoFinal,
     };
 
     const response = await fetch(`${API_URL}/api/users/${usuario.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(atualizado),
+      body: JSON.stringify(usuarioAtualizado),
     });
 
     if (!response.ok) {
@@ -318,15 +363,33 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    localStorage.setItem("usuarioLogado", JSON.stringify(atualizado));
+    localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAtualizado));
     window.location.href = "profile.html";
   });
 });
 
-/* ================= LOGOUT ================= */
+
+
+/* ================= LOGOUT PERFIL (MODAL) ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("confirm-logout")?.addEventListener("click", () => {
+  const logoutBtn = document.getElementById("logout-btn");
+  const modal = document.getElementById("logout-modal");
+  const cancelBtn = document.getElementById("cancel-logout");
+  const confirmBtn = document.getElementById("confirm-logout");
+
+  // abrir modal
+  logoutBtn?.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  // cancelar
+  cancelBtn?.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // CONFIRMAR LOGOUT (AQUI É O REAL)
+  confirmBtn?.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogado");
     window.location.href = basePath + "login.html";
   });
@@ -353,6 +416,24 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.removeItem("usuarioLogado");
       window.location.href = basePath + "login.html";
     });
+});
+
+/* ================= MODAL DE DELETAR CONTA ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const openBtn = document.getElementById("open-delete-modal");
+  const modal = document.getElementById("delete-modal");
+  const cancelBtn = document.getElementById("cancel-delete");
+
+  // Abrir modal
+  openBtn?.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
+
+  // Cancelar
+  cancelBtn?.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
 });
 
 /* ================= FADE IN ================= */
