@@ -364,7 +364,7 @@ document
     );
 
     alert("Perfil atualizado com sucesso!");
-    window.location.reload();
+window.location.href = `${basePath}profile.html`;
   });
 
 
