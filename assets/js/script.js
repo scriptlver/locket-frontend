@@ -230,40 +230,36 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-  // 🔐 Se tentar acessar perfil sem login
+  // 🔐 Bloqueia acesso sem login
   if (!usuario && currentPath.includes("profile")) {
-    window.location.href = "login.html";
+    window.location.replace(`${basePath}login.html`);
     return;
   }
 
-  // 🧼 Valida se usuário ainda existe no backend
-  if (currentPath.includes("profile") && usuario?.id) {
-    fetch(`${API_URL}/api/users/${usuario.id}`)
-      .then((res) => {
-        if (!res.ok) {
-          localStorage.removeItem("usuarioLogado");
-          window.location.href = "login.html";
-        }
-      })
-      .catch(() => {
-        localStorage.removeItem("usuarioLogado");
-        window.location.href = "login.html";
-      });
-  }
+  if (!usuario) return;
 
-  // 🖼️ Foto de perfil (corrigido)
+  // 🔥 RENDERIZA IMEDIATAMENTE COM LOCALSTORAGE
+  renderPerfil(usuario);
+
+  // 🔐 Validação leve no backend (sem travar UI)
+  fetch(`${API_URL}/api/users/${usuario.id}`).catch(() => {
+    localStorage.removeItem("usuarioLogado");
+    window.location.replace(`${basePath}login.html`);
+  });
+});
+
+function renderPerfil(usuario) {
+  // 🖼️ Foto (cache bust)
   const profileImg = document.getElementById("profile-img");
   if (profileImg) {
-    if (usuario?.foto) {
-      profileImg.src = usuario.foto.startsWith("data:image")
+    profileImg.src = usuario.foto
+      ? usuario.foto.startsWith("data:image")
         ? usuario.foto
-        : `${API_URL}/uploads/${usuario.foto}`;
-    } else {
-      profileImg.src = `${basePath}assets/images/icons/profile.png`;
-    }
+        : `${API_URL}/uploads/${usuario.foto}?v=${Date.now()}`
+      : `${basePath}assets/images/icons/profile.png`;
   }
 
-  // 🧾 Dados do perfil
+  // 🧾 Dados
   const map = {
     nome: "profile-name",
     nomeUsuario: "profile-nome-usuario",
@@ -273,103 +269,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   Object.entries(map).forEach(([campo, id]) => {
     const el = document.getElementById(id);
-    if (el && usuario) el.textContent = usuario[campo] || "";
+    if (el) el.textContent = usuario[campo] || "";
   });
-});
+}
 
-/* ================= EDITAR PERFIL ================= */
-document.addEventListener("DOMContentLoaded", () => {
-  if (!currentPath.includes("edit-profile")) return;
-
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-  if (!usuario) return;
-
-  // Preenche campos
-  document.getElementById("nome-usuario").value = usuario.nomeUsuario || "";
-  document.getElementById("nome").value = usuario.nome || "";
-  document.getElementById("email").value = usuario.email || "";
-  document.getElementById("bio").value = usuario.bio || "";
-
-  // Preview da foto (corrigido)
-  const preview = document.getElementById("preview-foto");
-  if (preview && usuario.foto) {
-    preview.src = usuario.foto.startsWith("data:image")
-      ? usuario.foto
-      : `${API_URL}/uploads/${usuario.foto}`;
-  }
-
-  // Preview ao trocar a imagem
-  const inputFoto = document.getElementById("foto");
-  inputFoto?.addEventListener("change", () => {
-    const file = inputFoto.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      preview.src = reader.result;
-    };
-    reader.readAsDataURL(file);
-  });
-});
-
-// Submit do formulário
-document
-  .getElementById("profile-form")
-  ?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-    if (!usuario) return;
-
-    let foto = usuario.foto;
-    const file = document.getElementById("foto").files[0];
-
-    // Converte imagem para base64 se mudou
-    if (file) {
-      foto = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.readAsDataURL(file);
-      });
-    }
-
-    const payload = {
-      id: usuario.id,
-      nomeUsuario: document.getElementById("nome-usuario").value.trim(),
-      nome: document.getElementById("nome").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      bio: document.getElementById("bio").value.trim(),
-      senha: document.getElementById("senha").value,
-      foto,
-    };
-
-    const response = await fetch(`${API_URL}/api/editar-perfil`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      alert(data.error || "Erro ao atualizar perfil");
-      return;
-    }
-
-    // 🔥 ATUALIZA LOCALSTORAGE (merge)
-const usuarioAtual = JSON.parse(localStorage.getItem("usuarioLogado"));
-
-localStorage.setItem(
-  "usuarioLogado",
-  JSON.stringify({
-    ...usuarioAtual,
-    ...data.usuario,
-  })
-);
-
-alert("Perfil atualizado com sucesso!");
-window.location.href = `${basePath}profile.html`;
-  });
 /* ================= LOGOUT PERFIL (MODAL) ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
