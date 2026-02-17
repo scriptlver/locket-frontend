@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const musicaId = btn.dataset.musica;
     const img = btn.querySelector("img");
 
+    // Ajuste para ler favoritos do MongoDB
     if (usuario?.favoritos?.includes(musicaId)) {
       img.src = `${basePath}assets/images/icons/favorite.png`;
       btn.classList.add("active");
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            userId: usuario.id,
+            userId: usuario._id || usuario.id, // Suporta MongoDB (_id)
             musicaId,
           }),
         });
@@ -123,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
   if (!form) return;
 
-  // Evita que o script de login rode na página de cadastro
   if (document.getElementById("nome-usuario")) return;
 
   form.addEventListener("submit", async (e) => {
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) return alert(data.error || "Erro no login");
 
       localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
-      window.location.href = "../locket.html";
+      window.location.href = `${basePath}locket.html`;
     } catch {
       alert("Erro de conexão com o servidor");
     }
@@ -159,10 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
-  if (!form) return;
-
-  // ✅ só entra se for cadastro
-  if (!document.getElementById("nome-usuario")) return;
+  if (!form || !document.getElementById("nome-usuario")) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -195,41 +192,44 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    const response = await fetch(`${API_URL}/api/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nomeUsuario,
-        nome,
-        email,
-        senha,
-        foto: fotoBase64,
-      }),
-    });
+    try {
+      const response = await fetch(`${API_URL}/api/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nomeUsuario,
+          nome,
+          email,
+          senha,
+          foto: fotoBase64,
+          bio: "" 
+        }),
+      });
 
-    const data = await response.json();
-    if (!response.ok) return alert(data.error || "Erro ao criar conta");
+      const data = await response.json();
+      if (!response.ok) return alert(data.error || "Erro ao criar conta");
 
-    alert("Conta criada com sucesso!");
-    window.location.href = "../login.html";
+      alert("Conta criada com sucesso!");
+      window.location.href = `${basePath}login.html`;
+    } catch {
+      alert("Erro ao conectar com o servidor");
+    }
   });
 });
 
+// Preview de Foto
 document.addEventListener("DOMContentLoaded", () => {
   const inputFoto = document.getElementById("foto");
   const preview = document.getElementById("preview-foto");
-
   if (!inputFoto || !preview) return;
 
   inputFoto.addEventListener("change", () => {
     const file = inputFoto.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      preview.src = reader.result;
-    };
-    reader.readAsDataURL(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => { preview.src = reader.result; };
+      reader.readAsDataURL(file);
+    }
   });
 });
 
@@ -238,7 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-  // 🔐 Bloqueia acesso sem login
   if (!usuario && currentPath.includes("profile")) {
     window.location.replace(`${basePath}login.html`);
     return;
@@ -246,28 +245,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!usuario) return;
 
-  // 🔥 RENDERIZA IMEDIATAMENTE COM LOCALSTORAGE
   renderPerfil(usuario);
 
-  // 🔐 Validação leve no backend (sem travar UI)
-  fetch(`${API_URL}/api/users/${usuario.id}`).catch(() => {
-    localStorage.removeItem("usuarioLogado");
-    window.location.replace(`${basePath}login.html`);
+  // Validação no backend usando _id do MongoDB
+  fetch(`${API_URL}/api/users/${usuario._id || usuario.id}`).catch(() => {
+    console.log("Sessão offline ou erro de validação");
   });
 });
 
 function renderPerfil(usuario) {
-  // 🖼️ Foto (cache bust)
   const profileImg = document.getElementById("profile-img");
   if (profileImg) {
-    profileImg.src = usuario.foto
-      ? usuario.foto.startsWith("data:image")
-        ? usuario.foto
-        : `${API_URL}/uploads/${usuario.foto}?v=${Date.now()}`
-      : `${basePath}assets/images/icons/profile.png`;
+    // Agora a foto é servida como string Base64 direto do Mongo ou URL antiga
+    profileImg.src = usuario.foto && usuario.foto.length > 50
+      ? usuario.foto 
+      : usuario.foto 
+        ? `${API_URL}/uploads/${usuario.foto}`
+        : `${basePath}assets/images/icons/profile.png`;
   }
 
-  // 🧾 Dados
   const map = {
     nome: "profile-name",
     nomeUsuario: "profile-nome-usuario",
@@ -281,63 +277,34 @@ function renderPerfil(usuario) {
   });
 }
 
-/* ================= EDITAR PERFIL (CARREGAR DADOS) ================= */
+/* ================= EDITAR PERFIL ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-  
-  // Verificamos se o formulário de edição existe na página atual
   const formEdicao = document.getElementById("edit-profile-form");
   if (!formEdicao || !usuario) return;
 
-  // FOTO NO EDITAR
   const preview = document.getElementById("preview-foto");
   if (preview) {
-    preview.src = usuario.foto
-      ? (usuario.foto.startsWith("data:image")
-        ? usuario.foto
-        : `${API_URL}/uploads/${usuario.foto}`)
-      : `${basePath}assets/images/icons/profile.png`;
+    preview.src = usuario.foto && usuario.foto.length > 50 
+      ? usuario.foto 
+      : usuario.foto 
+        ? `${API_URL}/uploads/${usuario.foto}`
+        : `${basePath}assets/images/icons/profile.png`;
   }
 
-  // PREENCHER INPUTS (Usando IDs que você definiu)
   const campos = ["nome-usuario", "nome", "email", "bio"];
   campos.forEach(id => {
     const input = document.getElementById(id);
     if (input) {
-      // Mapeia o ID do HTML para a chave do objeto usuario
       const chaveUsuario = id === "nome-usuario" ? "nomeUsuario" : id;
       input.value = usuario[chaveUsuario] || "";
     }
   });
 
-  // PREVIEW DA FOTO AO SELECIONAR ARQUIVO
-  const inputFoto = document.getElementById("foto");
-  inputFoto?.addEventListener("change", () => {
-    const file = inputFoto.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (preview) preview.src = reader.result;
-    };
-    reader.readAsDataURL(file);
-  });
-});
-
-//* ================= SALVAR EDITAR PERFIL (AJUSTADO PARA O SEU BACK) ================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("edit-profile-form");
-  if (!form) return;
-
-  form.addEventListener("submit", async (e) => {
+  formEdicao.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-    if (!usuario) return;
-
-    // 1. Pegamos os valores dos inputs
     const nomeUsuario = document.getElementById("nome-usuario")?.value.trim();
     const nome = document.getElementById("nome")?.value.trim();
     const email = document.getElementById("email")?.value.trim();
@@ -346,7 +313,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let fotoFinal = usuario.foto;
     const fotoInput = document.getElementById("foto");
 
-    // 2. Processa a foto se houver uma nova
     if (fotoInput?.files[0]) {
       fotoFinal = await new Promise((resolve) => {
         const reader = new FileReader();
@@ -355,20 +321,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // 3. Montamos o objeto EXATAMENTE como o seu router.put("/editar-perfil") espera
     const dadosParaEnviar = {
-      id: Number(usuario.id), // O seu back usa Number no findIndex
+      id: usuario._id || usuario.id, // Envia o ID correto para o Mongo
       nomeUsuario,
       nome,
       email,
       bio,
       foto: fotoFinal,
-      // Se quiser permitir mudar a senha aqui também:
-      // senha: document.getElementById("nova-senha")?.value || undefined 
     };
 
     try {
-      // 4. Chamamos a rota correta: /api/editar-perfil
       const response = await fetch(`${API_URL}/api/editar-perfil`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -376,95 +338,63 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Erro ao atualizar");
 
-      if (!response.ok) {
-        throw new Error(data.error || "Erro ao atualizar perfil");
-      }
-      const usuarioLogadoAtualizado = { ...usuario, ...dadosParaEnviar };
-      localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogadoAtualizado));
+      // Atualiza o localstorage com os novos dados vindos do banco
+      localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
 
       alert("Perfil atualizado com sucesso!");
       window.location.href = "profile.html";
 
     } catch (err) {
-      console.error("Erro:", err);
       alert(err.message);
     }
   });
 });
 
-/* ================= LOGOUT PERFIL (MODAL) ================= */
+/* ================= LOGOUT E DELETE ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const logoutBtn = document.getElementById("logout-btn");
-  const modal = document.getElementById("logout-modal");
-  const cancelBtn = document.getElementById("cancel-logout");
-  const confirmBtn = document.getElementById("confirm-logout");
-
-  // abrir modal
-  logoutBtn?.addEventListener("click", () => {
-    if (modal) modal.style.display = "flex";
-  });
-
-  // cancelar
-  cancelBtn?.addEventListener("click", () => {
-    if (modal) modal.style.display = "none";
-  });
-
-  // CONFIRMAR LOGOUT (AQUI É O REAL)
-  confirmBtn?.addEventListener("click", () => {
+  // Logout
+  document.getElementById("confirm-logout")?.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogado");
-    window.location.href = basePath + "login.html";
+    window.location.href = `${basePath}login.html`;
+  });
+
+  // Delete Account
+  document.getElementById("confirm-delete")?.addEventListener("click", async () => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    if (!usuario) return;
+
+    try {
+      const response = await fetch(`${API_URL}/api/users/${usuario._id || usuario.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Erro ao deletar");
+
+      localStorage.removeItem("usuarioLogado");
+      window.location.href = `${basePath}login.html`;
+    } catch (err) {
+      alert(err.message);
+    }
   });
 });
 
-/* ================= DELETAR CONTA ================= */
+/* ================= MODAIS E FADE ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  document
-    .getElementById("confirm-delete")
-    ?.addEventListener("click", async () => {
-      const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-      if (!usuario) return;
+  // Modal Delete
+  const openDelete = document.getElementById("open-delete-modal");
+  const modalDelete = document.getElementById("delete-modal");
+  openDelete?.addEventListener("click", () => { if (modalDelete) modalDelete.style.display = "flex"; });
+  document.getElementById("cancel-delete")?.addEventListener("click", () => { if (modalDelete) modalDelete.style.display = "none"; });
 
-      try {
-        const response = await fetch(`${API_URL}/api/users/${usuario.id}`, {
-          method: "DELETE",
-        });
+  // Modal Logout
+  const openLogout = document.getElementById("logout-btn");
+  const modalLogout = document.getElementById("logout-modal");
+  openLogout?.addEventListener("click", () => { if (modalLogout) modalLogout.style.display = "flex"; });
+  document.getElementById("cancel-logout")?.addEventListener("click", () => { if (modalLogout) modalLogout.style.display = "none"; });
 
-        if (!response.ok) {
-          alert("Erro ao deletar conta");
-          return;
-        }
-
-        localStorage.removeItem("usuarioLogado");
-        window.location.href = basePath + "login.html";
-      } catch {
-        alert("Erro ao conectar com o servidor");
-      }
-    });
-});
-
-/* ================= MODAL DE DELETAR CONTA ================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-  const openBtn = document.getElementById("open-delete-modal");
-  const modal = document.getElementById("delete-modal");
-  const cancelBtn = document.getElementById("cancel-delete");
-
-  // Abrir modal
-  openBtn?.addEventListener("click", () => {
-    if (modal) modal.style.display = "flex";
-  });
-
-  // Cancelar
-  cancelBtn?.addEventListener("click", () => {
-    if (modal) modal.style.display = "none";
-  });
-});
-
-/* ================= FADE IN ================= */
-
-document.addEventListener("DOMContentLoaded", () => {
   document.body.style.opacity = "1";
 });
