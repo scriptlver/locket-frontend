@@ -155,74 +155,55 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* ================= CADASTRO (CORRIGIDO) ================= */
+/* ================= CADASTRO ================= */
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
   const inputNomeUser = document.getElementById("nome-usuario");
 
-  // Só roda se estiver na página de cadastro
   if (!form || !inputNomeUser) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const nomeUsuario = inputNomeUser.value.trim();
-    const nome = document.getElementById("nome").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const senha = document.getElementById("senha").value;
-    const senha2 = document.getElementById("senha2").value;
-    const termos = document.getElementById("aceitar-termos").checked;
+    // ... (suas validações de nome, email e senha aqui)
 
-    // Validações básicas antes de enviar
-    if (!nomeUsuario || !nome || !email || !senha) {
-      return alert("Por favor, preencha todos os campos.");
-    }
-    if (senha !== senha2) {
-      return alert("As senhas não coincidem!");
-    }
-    if (!termos) {
-      return alert("Você precisa aceitar os termos.");
-    }
-
-    // Lógica da Foto
+    // --- LÓGICA DA FOTO ---
     let fotoBase64 = null;
-    const file = document.getElementById("foto")?.files[0];
+    const inputFoto = document.getElementById("foto"); // O ID do <input type="file">
+    const file = inputFoto?.files[0];
 
     if (file) {
-      fotoBase64 = await new Promise((resolve) => {
+      // Usamos FileReader para transformar o arquivo em texto (Base64)
+      fotoBase64 = await new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
+        reader.onload = () => resolve(reader.result); // Sucesso
+        reader.onerror = (error) => reject(error);    // Erro na leitura
         reader.readAsDataURL(file);
       });
     }
 
     try {
-      // Chamando a rota /api/register que está no seu server.js
       const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nomeUsuario,
-          nome,
-          email,
-          senha,
-          foto: fotoBase64,
-          bio: "" // Garante que a bio vá como string para o back
+          nomeUsuario: document.getElementById("nome-usuario").value.trim(),
+          nome: document.getElementById("nome").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          senha: document.getElementById("senha").value,
+          foto: fotoBase64, // Aqui vai a string da imagem ou null
+          bio: "" 
         }),
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Erro ao cadastrar");
 
-      if (!response.ok) {
-        throw new Error(data.error || "Erro ao criar conta");
-      }
-
-      alert("Conta criada com sucesso!");
-      window.location.href = "login.html"; 
+      alert("Conta criada!");
+      window.location.href = `${basePath}login.html`;
 
     } catch (err) {
-      console.error("Erro no cadastro:", err);
-      alert("Erro ao cadastrar: " + err.message);
+      alert(err.message);
     }
   });
 });
