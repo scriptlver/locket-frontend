@@ -330,7 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* ================= SALVAR EDITAR PERFIL ================= */
+//* ================= SALVAR EDITAR PERFIL (AJUSTADO PARA O SEU BACK) ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("edit-profile-form");
@@ -342,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
     if (!usuario) return;
 
-    // Pegar valores atuais dos inputs
+    // 1. Pegamos os valores dos inputs
     const nomeUsuario = document.getElementById("nome-usuario")?.value.trim();
     const nome = document.getElementById("nome")?.value.trim();
     const email = document.getElementById("email")?.value.trim();
@@ -351,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let fotoFinal = usuario.foto;
     const fotoInput = document.getElementById("foto");
 
-    // Converter nova foto para Base64 se o usuário subiu uma
+    // 2. Processa a foto se houver uma nova
     if (fotoInput?.files[0]) {
       fotoFinal = await new Promise((resolve) => {
         const reader = new FileReader();
@@ -360,35 +360,40 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    const usuarioAtualizado = {
-      ...usuario,
+    // 3. Montamos o objeto EXATAMENTE como o seu router.put("/editar-perfil") espera
+    const dadosParaEnviar = {
+      id: Number(usuario.id), // O seu back usa Number no findIndex
       nomeUsuario,
       nome,
       email,
       bio,
       foto: fotoFinal,
+      // Se quiser permitir mudar a senha aqui também:
+      // senha: document.getElementById("nova-senha")?.value || undefined 
     };
 
     try {
-      const response = await fetch(`${API_URL}/api/users/${usuario.id}`, {
+      // 4. Chamamos a rota correta: /api/editar-perfil
+      const response = await fetch(`${API_URL}/api/editar-perfil`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(usuarioAtualizado),
+        body: JSON.stringify(dadosParaEnviar),
       });
 
-      if (!response.ok) {
-        const erroData = await response.json();
-        throw new Error(erroData.error || "Erro na resposta do servidor");
-      }
+      const data = await response.json();
 
-      // Atualiza o localstorage e volta para o perfil
-      localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAtualizado));
+      if (!response.ok) {
+        throw new Error(data.error || "Erro ao atualizar perfil");
+      }
+      const usuarioLogadoAtualizado = { ...usuario, ...dadosParaEnviar };
+      localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogadoAtualizado));
+
       alert("Perfil atualizado com sucesso!");
       window.location.href = "profile.html";
-      
+
     } catch (err) {
-      console.error("Erro ao atualizar:", err);
-      alert("Erro ao atualizar perfil: " + err.message);
+      console.error("Erro:", err);
+      alert(err.message);
     }
   });
 });
