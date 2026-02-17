@@ -156,18 +156,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ================= CADASTRO ================= */
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
   if (!form) return;
 
-  // ✅ só entra se for cadastro
-  if (!document.getElementById("nome-usuario")) return;
+  // Verifica se estamos na página de cadastro pelo campo nome-usuario
+  const inputNomeUser = document.getElementById("nome-usuario");
+  if (!inputNomeUser) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const nomeUsuario = document.getElementById("nome-usuario").value.trim();
+    const nomeUsuario = inputNomeUser.value.trim();
     const nome = document.getElementById("nome").value.trim();
     const email = document.getElementById("email").value.trim();
     const senha = document.getElementById("senha").value;
@@ -175,12 +175,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const termos = document.getElementById("aceitar-termos").checked;
 
     if (!nomeUsuario || !nome || !email || !senha || senha !== senha2) {
-      alert("Preencha todos os campos corretamente");
+      alert("Erro: Verifique os campos e se as senhas são iguais.");
       return;
     }
 
     if (!termos) {
-      alert("Você precisa aceitar os termos");
+      alert("Aceite os termos para continuar.");
       return;
     }
 
@@ -196,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
+      // 🚀 AQUI ESTÁ A URL CORRETA BASEADA NO SEU SERVER.JS
       const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -205,36 +206,24 @@ document.addEventListener("DOMContentLoaded", () => {
           email,
           senha,
           foto: fotoBase64,
+          bio: "" 
         }),
       });
 
       const data = await response.json();
-      if (!response.ok) return alert(data.error || "Erro ao criar conta");
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erro ao criar conta");
+      }
 
       alert("Conta criada com sucesso!");
-      window.location.href = "../login.html";
-    } catch {
-      alert("Erro ao cadastrar");
+      // Ajuste o caminho do redirecionamento se necessário
+      window.location.href = "login.html"; 
+
+    } catch (err) {
+      console.error("Erro no fetch de cadastro:", err);
+      alert(err.message);
     }
-  });
-});
-
-// PREVIEW DA FOTO NO CADASTRO
-document.addEventListener("DOMContentLoaded", () => {
-  const inputFoto = document.getElementById("foto");
-  const preview = document.getElementById("preview-foto");
-
-  if (!inputFoto || !preview) return;
-
-  inputFoto.addEventListener("change", () => {
-    const file = inputFoto.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      preview.src = reader.result;
-    };
-    reader.readAsDataURL(file);
   });
 });
 
