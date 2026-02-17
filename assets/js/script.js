@@ -155,14 +155,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* ================= CADASTRO ================= */
+/* ================= CADASTRO (CORRIGIDO) ================= */
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
-  if (!form) return;
-
-  // Verifica se estamos na página de cadastro pelo campo nome-usuario
   const inputNomeUser = document.getElementById("nome-usuario");
-  if (!inputNomeUser) return;
+
+  // Só roda se estiver na página de cadastro
+  if (!form || !inputNomeUser) return;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -174,16 +173,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const senha2 = document.getElementById("senha2").value;
     const termos = document.getElementById("aceitar-termos").checked;
 
-    if (!nomeUsuario || !nome || !email || !senha || senha !== senha2) {
-      alert("Erro: Verifique os campos e se as senhas são iguais.");
-      return;
+    // Validações básicas antes de enviar
+    if (!nomeUsuario || !nome || !email || !senha) {
+      return alert("Por favor, preencha todos os campos.");
     }
-
+    if (senha !== senha2) {
+      return alert("As senhas não coincidem!");
+    }
     if (!termos) {
-      alert("Aceite os termos para continuar.");
-      return;
+      return alert("Você precisa aceitar os termos.");
     }
 
+    // Lógica da Foto
     let fotoBase64 = null;
     const file = document.getElementById("foto")?.files[0];
 
@@ -196,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // 🚀 AQUI ESTÁ A URL CORRETA BASEADA NO SEU SERVER.JS
+      // Chamando a rota /api/register que está no seu server.js
       const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -206,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
           email,
           senha,
           foto: fotoBase64,
-          bio: "" 
+          bio: "" // Garante que a bio vá como string para o back
         }),
       });
 
@@ -217,12 +218,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       alert("Conta criada com sucesso!");
-      // Ajuste o caminho do redirecionamento se necessário
       window.location.href = "login.html"; 
 
     } catch (err) {
-      console.error("Erro no fetch de cadastro:", err);
-      alert(err.message);
+      console.error("Erro no cadastro:", err);
+      alert("Erro ao cadastrar: " + err.message);
     }
   });
 });
