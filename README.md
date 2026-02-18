@@ -11,7 +11,7 @@ este frontend oferece uma experiência de usuário fluida, com sistema de login,
 aqui estão alguns registros da interface:
 
 <div align="center">
-  <img src="/assets/images/screenshots/mobile.png" width="250px" alt="locket mobile version">
+  <img src="/assets/images/screenshots/mobile.png" width="700px" alt="locket mobile version">
 </div>
 
 ---
