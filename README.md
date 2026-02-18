@@ -11,13 +11,13 @@ este frontend oferece uma experiência de usuário fluida, com sistema de login,
 aqui estão alguns registros da interface:
 
 <div align="center">
-  <img src="./home.png" width="400px" alt="home screen">
-  <img src="./login.png" width="400px" alt="login screen">
+  <img src="/assets/images/screenshots/home.png" width="400px" alt="home screen">
+  <img src="/assets/images/screenshots/login.png" width="400px" alt="login screen">
   <br>
-  <img src="./songs.png" width="400px" alt="songs list">
-  <img src="./lyrics.png" width="400px" alt="lyrics view">
+  <img src="/assets/images/screenshots/songs.png" width="400px" alt="songs list">
+  <img src="/assets/images/screenshots/lyrics.png" width="400px" alt="lyrics view">
   <br>
-  <img src="./profile.png" width="400px" alt="user profile">
+  <img src="/assets/images/icons/profile.png" width="400px" alt="user profile">
 </div>
 
 ---
