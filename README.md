@@ -1,9 +1,8 @@
 # 🔒🪽 locket frontend 🤍
 
-interface oficial do projeto **locket**, um site imersivo e estético inspirado no universo visual e sonoro do álbum *locket* da madison beer. 
+frontend desenvolvido para o projeto locket, um site inspirado no álbum locket da madison beer 🤍.
 
-este frontend oferece uma experiência de usuário fluida, com sistema de login, personalização de perfil e uma curadoria visual impecável.
-
+esta interface gerencia a experiência do usuário e o consumo de dados utilizando uma arquitetura moderna e responsiva.
 ---
 
 ## 📸 preview do projeto
