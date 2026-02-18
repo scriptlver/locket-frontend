@@ -2,6 +2,7 @@
 
 frontend desenvolvido para o projeto locket, um site inspirado no álbum locket da madison beer 🤍.
 esta interface gerencia a experiência do usuário e o consumo de dados utilizando uma arquitetura moderna e responsiva.
+
 ---
 
 ## 📸 preview do projeto
