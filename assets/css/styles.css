@@ -21,7 +21,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
-min-height: auto;
+  min-height: auto;
   font-family: "Cormorant Garamond", serif;
   background-color: var(--background-color);
   color: var(--text-color);
@@ -82,7 +82,7 @@ min-height: auto;
 }
 
 .album-cover:hover {
-  filter: brightness(1.10);
+  filter: brightness(1.1);
   transform: translateY(-6px);
 }
 
@@ -117,7 +117,6 @@ min-height: auto;
   text-align: center;
   margin: 0.7rem 0;
 }
-
 
 .footer-songs {
   text-align: center;
@@ -946,7 +945,7 @@ a {
     font-size: 13px;
   }
 
-  .footer{
+  .footer {
     margin-top: 50px;
   }
 }

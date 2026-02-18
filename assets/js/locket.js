@@ -6,6 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
       window.location.href = "locket.html";
-    }, 300); 
+    }, 300);
   });
 });

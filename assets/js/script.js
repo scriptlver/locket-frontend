@@ -1,5 +1,3 @@
-/* ================= CONFIG ================= */
-
 const basePath = location.pathname.split("/").length > 2 ? "../" : "";
 
 const API_URL =
@@ -9,7 +7,7 @@ const API_URL =
 
 const currentPath = location.pathname;
 
-/* ================= FAVORITOS ================= */
+/* favoritoss */
 
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
@@ -19,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const musicaId = btn.dataset.musica;
     const img = btn.querySelector("img");
 
-    // Ajuste para ler favoritos do MongoDB
     if (usuario?.favoritos?.includes(musicaId)) {
       img.src = `${basePath}assets/images/icons/favorite.png`;
       btn.classList.add("active");
@@ -36,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            userId: usuario._id || usuario.id, // Suporta MongoDB (_id)
+            userId: usuario._id || usuario.id,
             musicaId,
           }),
         });
@@ -65,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ================= VER MAIS ================= */
+/* ver mais (músicas) */
 
 document.addEventListener("DOMContentLoaded", () => {
   const btnToggle = document.getElementById("btn-toggle");
@@ -82,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* ================= MENU MOBILE ================= */
+/* menu mobile */
 
 fetch(`${basePath}menu-mobile.html`)
   .then((res) => {
@@ -118,7 +115,7 @@ fetch(`${basePath}menu-mobile.html`)
   })
   .catch((err) => console.error("Erro ao carregar menu:", err));
 
-/* ================= LOGIN ================= */
+/* login */
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
@@ -155,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* ================= CADASTRO ================= */
+/* cadastro */
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-field");
@@ -202,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
           email,
           senha,
           foto: fotoBase64,
-          bio: "" 
+          bio: "",
         }),
       });
 
@@ -217,7 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Preview de Foto
 document.addEventListener("DOMContentLoaded", () => {
   const inputFoto = document.getElementById("foto");
   const preview = document.getElementById("preview-foto");
@@ -227,13 +223,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const file = inputFoto.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => { preview.src = reader.result; };
+      reader.onload = () => {
+        preview.src = reader.result;
+      };
       reader.readAsDataURL(file);
     }
   });
 });
 
-/* ================= PERFIL ================= */
+/* perfil */
 
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
@@ -247,7 +245,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderPerfil(usuario);
 
-  // Validação no backend usando _id do MongoDB
   fetch(`${API_URL}/api/users/${usuario._id || usuario.id}`).catch(() => {
     console.log("Sessão offline ou erro de validação");
   });
@@ -256,12 +253,12 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderPerfil(usuario) {
   const profileImg = document.getElementById("profile-img");
   if (profileImg) {
-    // Agora a foto é servida como string Base64 direto do Mongo ou URL antiga
-    profileImg.src = usuario.foto && usuario.foto.length > 50
-      ? usuario.foto 
-      : usuario.foto 
-        ? `${API_URL}/uploads/${usuario.foto}`
-        : `${basePath}assets/images/icons/profile.png`;
+    profileImg.src =
+      usuario.foto && usuario.foto.length > 50
+        ? usuario.foto
+        : usuario.foto
+          ? `${API_URL}/uploads/${usuario.foto}`
+          : `${basePath}assets/images/icons/profile.png`;
   }
 
   const map = {
@@ -277,7 +274,7 @@ function renderPerfil(usuario) {
   });
 }
 
-/* ================= EDITAR PERFIL ================= */
+/* editar perfil */
 
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
@@ -286,15 +283,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const preview = document.getElementById("preview-foto");
   if (preview) {
-    preview.src = usuario.foto && usuario.foto.length > 50 
-      ? usuario.foto 
-      : usuario.foto 
-        ? `${API_URL}/uploads/${usuario.foto}`
-        : `${basePath}assets/images/icons/profile.png`;
+    preview.src =
+      usuario.foto && usuario.foto.length > 50
+        ? usuario.foto
+        : usuario.foto
+          ? `${API_URL}/uploads/${usuario.foto}`
+          : `${basePath}assets/images/icons/profile.png`;
   }
 
   const campos = ["nome-usuario", "nome", "email", "bio"];
-  campos.forEach(id => {
+  campos.forEach((id) => {
     const input = document.getElementById(id);
     if (input) {
       const chaveUsuario = id === "nome-usuario" ? "nomeUsuario" : id;
@@ -322,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const dadosParaEnviar = {
-      id: usuario._id || usuario.id, // Envia o ID correto para o Mongo
+      id: usuario._id || usuario.id,
       nomeUsuario,
       nome,
       email,
@@ -340,61 +338,72 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Erro ao atualizar");
 
-      // Atualiza o localstorage com os novos dados vindos do banco
       localStorage.setItem("usuarioLogado", JSON.stringify(data.usuario));
 
       alert("Perfil atualizado com sucesso!");
       window.location.href = "profile.html";
-
     } catch (err) {
       alert(err.message);
     }
   });
 });
 
-/* ================= LOGOUT E DELETE ================= */
+/* logout e delete */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Logout
+  // logout
   document.getElementById("confirm-logout")?.addEventListener("click", () => {
     localStorage.removeItem("usuarioLogado");
     window.location.href = `${basePath}login.html`;
   });
 
-  // Delete Account
-  document.getElementById("confirm-delete")?.addEventListener("click", async () => {
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-    if (!usuario) return;
+  // delete account
+  document
+    .getElementById("confirm-delete")
+    ?.addEventListener("click", async () => {
+      const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+      if (!usuario) return;
 
-    try {
-      const response = await fetch(`${API_URL}/api/users/${usuario._id || usuario.id}`, {
-        method: "DELETE",
-      });
+      try {
+        const response = await fetch(
+          `${API_URL}/api/users/${usuario._id || usuario.id}`,
+          {
+            method: "DELETE",
+          },
+        );
 
-      if (!response.ok) throw new Error("Erro ao deletar");
+        if (!response.ok) throw new Error("Erro ao deletar");
 
-      localStorage.removeItem("usuarioLogado");
-      window.location.href = `${basePath}login.html`;
-    } catch (err) {
-      alert(err.message);
-    }
-  });
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = `${basePath}login.html`;
+      } catch (err) {
+        alert(err.message);
+      }
+    });
 });
 
-/* ================= MODAIS E FADE ================= */
+/* modais */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Modal Delete
+  // modal delete
   const openDelete = document.getElementById("open-delete-modal");
   const modalDelete = document.getElementById("delete-modal");
-  openDelete?.addEventListener("click", () => { if (modalDelete) modalDelete.style.display = "flex"; });
-  document.getElementById("cancel-delete")?.addEventListener("click", () => { if (modalDelete) modalDelete.style.display = "none"; });
+  openDelete?.addEventListener("click", () => {
+    if (modalDelete) modalDelete.style.display = "flex";
+  });
+  document.getElementById("cancel-delete")?.addEventListener("click", () => {
+    if (modalDelete) modalDelete.style.display = "none";
+  });
 
-  // Modal Logout
+  // modal logout
   const openLogout = document.getElementById("logout-btn");
   const modalLogout = document.getElementById("logout-modal");
-  openLogout?.addEventListener("click", () => { if (modalLogout) modalLogout.style.display = "flex"; });
-  document.getElementById("cancel-logout")?.addEventListener("click", () => { if (modalLogout) modalLogout.style.display = "none"; });
+  openLogout?.addEventListener("click", () => {
+    if (modalLogout) modalLogout.style.display = "flex";
+  });
+  document.getElementById("cancel-logout")?.addEventListener("click", () => {
+    if (modalLogout) modalLogout.style.display = "none";
+  });
 
   document.body.style.opacity = "1";
 });
