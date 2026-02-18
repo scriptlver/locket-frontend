@@ -9,6 +9,9 @@ este frontend oferece uma experiência de usuário fluida, com sistema de login,
 ## 📸 preview do projeto
 
 aqui estão alguns registros da interface:
+<div align="center">
+  <img src="/assets/images/screenshots/mobile.png>
+</div>
 
 ---
 
