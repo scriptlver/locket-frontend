@@ -4,7 +4,7 @@ frontend desenvolvido para o projeto locket, um site inspirado no álbum locket 
 
 ---
 
-## 📸 preview do projeto
+## 🪽 preview do projeto
 
 aqui estão alguns registros da interface na versão mobile:
 
@@ -18,9 +18,9 @@ aqui estão alguns registros da interface na versão mobile:
 
 o projeto foi construído com foco em **ui/ux aesthetic**, utilizando uma paleta de cores suave (tons de branco e transparências) e tipografia elegante para refletir a identidade da artista.
 
-* **💡 interatividade:** transições suaves e feedback visual ao favoritar músicas.
-* **🎨 design:** inspirado em elementos de "lockets" (medalhões).
-* **📱 responsividade:** adaptado para diferentes tamanhos de tela.
+* **🤍 interatividade:** transições suaves e feedback visual ao favoritar músicas.
+* **🤍 design:** inspirado em elementos de "lockets" (medalhões).
+* **🤍 responsividade:** adaptado para diferentes tamanhos de tela.
 
 ---
 
@@ -54,16 +54,16 @@ o projeto foi construído com foco em **ui/ux aesthetic**, utilizando uma paleta
 
 ---
 
-## 🚀 como visualizar
+## 🤍 hospedagem e acesso
 
 o projeto está disponível online através da vercel:
 
 * **link do site:** [https://locket-frontend-xi.vercel.app](https://locket-frontend-xi.vercel.app)
-* **status:** 🌐 online & integrado ao backend
+* **status:** 🤍 online & integrado ao backend: [https://locket-backend-78sy.onrender.com](https://locket-backend-78sy.onrender.com)
 
 ---
 
-## 🛠️ instalação local
+## 🔒 instalação local
 
 para rodar a interface na sua máquina:
 
