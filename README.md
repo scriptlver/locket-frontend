@@ -8,7 +8,7 @@ este frontend oferece uma experiência de usuário fluida, com sistema de login,
 
 ## 📸 preview do projeto
 
-aqui estão alguns registros da interface:
+aqui estão alguns registros da interface na versão mobile:
 
 <div align="center">
   <img src="/assets/images/screenshots/mobile.png" width="700px" alt="locket mobile version">
