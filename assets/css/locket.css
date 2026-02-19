@@ -79,6 +79,7 @@ html::after {
     filter 0.35s ease;
   transform-origin: center;
   will-change: transform;
+  cursor: pointer;
 }
 
 .medalhao:hover {
