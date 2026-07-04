@@ -4,6 +4,16 @@ frontend desenvolvido para o projeto locket, um site inspirado no álbum locket 
 
 ---
 
+## 🤍 hospedagem e acesso
+
+o projeto está disponível online através da vercel:
+
+* **link do site:** [https://locket-frontend-xi.vercel.app](https://locket-frontend-xi.vercel.app)
+* **status:** 🤍 online & integrado ao backend: [https://locket-backend-78sy.onrender.com](https://locket-backend-78sy.onrender.com)
+* **vídeo demo:** [assista no youtube](https://youtu.be/ys_g7n42BKc)
+
+---
+
 ## 🪽 preview do projeto
 
 aqui estão alguns registros da interface na versão mobile:
@@ -51,15 +61,6 @@ o projeto foi construído com foco em **ui/ux aesthetic**, utilizando uma paleta
 | **termos de uso** | página dedicada às diretrizes e políticas da plataforma. |
 | **sair da conta** | logout seguro para encerrar a sessão do utilizador. |
 | **deletar conta** | opção de exclusão permanente de todos os dados do utilizador. |
-
----
-
-## 🤍 hospedagem e acesso
-
-o projeto está disponível online através da vercel:
-
-* **link do site:** [https://locket-frontend-xi.vercel.app](https://locket-frontend-xi.vercel.app)
-* **status:** 🤍 online & integrado ao backend: [https://locket-backend-78sy.onrender.com](https://locket-backend-78sy.onrender.com)
 
 ---
 
